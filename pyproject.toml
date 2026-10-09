@@ -8,8 +8,10 @@ version = "0.1.0"
 description = "Contract document processing tools."
 requires-python = ">=3.11"
 dependencies = [
+    "numpy>=1.26",
     "pydantic>=2.7",
     "pymupdf>=1.24",
+    "sentence-transformers>=3.0",
 ]
 
 [dependency-groups]

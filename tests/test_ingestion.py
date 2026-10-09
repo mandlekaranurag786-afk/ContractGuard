@@ -5,7 +5,11 @@ import hashlib
 import pymupdf
 import pytest
 
-from contractguard.ingestion import PDFIngestionError, ingest_pdf
+from contractguard.ingestion import (
+    PDFIngestionError,
+    ingest_pdf,
+    load_parsed_document,
+)
 from contractguard.ingestion.pdf import _clean_text
 
 
@@ -34,6 +38,18 @@ def test_ingest_pdf_extracts_pages_and_writes_json(tmp_path) -> None:
     assert parsed.pages[0].clean_text.startswith("This agreement")
     assert parsed.pages[0].needs_ocr is False
     assert (tmp_path / "parsed" / f"{parsed.doc_id}.json").is_file()
+
+
+def test_load_parsed_document_round_trips_ingested_pdf(tmp_path) -> None:
+    source = tmp_path / "agreement.pdf"
+    _create_pdf(source, ["This agreement can be persisted and loaded again."])
+
+    original = ingest_pdf(source, output_dir=tmp_path / "parsed")
+    json_path = tmp_path / "parsed" / f"{original.doc_id}.json"
+
+    loaded = load_parsed_document(json_path)
+
+    assert loaded == original
 
 
 def test_ingest_pdf_retains_empty_page_and_flags_it_for_ocr(tmp_path) -> None:

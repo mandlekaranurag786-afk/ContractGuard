@@ -5,6 +5,7 @@ from contractguard.ingestion.batch import (
     IngestionSummary,
     ingest_directory,
 )
+from contractguard.ingestion.loader import load_parsed_document
 from contractguard.ingestion.pdf import (
     MIN_TEXT_CHARACTERS,
     ParsedDocument,
@@ -22,4 +23,5 @@ __all__ = [
     "IngestionSummary",
     "ingest_directory",
     "ingest_pdf",
+    "load_parsed_document",
 ]
