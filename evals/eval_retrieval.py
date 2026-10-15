@@ -24,6 +24,7 @@ from pathlib import Path
 
 from contractguard.chunking import Chunk
 from contractguard.chunking.fixed import chunk_document
+from contractguard.evaluation.metrics import first_hit_rank, recall_at_k
 from contractguard.ingestion import load_parsed_document
 from contractguard.retrieval.hybrid import HybridSearchIndex
 from contractguard.retrieval.vector import InMemoryVectorIndex
@@ -217,6 +218,7 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
                 "best_rank": best_rank,
                 "best_chunk_id": best_chunk_id,
                 "best_overlap": round(best_score, 3),
+                "rank_overlaps": [score for _, _, score in per_rank_scores],
                 "note": "",
             })
 
@@ -241,6 +243,19 @@ def save_results(results: list[dict], results_out: Path = RESULTS_OUT):
     print(f"\nSaved {len(results)} rows to {results_out}")
 
 
+def _print_recall_table(scored: list[dict]):
+    for threshold in (0.5, 0.7, 0.9):
+        first_hit_ranks = [
+            first_hit_rank(r["rank_overlaps"], threshold) for r in scored
+        ]
+        for k in (1, 3, 5, 10):
+            recall = recall_at_k(first_hit_ranks, k)
+            hits = sum(rank is not None and rank <= k for rank in first_hit_ranks)
+            print(f"  recall@{k:<2d} (overlap>={threshold}): {recall:.2%} "
+                  f"({hits}/{len(scored)})")
+        print()
+
+
 def print_summary(results: list[dict]):
     scored = [r for r in results if r["cuad_answer_exists"]]
     skipped = [r for r in results if not r["cuad_answer_exists"]]
@@ -248,17 +263,12 @@ def print_summary(results: list[dict]):
     print(f"\n{'='*60}")
     print(f"Total clause instances evaluated: {len(scored)}")
     print(f"Skipped (CUAD answer empty):      {len(skipped)}")
+    _print_recall_table(scored)
 
-    for threshold in (0.5, 0.7, 0.9):
-        for k in (1, 3, 5, 10):
-            hits = sum(
-                1 for r in scored
-                if r["best_overlap"] >= threshold and r["best_rank"] <= k
-            )
-            recall = hits / len(scored) if scored else 0.0
-            print(f"  recall@{k:<2d} (overlap>={threshold}): {recall:.2%} "
-                  f"({hits}/{len(scored)})")
-        print()
+    for clause_type in CLAUSE_QUERIES:
+        clause_scored = [r for r in scored if r["clause_type"] == clause_type]
+        print(f"{clause_type}: {len(clause_scored)} instances")
+        _print_recall_table(clause_scored)
 
 
 if __name__ == "__main__":

@@ -117,7 +117,6 @@ reads contracts correctly before it's trusted on a real upload. Once
 extraction is validated this way, CUAD is not referenced by the running
 system at all.
 
-
 ## Retrieval baseline — dense vector search (BAAI/bge-small-en-v1.5)
 
 ### Finding 1: Dense search ranks definitions above operative clauses
@@ -211,3 +210,8 @@ specific reason logged, distinct from Finding 2's exclusion.
   clause" confusion specifically.
 - Re-run eval_retrieval.py after each change; compare against this
   baseline, not against hand-read examples.
+
+
+##Hybrid Search
+
+Hybrid (RRF k=60) vs dense, recall@1 at overlap≥0.5: Renewal Term net +2 (5 gained, 3 lost), Cap On Liability net −3 (0 gained, 3 lost). BM25 helps clauses with distinctive vocabulary (“renew”) and hurts clauses whose key word is common across the contract (“liability”) while the operative wording (“shall not exceed”) doesn’t match the query. Overall recall@1 hides this, so recall should be reported per clause type from now on.
