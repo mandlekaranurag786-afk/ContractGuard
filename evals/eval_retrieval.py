@@ -19,10 +19,13 @@ Usage:
 import ast
 import csv
 import re
+from collections.abc import Callable
 from pathlib import Path
 
-from contractguard.ingestion import load_parsed_document
+from contractguard.chunking import Chunk
 from contractguard.chunking.fixed import chunk_document
+from contractguard.ingestion import load_parsed_document
+from contractguard.retrieval.hybrid import HybridSearchIndex
 from contractguard.retrieval.vector import InMemoryVectorIndex
 
 # ---- Config -----------------------------------------------------------
@@ -30,7 +33,8 @@ from contractguard.retrieval.vector import InMemoryVectorIndex
 PARSED_DIR = Path("data/parsed")
 MASTER_CLAUSES_CSV = Path("data/contracts/master_clauses.csv")
 SELECTED_CONTRACTS_CSV = Path("data/contracts/selected_30_contracts.csv")
-RESULTS_OUT = Path("evals/retrieval_results.csv")
+RESULTS_OUT = Path("evals/retrieval_results_dense.csv")
+HYBRID_RESULTS_OUT = Path("evals/retrieval_results_hybrid.csv")
 TOP_K = 10
 
 # clause_type -> (CUAD raw-span column name, query we run against our index)
@@ -140,7 +144,7 @@ def build_filename_to_docid_map(parsed_dir: Path) -> dict[str, str]:
 
 # ---- Main eval loop -------------------------------------------------------
 
-def run_eval() -> list[dict]:
+def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
     cuad_answers = load_cuad_answers(MASTER_CLAUSES_CSV)
     filename_to_docid = build_filename_to_docid_map(PARSED_DIR)
 
@@ -160,7 +164,7 @@ def run_eval() -> list[dict]:
             print(f"  [skip] {filename}: produced zero chunks")
             continue
 
-        index = InMemoryVectorIndex.from_chunks(chunks)
+        index = index_factory(chunks)
 
         for clause_type, query in CLAUSE_QUERIES.items():
             bad_label_reason = KNOWN_BAD_LABELS.get((key, clause_type))
@@ -222,9 +226,9 @@ def run_eval() -> list[dict]:
 
     return results
 
-def save_results(results: list[dict]):
-    RESULTS_OUT.parent.mkdir(exist_ok=True)
-    with open(RESULTS_OUT, "w", newline="", encoding="utf-8") as f:
+def save_results(results: list[dict], results_out: Path = RESULTS_OUT):
+    results_out.parent.mkdir(exist_ok=True)
+    with open(results_out, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
             f,
             fieldnames=["contract", "clause_type", "cuad_answer_exists",
@@ -234,7 +238,7 @@ def save_results(results: list[dict]):
         writer.writeheader()
         for row in results:
             writer.writerow(row)
-    print(f"\nSaved {len(results)} rows to {RESULTS_OUT}")
+    print(f"\nSaved {len(results)} rows to {results_out}")
 
 
 def print_summary(results: list[dict]):
@@ -259,6 +263,12 @@ def print_summary(results: list[dict]):
 
 if __name__ == "__main__":
     print("Running retrieval eval across selected contracts...\n")
-    results = run_eval()
-    save_results(results)
-    print_summary(results)
+    print("DENSE-ONLY BASELINE")
+    dense_results = run_eval(InMemoryVectorIndex.from_chunks)
+    save_results(dense_results)
+    print_summary(dense_results)
+
+    print("HYBRID SEARCH")
+    hybrid_results = run_eval(HybridSearchIndex.from_chunks)
+    save_results(hybrid_results, HYBRID_RESULTS_OUT)
+    print_summary(hybrid_results)
