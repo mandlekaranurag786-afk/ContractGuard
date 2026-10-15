@@ -15,3 +15,14 @@ def recall_at_k(first_hit_ranks: list[int | None], k: int) -> float:
         return 0.0
     hits = sum(rank is not None and rank <= k for rank in first_hit_ranks)
     return hits / len(first_hit_ranks)
+
+
+def mrr_at_k(first_hit_ranks: list[int | None], k: int) -> float:
+    """Return the mean reciprocal rank for hits at or before rank *k*."""
+    if not first_hit_ranks:
+        return 0.0
+    scores = [
+        1 / rank if rank is not None and 1 <= rank <= k else 0.0
+        for rank in first_hit_ranks
+    ]
+    return sum(scores) / len(scores)

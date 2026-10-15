@@ -24,7 +24,7 @@ from pathlib import Path
 
 from contractguard.chunking import Chunk
 from contractguard.chunking.fixed import chunk_document
-from contractguard.evaluation.metrics import first_hit_rank, recall_at_k
+from contractguard.evaluation.metrics import first_hit_rank, mrr_at_k, recall_at_k
 from contractguard.ingestion import load_parsed_document
 from contractguard.retrieval.hybrid import HybridSearchIndex
 from contractguard.retrieval.vector import InMemoryVectorIndex
@@ -36,7 +36,7 @@ MASTER_CLAUSES_CSV = Path("data/contracts/master_clauses.csv")
 SELECTED_CONTRACTS_CSV = Path("data/contracts/selected_30_contracts.csv")
 RESULTS_OUT = Path("evals/retrieval_results_dense.csv")
 HYBRID_RESULTS_OUT = Path("evals/retrieval_results_hybrid.csv")
-TOP_K = 10
+TOP_K = 20
 
 # clause_type -> (CUAD raw-span column name, query we run against our index)
 CLAUSE_QUERIES = {
@@ -174,8 +174,11 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
                     "contract": filename,
                     "clause_type": clause_type,
                     "cuad_answer_exists": False,
-                    "best_rank": None,
+                    "best_overlap_rank": None,
                     "best_overlap": None,
+                    "first_hit_rank_05": None,
+                    "first_hit_rank_07": None,
+                    "first_hit_rank_09": None,
                     "note": f"Excluded -- known bad CUAD label: {bad_label_reason}",
                 })
                 continue
@@ -189,8 +192,11 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
                     "contract": filename,
                     "clause_type": clause_type,
                     "cuad_answer_exists": False,
-                    "best_rank": None,
+                    "best_overlap_rank": None,
                     "best_overlap": None,
+                    "first_hit_rank_05": None,
+                    "first_hit_rank_07": None,
+                    "first_hit_rank_09": None,
                     "note": "CUAD answer empty -- excluded from recall scoring",
                 })
                 continue
@@ -204,28 +210,43 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
 
             if per_rank_scores:
                 # Best (rank, score) pair -- highest overlap, earliest rank on ties
-                best_rank, best_chunk_id, best_score = max(
+                best_overlap_rank, best_chunk_id, best_score = max(
                     per_rank_scores, key=lambda x: (x[2], -x[0])
                 )
             else:
                 # Retrieval returned nothing at all for this query.
-                best_rank, best_chunk_id, best_score = None, None, 0.0
+                best_overlap_rank, best_chunk_id, best_score = None, None, 0.0
+
+            rank_overlaps = [score for _, _, score in per_rank_scores]
+            first_hit_rank_05 = first_hit_rank(rank_overlaps, 0.5)
+            first_hit_rank_07 = first_hit_rank(rank_overlaps, 0.7)
+            first_hit_rank_09 = first_hit_rank(rank_overlaps, 0.9)
 
             results.append({
                 "contract": filename,
                 "clause_type": clause_type,
                 "cuad_answer_exists": True,
-                "best_rank": best_rank,
+                "best_overlap_rank": best_overlap_rank,
                 "best_chunk_id": best_chunk_id,
                 "best_overlap": round(best_score, 3),
-                "rank_overlaps": [score for _, _, score in per_rank_scores],
+                "rank_overlaps": rank_overlaps,
+                "first_hit_rank_05": first_hit_rank_05,
+                "first_hit_rank_07": first_hit_rank_07,
+                "first_hit_rank_09": first_hit_rank_09,
                 "note": "",
             })
 
-            rank_str = f"{best_rank:2d}" if best_rank is not None else " -"
+            first_hit_str = (
+                f"{first_hit_rank_05:2d}" if first_hit_rank_05 is not None else " -"
+            )
+            best_rank_str = (
+                f"{best_overlap_rank:2d}" if best_overlap_rank is not None else " -"
+            )
             print(f"  {filename[:50]:50s} | {clause_type:20s} | "
-                  f"best_rank={rank_str} overlap={best_score:.2f}")
+                  f"first_hit@0.5={first_hit_str} "
+                  f"best_overlap_rank={best_rank_str} overlap={best_score:.2f}")
 
+    _assert_reporting_consistency(results)
     return results
 
 def save_results(results: list[dict], results_out: Path = RESULTS_OUT):
@@ -234,7 +255,9 @@ def save_results(results: list[dict], results_out: Path = RESULTS_OUT):
         writer = csv.DictWriter(
             f,
             fieldnames=["contract", "clause_type", "cuad_answer_exists",
-                        "best_rank", "best_chunk_id", "best_overlap", "note"],
+                        "best_overlap_rank", "best_chunk_id", "best_overlap",
+                        "first_hit_rank_05", "first_hit_rank_07",
+                        "first_hit_rank_09", "note"],
             extrasaction="ignore",
         )
         writer.writeheader()
@@ -243,16 +266,34 @@ def save_results(results: list[dict], results_out: Path = RESULTS_OUT):
     print(f"\nSaved {len(results)} rows to {results_out}")
 
 
+def _assert_reporting_consistency(results: list[dict]) -> None:
+    scored = [row for row in results if row["cuad_answer_exists"]]
+    first_hit_ranks = [row["first_hit_rank_05"] for row in scored]
+
+    for k in (1, 10):
+        reported_hits = sum(
+            rank is not None and rank <= k for rank in first_hit_ranks
+        )
+        recall_hits = round(recall_at_k(first_hit_ranks, k) * len(scored))
+        if reported_hits != recall_hits:
+            raise RuntimeError(
+                f"first_hit_rank_05 count ({reported_hits}) does not match "
+                f"recall@{k} count ({recall_hits})"
+            )
+
+
 def _print_recall_table(scored: list[dict]):
     for threshold in (0.5, 0.7, 0.9):
         first_hit_ranks = [
             first_hit_rank(r["rank_overlaps"], threshold) for r in scored
         ]
-        for k in (1, 3, 5, 10):
+        for k in (1, 3, 5, 10, 20):
             recall = recall_at_k(first_hit_ranks, k)
             hits = sum(rank is not None and rank <= k for rank in first_hit_ranks)
             print(f"  recall@{k:<2d} (overlap>={threshold}): {recall:.2%} "
                   f"({hits}/{len(scored)})")
+        mrr = mrr_at_k(first_hit_ranks, k=10)
+        print(f"  MRR@10 (overlap>={threshold}): {mrr:.3f}")
         print()
 
 
