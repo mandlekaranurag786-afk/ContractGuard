@@ -1,0 +1,243 @@
+================================================================================
+LOST RANK 1
+================================================================================
+
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF
+CUAD answer: Pretzel Time shall not be liable to Franchisee,  the contractor, or any other person,  and Franchisee  waives all claims for liability or damages of any type  whatsoever  (whether  direct,  indirect,  incidental,   consequential,  or exemplary),  on account of the  rendition  of any  services  by Pretzel  Time in accordance  with  this  Section,  except  to the  extent  caused  by  the  gross negl
+dense rank 1: b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:91 | overlap=1.000
+nit;
+
+ (2). Assist Franchisee in finding a general contractor for the
+ construction and development of the Unit; and
+
+ (3). Respond to a reasonable amount of questions from Franchisee's
+ contractor relating to construction and development of the Unit
+ in accordance with the requirements of Pretzel Time.
+
+ 8.F. LIMITATION ON LIABILITY.
+
+ Pretzel Time shall not be liable to Franchisee, the contractor, or any
+other person, and Franchisee waives all claims for liability or damages of any
+type whatsoever (whether direct, indirect, incidental, consequential, or
+exemplary), on account of the renditio
+reranked rank 1: b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:149 | overlap=0.404
+cross_encoder_score=-6.287601
+ types of public liability with personal injury
+coverage and property damage coverage. In addition to coverage as aforesaid such
+insurance shall include coverages as set forth in the Operations Manual and
+shall contain a provision obligating all insurers to provide a written notice
+Pretzel Time of any cancellation or modification of coverage at least thirty
+(30) days prior to the effective date of such modification or cancellation.
+
+ The insurance afforded by the policy or policies respecting liability
+shall not be limited in any way by reason of any insurance which may be
+maintained by Pretze
+reranked rank-1 pair tokens: 198
+CUAD matching chunk after reranking: rank=3 chunk_id=b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:91 overlap=1.000 cross_encoder_score=-8.500473
+CUAD matching pair tokens: 221
+
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf
+CUAD answer: EXCEPT AS SET FORTH BELOW IN THIS SECTION 13.4(b), IN NO EVENT WILL SUPPLIER'S LIABILITY, [* * *], BE GREATER THAN, PER CLAIM OR SERIES OF CLAIMS ARISING FROM THE SAME CAUSE OF ACTION, [* * *].
+dense rank 1: efdc607a19a80f5dd4d5a385baf876a08c5e51fdbaa08bc8332f16c422d4ae7e:94 | overlap=1.000
+S SECTION 13.4(b), WITH RESPECT [* * *], IN NO EVENT SHALL A PARTY’S LIABILITY BE GREATER
+THAN, PER CLAIM OR SERIES OF CLAIMS ARISING FROM THE SAME CAUSE OF ACTION, [* * *].
+
+NOTWITHSTANDING ANYTHING TO THE CONTRARY IN THIS SECTION 13.4(b), WITH RESPECT TO [* * *] IN NO EVENT SHALL
+SUPPLIER’S LIABILITY, HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, BE GREATER THAN, PER CLAIM OR SERIES OF CLAIMS
+ARISING FROM THE SAME CAUSE OF ACTION, [* * *].
+
+[* * *]
+
+Article 14 Indemnification
+
+14.1 Indemnification of Supplier
+
+Customer shall indemnify, defend and hold harmless Supplier and its officers, dir
+reranked rank 1: efdc607a19a80f5dd4d5a385baf876a08c5e51fdbaa08bc8332f16c422d4ae7e:109 | overlap=0.487
+cross_encoder_score=-6.274345
+ecall or Seizure, and Supplier shall, at the option of Customer:
+
+[* * *].
+
+Such liability shall not limit or otherwise be exclusive of any other provisions of this Agreement.
+
+17.4 Customer’s Liability for Recall
+
+In the event of a Recall or Seizure arising from [* * *] Customer shall [* * *].
+
+Such liability shall not be exclusive of any other provisions of this Agreement.
+
+17.5 Replacement Shipments
+
+In the event of any Recall or Seizure with respect to the Product during the Term of this agreement, Supplier shall, upon the written request of
+Customer, as soon as reasonably possible, supply
+reranked rank-1 pair tokens: 199
+CUAD matching chunk after reranking: rank=2 chunk_id=efdc607a19a80f5dd4d5a385baf876a08c5e51fdbaa08bc8332f16c422d4ae7e:93 overlap=1.000 cross_encoder_score=-6.580933
+CUAD matching pair tokens: 260
+
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf
+CUAD answer: NOTWITHSTANDING ANY OTHER PROVISION OF THIS AGREEMENT TO THE CONTRARY, EXCEPT FOR DAMAGES OR CLAIMS ARISING OUT OF (I) A BREACH OF SECTION 13 OF THIS AGREEMENT, (II) CUSTOMER LIABILITIES PURSUANT TO, AND SUBJECT TO THE LIMITATIONS SET FORTH IN, SECTION 2.5(E), (III) A PARTY'S OR ITS PERSONNEL'S GROSS NEGLIGENCE, FRAUD OR WILLFUL MISCONDUCT, (IV) A PARTY'S WILLFUL BREACH OF THIS AGREEMENT, OR (V) A
+dense rank 1: 893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:218 | overlap=0.907
+ LIABILITIES PURSUANT TO,
+ AND SUBJECT TO THE LIMITATIONS SET FORTH IN, SECTION 2.5(E), (III) A PARTY’S OR ITS PERSONNEL’S GROSS
+ NEGLIGENCE, FRAUD OR WILLFUL MISCONDUCT, (IV) A PARTY’S WILLFUL BREACH OF THIS AGREEMENT, OR (V) A
+ PARTY’S INDEMNIFICATION OBLIGATION WITH RESPECT TO THIRD PARTY CLAIMS UNDER SECTION 10.1 OR SECTION
+ 10.2, IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY OR ANY INDEMNIFIED PARTY HEREUNDER FOR
+ ANY CONSEQUENTIAL DAMAGES, SPECIAL DAMAGES, INCIDENTAL OR INDIRECT DAMAGES, LOSS OF REVENUE OR
+ PROFITS, DIMINUTION IN VALUE, DAMAGES BASED ON MULTIPLE OF REVENUE 
+reranked rank 1: 893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:17 | overlap=0.390
+cross_encoder_score=-4.455290
+ssession, handling, Release or
+ threatened Release of, any hazardous or toxic material, substance or waste and any Laws relating to recordkeeping, notification, disclosure,
+ registration and reporting requirements respecting hazardous or toxic materials, substances or wastes.
+ 1.31 “Environmental Liability” means any Liability arising under Environmental Laws.
+ 1.32 “Exclusive Purchase Requirement” means, on a Product SKU-by-Product SKU and country-by country basis within the applicable Territory,
+ (a) in the first two (2) years of the Initial Term, one hundred percent (100%) of Customer’s tot
+reranked rank-1 pair tokens: 219
+CUAD matching chunk after reranking: rank=2 chunk_id=893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:230 overlap=0.512 cross_encoder_score=-4.938909
+CUAD matching pair tokens: 214
+
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf
+CUAD answer: NOTWITHSTANDING ANYTHING TO THE CONTRARY IN THIS AGREEMENT, IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY OR ITS AFFILIATES, ANY SUCCESSORS IN INTEREST OR ANY BENEFICIARY OR ASSIGNEE OF THIS AGREEMENT FOR ANY CONSEQUENTIAL, MULTIPLE, INCIDENTAL, INDIRECT, SPECIAL, EXEMPLARY OR PUNITIVE DAMAGES, OR LOSS OF PROFITS OR REVENUES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR ANY BREACH 
+dense rank 1: 9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35 | overlap=0.912
+ AFFILIATES, ANY SUCCESSORS IN INTEREST OR ANY BENEFICIARY OR ASSIGNEE OF THIS AGREEMENT
+FOR ANY CONSEQUENTIAL, MULTIPLE, INCIDENTAL, INDIRECT, SPECIAL, EXEMPLARY OR PUNITIVE DAMAGES, OR LOSS OF
+PROFITS OR REVENUES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR ANY BREACH HEREOF; PROVIDED, HOWEVER,
+THE FOREGOING SHALL NOT BE CONSTRUED AS LIMITING AN OBLIGATION OF A PARTY HEREUNDER TO INDEMNIFY, DEFEND AND
+HOLD HARMLESS THE OTHER PARTY AGAINST CLAIMS ASSERTED BY UNAFFILIATED THIRD PARTIES, INCLUDING, BUT NOT
+LIMITED TO, THIRD PARTY CLAIMS FOR SPECIAL, INDIRECT, CONSEQUENTIAL, PUNITIVE OR EXEMP
+reranked rank 1: 9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:84 | overlap=0.279
+cross_encoder_score=-8.111633
+ required to
+ pay the tariff rate on total volume of methane shipped.
+
+ 6
+
+ Source: RANGE RESOURCES - LOUISIANA, INC., 8-K, 4/17/2015
+FERC ICA OIL TARIFF F.E.R.C. No. 1.0.0
+
+ G. Carrier is not responsible for monitoring receipts or deliveries for contaminants. Further, Carrier reserves the right to dispose of any
+ contaminated Product on the System. Disposal thereof may be made in any reasonable manner including but not limited to commercial
+ sales. Any liability associated with the contamination or disposal of any Products shall be borne by Shipper introducing the
+ contaminated Products into 
+reranked rank-1 pair tokens: 214
+CUAD matching chunk after reranking: rank=2 chunk_id=9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35 overlap=0.912 cross_encoder_score=-8.204469
+CUAD matching pair tokens: 215
+
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF
+CUAD answer: Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or  personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]);  provided<
+dense rank 1: 3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97 | overlap=0.890
+xpenses or professional fees for death or personal injury incurred by such other Party in relation to
+ or arising out of any breach of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement by the first
+ Party or of any gross negligence or willful act of the first Party, or its employees in the course of their employment.
+
+10.8 PPI Liability Limitation. Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and
+ Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, 
+reranked rank 1: 3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:15 | overlap=0.311
+cross_encoder_score=-5.536773
+tory Authority” Means any competent regulatory authority or other governmental body (for example, but not by way of
+ limitation the FDA and DEA) responsible for granting a Marketing Authorization in the Territory;
+
+“Royalty Cap” Shall have the meaning set forth in Section 6.4;
+
+“Supply Agreement” Means: (i) with respect to periods between the Effective Date and the Agreement Date, that certain Supply
+ Agreement entered into by the Parties on the Effective Date and (ii) with respect to periods on or after the
+ Agreement Date, that certain Amended and Restated Supply Agreement entered into by th
+reranked rank-1 pair tokens: 208
+CUAD matching chunk after reranking: rank=2 chunk_id=3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97 overlap=0.890 cross_encoder_score=-6.279228
+CUAD matching pair tokens: 216
+
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF
+CUAD answer: IN NO EVENT SHALL, XIMAGE BE LIABLE TO MORPHO FOR ANY INCIDENTAL,      CONSEQUENTIAL, SPECIAL OR INDIRECT DAMAGES (INCLUDING WITHOUT      LIMITATION, DAMAGES ARISING FROM LOSS OF BUSINESS, DATA, PROFITS OR      GOODWILL) INCURRED OR SUFFERED BY MORPHO IN CONNECTION WITH, OR ARISING      OUT OF, THIS AGREEMENT OR MORPHO'S USE OF ANY DOCUMENTATION OR SOFTWARE      OR SERVICES PROVIDED, OR TO BE PROV
+dense rank 1: daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:18 | overlap=0.600
+n notice if the other party has failed
+ to make timely payment of any amounts required to be paid hereunder,
+ or
+ (c) Immediately, (i) if a petition in bankruptcy has been filed by or
+ against the other party, (ii) if the other party has made an
+ assignment for the benefit of creditors, (iii) if a receiver has
+ been appointed or applied for by the other party, or (iv) if the
+ other party has admitted in writing its inability to pay its debts
+ as they become due and payable.
+
+14. DISCLAIMER OF WARRANTY
+
+ XIMAGE MAKES NO WARRANTY OF ANY KIND, WHETHER EXPRESS OR IMPLIED
+ (INCLUDING WARRANTIES OR 
+reranked rank 1: daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:1 | overlap=0.091
+cross_encoder_score=-6.020098
+.......................6
+
+10. Return and Repair.............................................................7
+
+11. Injunctive Relief/Termination.................................................7
+
+12. Indemnification...............................................................7
+
+13. Termination...................................................................7
+
+14. Disclaimer of Warranty........................................................8
+
+15. Limitations of Liability......................................................8
+
+16. Arbitration.................................................
+reranked rank-1 pair tokens: 766
+CUAD matching chunk after reranking: rank=2 chunk_id=daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19 overlap=0.945 cross_encoder_score=-7.663652
+CUAD matching pair tokens: 219
+================================================================================
+GAINED RANK 1
+================================================================================
+
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF
+CUAD answer: NOTWITHSTANDING THE FOREGOING, NEITHER PARTY SHALL BE LIABLE TO THE OTHER PARTY, UNDER  ANY LEGAL OR EQUITABLE THEORY, FOR ANY INCIDENTAL, SPECIAL OR INDIRECT DAMAGES OF ANY KIND,  SUFFERED BY OR OTHERWISE COMPENSABLE TO SUCH OTHER PARTY, ARISING OUT OF, UNDER OR  RELATING TO THIS AGREEMENT, WHETHER OR NOT ADVISED OF THE POSSIBILITY OF SUCH.
+dense rank 1: 4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:4 | overlap=0.270
+ the cost of manufacturing and delivering (including, without limitation, all
+ applicable freight, packaging and shipping costs) and costs of any third party vendors used in connection with
+ manufacturing and fulfillment of MOXATAG samples.
+
+(g) “Deposit” means that amount which MBRK shall deposit with DD upon the Promotion Commencement Date and as
+ subject to the adjustment outlined in Section 5.
+
+(h) “DD Target Segment Prescribers” means the licensed prescribers as defined in EXHIBIT 1.
+
+(i) “Early Termination Fee” means that amount equal to the most recent month’s Promotion Fee prior to
+ te
+reranked rank 1: 4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:51 | overlap=0.514
+cross_encoder_score=-6.860261
+n or other casualty, any lack or failure of
+transportation facilities, any lack or
+failure of supply of raw materials, any strike or labor disturbance, or any other event similar to those enumerated above.
+Such excuse from liability shall be effective only to the extent and duration of the event(s) causing the failure or delay in
+performance and provided that the party has not caused such event(s) to occur. Notice by the failing party of such
+party’s failure or delay in performance due to force majeure must be given to the other party within ten (10) calendar
+days after its occurrence. All del
+reranked rank-1 pair tokens: 211
+CUAD matching chunk after reranking: rank=1 chunk_id=4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:51 overlap=0.514 cross_encoder_score=-6.860261
+CUAD matching pair tokens: 211
+
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf
+CUAD answer: EXCEPTING ONLY CLAIMS MADE PURSUANT TO SECTION 12.1, IN NO EVENT WILL EITHER PARTY BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING ANY LOST PROFITS, LOST REVENUES OR LOST SAVINGS, ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT AND/OR THE PRODUCTS, WHETHER IN CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY HA
+dense rank 1: cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:23 | overlap=0.344
+ght, false advertising, unfair
+competition, defamation, invasion of privacy or rights of celebrity, violation of any anti-discrimination law or regulation, or any other right of any
+person or entity.
+
+ 5
+
+ Source: ALLIED ESPORTS ENTERTAINMENT, INC., 8-K, 8/15/2019
+12. Indemnity and Liability
+ 12.1 Each Party (“Indemnitor”) will defend, indemnify and hold the other Party (including associated officers, directors, shareholders,
+employees, agents and affiliates) (cumulatively, “Indemnitee”) harmless from and against any and all losses, damages, claims, liabilities and
+expenses (including reasonab
+reranked rank 1: cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:24 | overlap=1.000
+cross_encoder_score=-7.203971
+, representation or
+covenant in this Agreement; (b) a claim of personal injury or property damage arising out of the fault or negligence of Indemnitor, its
+representatives, agents, or employees; or (c) a claim of infringement or misappropriation of any patent, trademark, copyright or other proprietary
+right held by any third party.
+ 12.2 EXCEPTING ONLY CLAIMS MADE PURSUANT TO SECTION 12.1, IN NO EVENT WILL EITHER PARTY BE LIABLE FOR ANY
+INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING ANY LOST
+PROFITS, LOST REVENUES OR LOST SAVINGS, ARISING OUT
+reranked rank-1 pair tokens: 222
+CUAD matching chunk after reranking: rank=1 chunk_id=cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:24 overlap=1.000 cross_encoder_score=-7.203971
+CUAD matching pair tokens: 222
