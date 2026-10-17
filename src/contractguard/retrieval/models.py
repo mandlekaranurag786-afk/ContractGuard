@@ -17,3 +17,4 @@ class SearchResult(BaseModel):
     dense_score: float | None = None
     bm25_score: float | None = None
     rrf_score: float | None = None
+    rerank_score: float | None = None

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from contractguard.evaluation.metrics import first_hit_rank, mrr_at_k, recall_at_k
 
 
@@ -33,14 +35,14 @@ def test_recall_at_k_returns_zero_for_no_instances() -> None:
 def test_mrr_at_k_scores_hits_with_reciprocal_rank() -> None:
     ranks = [1, 2, None, 5]
 
-    assert mrr_at_k(ranks, k=10) == 0.425
-    assert mrr_at_k(ranks, k=3) == 0.375
+    assert mrr_at_k(ranks, k=10) == pytest.approx(0.425)
+    assert mrr_at_k(ranks, k=3) == pytest.approx(0.375)
 
 
 def test_mrr_at_k_returns_zero_for_all_misses_and_empty_input() -> None:
-    assert mrr_at_k([None, None], k=10) == 0.0
-    assert mrr_at_k([], k=5) == 0.0
+    assert mrr_at_k([None, None], k=10) == pytest.approx(0.0)
+    assert mrr_at_k([], k=5) == pytest.approx(0.0)
 
 
 def test_mrr_at_k_counts_a_hit_exactly_at_k() -> None:
-    assert mrr_at_k([5], k=5) == 1 / 5
+    assert mrr_at_k([5], k=5) == pytest.approx(1 / 5)
