@@ -14,10 +14,50 @@ class PairScorer(Protocol):
         """Return one score for each candidate text."""
 
 
+class Retriever(Protocol):
+    """Retrieves ranked candidate chunks for a query."""
+
+    def search(self, query: str, k: int = 10) -> list[SearchResult]:
+        """Return up to *k* ranked candidates."""
+
+
+class CrossEncoderScorer:
+    """Scores query-text pairs with a local sentence-transformers model."""
+
+    def __init__(
+        self, model_name: str, batch_size: int = 32, max_length: int = 512
+    ) -> None:
+        from sentence_transformers import CrossEncoder
+
+        self._model = CrossEncoder(model_name, max_length=max_length)
+        self._batch_size = batch_size
+
+    def score(self, query: str, texts: list[str]) -> list[float]:
+        """Return raw cross-encoder scores for query-text pairs."""
+        scores = self._model.predict(
+            [(query, text) for text in texts],
+            batch_size=self._batch_size,
+            show_progress_bar=False,
+        )
+        return [float(score) for score in scores]
+
+    def max_pair_tokens(self, query: str, texts: list[str]) -> int:
+        """Return the longest tokenized query-text pair length."""
+        return max(
+            (
+                len(self._model.tokenizer(query, text, truncation=False)["input_ids"])
+                for text in texts
+            ),
+            default=0,
+        )
+
+
 class RerankingRetriever:
     """Reranks candidates returned by a base retriever."""
 
-    def __init__(self, base: object, scorer: PairScorer, pool_size: int = 20) -> None:
+    def __init__(
+        self, base: Retriever, scorer: PairScorer, pool_size: int = 20
+    ) -> None:
         self._base = base
         self._scorer = scorer
         self._pool_size = pool_size

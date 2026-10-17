@@ -71,15 +71,19 @@ def test_reranker_candidate_pool_scales_with_k() -> None:
 
 
 def test_reranker_keeps_base_order_for_equal_scores() -> None:
-    candidates = [SearchResult(chunk=_chunk(index), score=0.0) for index in range(3)]
+    candidates = [
+        SearchResult(chunk=_chunk(2), score=0.0),
+        SearchResult(chunk=_chunk(0), score=0.0),
+        SearchResult(chunk=_chunk(1), score=0.0),
+    ]
     results = RerankingRetriever(
         _FakeBaseRetriever(candidates), _FakePairScorer([0.5, 0.5, 0.4])
     ).search("query", k=3)
 
     assert [result.chunk.chunk_id for result in results] == [
+        "doc-1:2",
         "doc-1:0",
         "doc-1:1",
-        "doc-1:2",
     ]
 
 
@@ -118,6 +122,8 @@ def test_reranker_preserves_base_score_provenance() -> None:
     assert result.dense_score == 0.4
     assert result.bm25_score == 1.5
     assert result.rrf_score == 0.03
+    assert candidate.score == 0.4
+    assert candidate.rerank_score is None
 
 
 def test_reranker_rejects_wrong_number_of_scores() -> None:

@@ -16,10 +16,16 @@ Usage:
     uv run python evals/eval_retrieval.py
 """
 
+import argparse
 import ast
 import csv
+import gc
+import math
 import re
+import statistics
+import time
 from collections.abc import Callable
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from contractguard.chunking import Chunk
@@ -27,6 +33,7 @@ from contractguard.chunking.fixed import chunk_document
 from contractguard.evaluation.metrics import first_hit_rank, mrr_at_k, recall_at_k
 from contractguard.ingestion import load_parsed_document
 from contractguard.retrieval.hybrid import HybridSearchIndex
+from contractguard.retrieval.rerank import CrossEncoderScorer, RerankingRetriever
 from contractguard.retrieval.vector import InMemoryVectorIndex
 
 # ---- Config -----------------------------------------------------------
@@ -37,6 +44,9 @@ SELECTED_CONTRACTS_CSV = Path("data/contracts/selected_30_contracts.csv")
 RESULTS_OUT = Path("evals/retrieval_results_dense.csv")
 HYBRID_RESULTS_OUT = Path("evals/retrieval_results_hybrid.csv")
 TOP_K = 20
+RERANK_POOL_SIZE = 20
+MINILM_RERANKER = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+BGE_RERANKER = "BAAI/bge-reranker-base"
 
 # clause_type -> (CUAD raw-span column name, query we run against our index)
 CLAUSE_QUERIES = {
@@ -51,6 +61,98 @@ KNOWN_BAD_LABELS = {
         "CUAD answer span points to a data-protection clause, not a renewal "
         "clause. Verified: no renewal clause exists anywhere in this PDF.",
 }
+
+
+@dataclass(frozen=True)
+class EvalConfig:
+    """One retrieval configuration evaluated by this harness."""
+
+    name: str
+    label: str
+    index_factory: Callable[[list[Chunk]], object]
+    results_out: Path
+    reranker_model: str | None = None
+
+
+EVAL_CONFIGS = {
+    "dense": EvalConfig(
+        "dense", "DENSE-ONLY BASELINE", InMemoryVectorIndex.from_chunks,
+        RESULTS_OUT,
+    ),
+    "hybrid": EvalConfig(
+        "hybrid", "HYBRID SEARCH", HybridSearchIndex.from_chunks,
+        HYBRID_RESULTS_OUT,
+    ),
+    "dense+rerank-minilm": EvalConfig(
+        "dense+rerank-minilm", "DENSE + MINILM RERANK",
+        InMemoryVectorIndex.from_chunks,
+        Path("evals/retrieval_results_dense_rerank_minilm.csv"),
+        MINILM_RERANKER,
+    ),
+    "hybrid+rerank-minilm": EvalConfig(
+        "hybrid+rerank-minilm", "HYBRID + MINILM RERANK",
+        HybridSearchIndex.from_chunks,
+        Path("evals/retrieval_results_hybrid_rerank_minilm.csv"),
+        MINILM_RERANKER,
+    ),
+    "dense+rerank-bge": EvalConfig(
+        "dense+rerank-bge", "DENSE + BGE RERANK",
+        InMemoryVectorIndex.from_chunks,
+        Path("evals/retrieval_results_dense_rerank_bge.csv"),
+        BGE_RERANKER,
+    ),
+    "hybrid+rerank-bge": EvalConfig(
+        "hybrid+rerank-bge", "HYBRID + BGE RERANK",
+        HybridSearchIndex.from_chunks,
+        Path("evals/retrieval_results_hybrid_rerank_bge.csv"),
+        BGE_RERANKER,
+    ),
+}
+
+
+@dataclass
+class QueryTiming:
+    """Per-query timing and token-length diagnostics for one eval config."""
+
+    base_ms: list[float] = field(default_factory=list)
+    rerank_ms: list[float] = field(default_factory=list)
+    max_pair_tokens: int = 0
+    enabled: bool = True
+
+
+class _TimedRetriever:
+    """Records base retrieval time without changing its interface."""
+
+    def __init__(self, base: object, timing: QueryTiming) -> None:
+        self._base = base
+        self._timing = timing
+        self.last_results = []
+
+    def search(self, query: str, k: int = 10):
+        started = time.perf_counter()
+        self.last_results = self._base.search(query, k=k)
+        if self._timing.enabled:
+            self._timing.base_ms.append((time.perf_counter() - started) * 1_000)
+        return self.last_results
+
+
+class _TimedPairScorer:
+    """Records scorer-only timing and token lengths without changing scores."""
+
+    def __init__(self, scorer: CrossEncoderScorer, timing: QueryTiming) -> None:
+        self._scorer = scorer
+        self._timing = timing
+
+    def score(self, query: str, texts: list[str]) -> list[float]:
+        self._timing.max_pair_tokens = max(
+            self._timing.max_pair_tokens,
+            self._scorer.max_pair_tokens(query, texts),
+        )
+        started = time.perf_counter()
+        scores = self._scorer.score(query, texts)
+        if self._timing.enabled:
+            self._timing.rerank_ms.append((time.perf_counter() - started) * 1_000)
+        return scores
 
 # ---- Filename matching -----------------------------------------------------
 
@@ -145,9 +247,15 @@ def build_filename_to_docid_map(parsed_dir: Path) -> dict[str, str]:
 
 # ---- Main eval loop -------------------------------------------------------
 
-def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
+def run_eval(
+    index_factory: Callable[[list[Chunk]], object],
+    scorer: CrossEncoderScorer | None = None,
+    timing: QueryTiming | None = None,
+) -> list[dict]:
     cuad_answers = load_cuad_answers(MASTER_CLAUSES_CSV)
     filename_to_docid = build_filename_to_docid_map(PARSED_DIR)
+    timing = timing or QueryTiming()
+    warmed_reranker = False
 
     results = []
 
@@ -165,7 +273,20 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
             print(f"  [skip] {filename}: produced zero chunks")
             continue
 
-        index = index_factory(chunks)
+        timed_base = _TimedRetriever(index_factory(chunks), timing)
+        if scorer is None:
+            index = timed_base
+        else:
+            index = RerankingRetriever(
+                timed_base,
+                _TimedPairScorer(scorer, timing),
+                pool_size=RERANK_POOL_SIZE,
+            )
+            if not warmed_reranker:
+                timing.enabled = False
+                index.search(next(iter(CLAUSE_QUERIES.values())), k=TOP_K)
+                timing.enabled = True
+                warmed_reranker = True
 
         for clause_type, query in CLAUSE_QUERIES.items():
             bad_label_reason = KNOWN_BAD_LABELS.get((key, clause_type))
@@ -202,6 +323,12 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
                 continue
 
             search_results = index.search(query, k=TOP_K)
+            base_rank_overlaps = None
+            if scorer is not None:
+                base_rank_overlaps = [
+                    best_overlap_against_spans(result.chunk.text, answer_spans)
+                    for result in timed_base.last_results
+                ]
 
             per_rank_scores = []
             for rank, r in enumerate(search_results, start=1):
@@ -230,6 +357,7 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
                 "best_chunk_id": best_chunk_id,
                 "best_overlap": round(best_score, 3),
                 "rank_overlaps": rank_overlaps,
+                "base_rank_overlaps": base_rank_overlaps,
                 "first_hit_rank_05": first_hit_rank_05,
                 "first_hit_rank_07": first_hit_rank_07,
                 "first_hit_rank_09": first_hit_rank_09,
@@ -247,6 +375,8 @@ def run_eval(index_factory: Callable[[list[Chunk]], object]) -> list[dict]:
                   f"best_overlap_rank={best_rank_str} overlap={best_score:.2f}")
 
     _assert_reporting_consistency(results)
+    if scorer is not None:
+        _assert_reranked_recall_at_20(results)
     return results
 
 def save_results(results: list[dict], results_out: Path = RESULTS_OUT):
@@ -282,6 +412,25 @@ def _assert_reporting_consistency(results: list[dict]) -> None:
             )
 
 
+def _assert_reranked_recall_at_20(results: list[dict]) -> None:
+    scored = [row for row in results if row["cuad_answer_exists"]]
+    for threshold in (0.5, 0.7, 0.9):
+        reranked_ranks = [
+            first_hit_rank(row["rank_overlaps"], threshold) for row in scored
+        ]
+        base_ranks = [
+            first_hit_rank(row["base_rank_overlaps"], threshold) for row in scored
+        ]
+        reranked_recall = recall_at_k(reranked_ranks, k=TOP_K)
+        base_recall = recall_at_k(base_ranks, k=TOP_K)
+        if reranked_recall != base_recall:
+            raise RuntimeError(
+                f"reranked recall@{TOP_K} at overlap {threshold} "
+                f"({reranked_recall:.2%}) does not match base recall "
+                f"({base_recall:.2%})"
+            )
+
+
 def _print_recall_table(scored: list[dict]):
     for threshold in (0.5, 0.7, 0.9):
         first_hit_ranks = [
@@ -312,14 +461,88 @@ def print_summary(results: list[dict]):
         _print_recall_table(clause_scored)
 
 
-if __name__ == "__main__":
-    print("Running retrieval eval across selected contracts...\n")
-    print("DENSE-ONLY BASELINE")
-    dense_results = run_eval(InMemoryVectorIndex.from_chunks)
-    save_results(dense_results)
-    print_summary(dense_results)
+def _print_timing_summary(label: str, values: list[float]) -> None:
+    if not values:
+        print(f"  {label}: no measurements")
+        return
+    ordered = sorted(values)
+    p95_index = math.ceil(0.95 * len(ordered)) - 1
+    print(
+        f"  {label}: median={statistics.median(ordered):.1f} ms "
+        f"p95={ordered[p95_index]:.1f} ms mean={statistics.fmean(ordered):.1f} ms"
+    )
 
-    print("HYBRID SEARCH")
-    hybrid_results = run_eval(HybridSearchIndex.from_chunks)
-    save_results(hybrid_results, HYBRID_RESULTS_OUT)
-    print_summary(hybrid_results)
+
+def print_timing_summary(timing: QueryTiming) -> None:
+    print("Timing per query:")
+    _print_timing_summary("base_ms", timing.base_ms)
+    _print_timing_summary("rerank_ms", timing.rerank_ms)
+
+
+def _ordered_configs(config_names: list[str]) -> list[EvalConfig]:
+    selected = [EVAL_CONFIGS[name] for name in config_names]
+    base_configs = [config for config in selected if config.reranker_model is None]
+    rerank_groups: dict[str, list[EvalConfig]] = {}
+    for config in selected:
+        if config.reranker_model is not None:
+            rerank_groups.setdefault(config.reranker_model, []).append(config)
+    rerank_configs = [
+        config for group in rerank_groups.values() for config in group
+    ]
+    return base_configs + rerank_configs
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--configs",
+        choices=EVAL_CONFIGS,
+        default=["dense", "hybrid"],
+        nargs="+",
+    )
+    args = parser.parse_args()
+    configs = _ordered_configs(args.configs)
+    remaining_model_configs = {
+        model: sum(config.reranker_model == model for config in configs)
+        for model in {config.reranker_model for config in configs}
+        if model is not None
+    }
+    scorer: CrossEncoderScorer | None = None
+    scorer_model: str | None = None
+    model_max_pair_tokens = 0
+
+    print("Running retrieval eval across selected contracts...\n")
+    for config in configs:
+        if config.reranker_model != scorer_model:
+            started = time.perf_counter()
+            scorer = CrossEncoderScorer(config.reranker_model)
+            scorer_model = config.reranker_model
+            model_max_pair_tokens = 0
+            print(
+                f"Loaded reranker {scorer_model} in "
+                f"{(time.perf_counter() - started) * 1_000:.1f} ms"
+            )
+
+        print(config.label)
+        timing = QueryTiming()
+        results = run_eval(config.index_factory, scorer, timing)
+        save_results(results, config.results_out)
+        print_summary(results)
+        print_timing_summary(timing)
+
+        if scorer is not None:
+            model_max_pair_tokens = max(model_max_pair_tokens, timing.max_pair_tokens)
+            remaining_model_configs[scorer_model] -= 1
+            if remaining_model_configs[scorer_model] == 0:
+                import torch
+
+                print(f"torch.get_num_threads(): {torch.get_num_threads()}")
+                print(f"max_pair_tokens: {model_max_pair_tokens}")
+                del scorer
+                scorer = None
+                scorer_model = None
+                gc.collect()
+
+
+if __name__ == "__main__":
+    main()
