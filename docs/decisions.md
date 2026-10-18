@@ -211,7 +211,127 @@ specific reason logged, distinct from Finding 2's exclusion.
 - Re-run eval_retrieval.py after each change; compare against this
   baseline, not against hand-read examples.
 
-
 ##Hybrid Search
 
 Hybrid (RRF k=60) vs dense, recall@1 at overlap≥0.5: Renewal Term net +2 (5 gained, 3 lost), Cap On Liability net −3 (0 gained, 3 lost). BM25 helps clauses with distinctive vocabulary (“renew”) and hurts clauses whose key word is common across the contract (“liability”) while the operative wording (“shall not exceed”) doesn’t match the query. Overall recall@1 hides this, so recall should be reported per clause type from now on.
+
+
+## Correction: earlier numbers in this file used a buggy metric
+
+The "Baseline results" and "Hybrid Search" sections above were measured
+with the old recall@k, which used the rank of the HIGHEST-overlap chunk
+instead of the FIRST chunk that passes the threshold. That undercounted
+recall by about 14-17 points. The fix is in commit 46024f2. Commit 2aa0390's
+message also has the old numbers. I left the old text above as history.
+
+Corrected numbers (58 instances: AlliedEsports renewal = no clause,
+OPERALTD renewal = wrong label, both excluded), overlap >= 0.5:
+
+| Method | @1         | @3    | @5    | @10  | MRR@10 |
+| ------ | ---------- | ----- | ----- | ---- | ------ |
+| Dense  | 72.4% (42) | 94.8% | 98.3% | 100% | 0.823  |
+| Hybrid | 74.1% (43) | 93.1% | 94.8% | 100% | 0.835  |
+
+Hybrid vs dense at rank 1 (paired, from the CSVs):
+
+- Renewal Term: 18 -> 23 (8 gained, 3 lost)
+- Cap On Liability: 24 -> 20 (0 gained, 4 lost)
+
+## MRR@10 and recall@20 added
+
+Recall@10 reached 100%, so it can no longer show any improvement. The open
+problem is ordering (rank 1 only ~73%), so I added MRR@10, which rewards
+rank 1 more than rank 5. Before trusting it, I calculated the range MRR
+must fall in from the recall counts (dense 0.807-0.848, hybrid
+0.813-0.849). Measured 0.823 and 0.835, both inside.
+
+Added recall@20 because a reranker reorders the top 20, so recall@20 is
+its ceiling. It is 100% at overlap 0.5. Checked that retrieving 20
+instead of 10 did not change recall@1/3/5/10.
+
+## Bug: per-row CSV showed the old buggy rank
+
+The totals were correct, but each CSV row still printed best_rank (rank
+of the highest-overlap chunk). Found it by counting: only 14 dense Renewal
+rows showed best_rank=1, but the table said 18. Fixed: rows now store
+first_hit_rank at 0.5/0.7/0.9, best_rank renamed to best_overlap_rank
+(diagnostic only). Added a check that stops the run if per-row counts
+don't match recall@1 and recall@10. Codex's summary did not catch this;
+comparing raw rows with totals did.
+
+## Reranker experiment (cross-encoder)
+
+Rules written BEFORE running any model:
+
+- Metric: MRR@10 and rank-1 count per clause, overlap 0.5
+- Latency budget: median <= 500 ms, p95 <= 1500 ms per query (20 pairs,
+  CPU). Reason: ~10 rules per contract x 0.5 s = ~5 s per contract.
+- Keep only if >= 3 more rank-1 hits than the BEST baseline (hybrid, 43).
+  One instance = 1.7 points, so 1-2 is noise.
+
+Hardware: i5-1135G7 (4 cores/8 threads), 15 GB RAM, Ubuntu, CPU only.
+
+Results (overlap 0.5):
+
+| Config          | Rank 1 | MRR@10 | Renewal | Cap | Rerank median / p95 |
+| --------------- | ------ | ------ | ------- | --- | ------------------- |
+| Dense           | 42     | 0.823  | 18      | 24  | -                   |
+| Hybrid          | 43     | 0.835  | 23      | 20  | -                   |
+| Dense + MiniLM  | 45     | 0.860  | 25      | 20  | 568 / 1288 ms       |
+| Hybrid + MiniLM | 45     | 0.851  | 25      | 20  | 555 / 1275 ms       |
+| Dense + bge     | 22     | 0.554  | 17      | 5   | 4640 / 6199 ms      |
+| Hybrid + bge    | 23     | 0.568  | 18      | 5   | 4452 / 5637 ms      |
+
+Recall@20 is the same for every config (a reranker only reorders), and
+an automatic check confirms it. MiniLM gave the same numbers in two runs.
+
+Decision: NO reranker. Default stays hybrid.
+
+- MiniLM: +2 vs hybrid (noise) and median 568 ms (over budget).
+- bge: -20 and 9x over budget.
+  I did not change the rules after seeing the results. The code stays as an
+  optional config.
+
+Why MiniLM hurt Cap (6 lost, 2 gained): I printed the new rank-1 chunks.
+It chose an insurance clause, a recall clause, a definition
+("Environmental Liability means..."), a tariff paragraph, a definitions
+list containing "Royalty Cap", and a table of contents. It matches the
+WORDS "liability" and "cap", not the meaning. My first guess (CUAD labels
+are wrong) was wrong: the labels were fine for these 6.
+
+Sanity check: with 4 test sentences, BOTH models ranked a table-of-contents
+line ("15. Limitations of Liability ....8") above a real cap clause. bge
+loads correctly (right model class, sensible order for the other 3), so
+this is a model weakness, not a bug. bge scores were all below 0.02, so
+reranker scores cannot be used as confidence.
+
+Tokens: my estimate "1000 chars ~ 250 tokens" was wrong for one chunk.
+A table-of-contents chunk is 766 tokens (dot leaders become many tokens),
+so it was cut off at 512. No correct chunk was cut off (211-260 tokens).
+bge's tokenizer: max 408, no cut-off.
+
+Latency notes: first MiniLM load took 98 s because of Hugging Face network
+checks; with HF_HUB_OFFLINE=1 it took 121 ms. A re-run gave the same 568 ms,
+so it was real cost, not memory pressure.
+
+Practical lessons: load one model at a time; download models first, then
+run offline (two downloads at once caused a lock wait); use
+PYTHONUNBUFFERED=1 and tee to see progress.
+
+## Open items
+
+- Hybrid vs dense is still within noise (43 vs 42). Hybrid is the default
+  for now. Decide with more eval data.
+- Table-of-contents / heading chunks fool retrieval and rerankers.
+  Possible fix: filter them at ingestion.
+- Not measured: whether bge-small (embedder) also cuts off the 766-token chunk.
+- Still open from before: clause-aware chunking, selected_30 filter check,
+  Cap On Liability label mixes money caps and damages exclusions.
+
+## Next: structured extraction with Gemini (Day 1 plan, 18 Oct 2026)
+
+- LLM: Gemini via API key (AI Studio free tier). Main model: Gemini 3.5
+  Flash Lite (500 requests/day). One provider for now.
+- Eval runs use ONE fixed model (no automatic fallback), so results are
+  not mixed. The product API may fall back to another model.
+- Cache every LLM response on disk, so re-runs cost no API calls.
