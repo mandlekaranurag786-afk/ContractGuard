@@ -45,3 +45,27 @@ def test_tokenization_is_case_insensitive_and_strips_punctuation() -> None:
 
 def test_tokenizer_preserves_duplicate_words_for_bm25_term_frequency() -> None:
     assert tokenize("cap cap CAP") == ["cap", "cap", "cap"]
+
+
+
+
+
+
+# import os
+# from dotenv import load_dotenv
+# from google import genai
+
+# # Load the variables from the .env file
+# load_dotenv() 
+
+# # Now the client will automatically find the GEMINI_API_KEY in the environment
+# client = genai.Client()
+
+# from google import genai
+
+# client = genai.Client()
+# response = client.models.generate_content(
+#     model="gemini-3.5-flash-lite",
+#     contents="Who is the PM of India?",
+# )
+# print(response.text)
