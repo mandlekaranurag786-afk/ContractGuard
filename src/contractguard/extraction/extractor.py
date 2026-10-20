@@ -13,6 +13,7 @@ from contractguard.extraction.schemas import (
     RenewalTermExtraction,
 )
 from contractguard.llm.client import LLMClient, LLMResponse
+from contractguard.llm.errors import LLMError, LLMQuotaError
 
 SCHEMAS: dict[str, type[BaseModel]] = {
     "Renewal Term": RenewalTermExtraction,
@@ -47,7 +48,23 @@ class Extractor:
         error: ValidationError | ValueError | None = None
 
         for _ in range(2):
-            response = self._client.generate_json(prompt, schema)
+            try:
+                response = self._client.generate_json(prompt, schema)
+            except LLMQuotaError:
+                raise
+            except LLMError as exc:
+                return ExtractionResult(
+                    clause_type=clause_type,
+                    extraction=None,
+                    checks={},
+                    attempts=len(responses) + 1,
+                    model=None,
+                    cached=False,
+                    latency_ms=None,
+                    input_tokens=None,
+                    output_tokens=None,
+                    error=str(exc),
+                )
             responses.append(response)
             try:
                 extraction = schema.model_validate_json(response.text)

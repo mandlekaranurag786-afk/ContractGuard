@@ -22,6 +22,12 @@ def normalize(text: str) -> str:
         "\u201d": '"',
         "\u2013": "-",
         "\u2014": "-",
+        "\u00ad": "",
+        "\u200b": "",
+        "\u200c": "",
+        "\u200d": "",
+        "\u2060": "",
+        "\ufeff": "",
     })
     return re.sub(r"\s+", " ", text.translate(translation)).strip()
 

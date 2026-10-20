@@ -15,8 +15,9 @@ FIELD_DEFINITIONS = {
         "not stated\n"
         "- renewal_term_months: length of EACH renewal period in months\n"
         "- notice_days: notice needed to STOP AUTOMATIC RENEWAL (non-renewal notice), "
-        "in days (1 month = 30 days). NOT notice for termination for breach or for "
-        "convenience"
+        "in days (1 month = 30 days; 1 year = 365 days). Notice of termination that "
+        "takes effect at the END of the initial or a renewal term also counts as "
+        "non-renewal notice. NOT notice for termination for breach or for convenience"
     ),
     "Cap On Liability": (
         "FIELD DEFINITIONS\n"

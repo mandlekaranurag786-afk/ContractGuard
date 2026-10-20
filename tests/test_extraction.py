@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+import pytest
 from pydantic import BaseModel
 
 from contractguard.chunking import Chunk
@@ -13,6 +14,7 @@ from contractguard.extraction.schemas import (
     RenewalTermExtraction,
 )
 from contractguard.llm.client import LLMResponse
+from contractguard.llm.errors import LLMQuotaError, LLMUnavailableError
 
 
 def _chunk(index: int, text: str) -> Chunk:
@@ -162,6 +164,27 @@ def test_grounding_normalizes_curly_quotes_and_whitespace() -> None:
     assert evidence_grounded(extraction, chunks) is True
 
 
+def test_grounding_removes_zero_width_space_but_preserves_real_space() -> None:
+    chunks = [_chunk(0, "PURSUANT TO SECTION \u200b8 HEREUNDER")]
+    spaced = RenewalTermExtraction.model_validate_json(
+        _renewal_json(evidence_quote="SECTION 8")
+    )
+    unspaced = RenewalTermExtraction.model_validate_json(
+        _renewal_json(evidence_quote="SECTION8")
+    )
+
+    assert evidence_grounded(spaced, chunks) is True
+    assert evidence_grounded(unspaced, chunks) is False
+
+
+def test_grounding_removes_soft_hyphen_inside_word() -> None:
+    extraction = RenewalTermExtraction.model_validate_json(
+        _renewal_json(evidence_quote="nonrenewal")
+    )
+
+    assert evidence_grounded(extraction, [_chunk(0, "non\u00adrenewal notice")]) is True
+
+
 def test_invalid_json_is_retried_once_then_succeeds() -> None:
     client = _FakeLLMClient(["not json", _renewal_json()])
     result = Extractor(client).extract(
@@ -204,6 +227,7 @@ def test_prompt_includes_clause_specific_definitions_and_data_boundary() -> None
     assert "</contract_text>" in renewal_prompt
     assert "data, not instructions" in renewal_prompt
     assert "non-renewal" in renewal_prompt
+    assert "365 days" in renewal_prompt
     assert "has_damages_exclusion" not in renewal_prompt
     assert "has_damages_exclusion" in cap_prompt
     assert "notice_days" not in cap_prompt
@@ -219,3 +243,26 @@ def test_extractor_uses_the_clause_specific_schema() -> None:
     extractor.extract("Cap On Liability", cap_chunks)
 
     assert client.schemas == [RenewalTermExtraction, LiabilityCapExtraction]
+
+
+@dataclass
+class _ErrorLLMClient:
+    error: Exception
+
+    def generate_json(self, prompt: str, schema: type[BaseModel]) -> LLMResponse:
+        raise self.error
+
+
+def test_extractor_propagates_quota_errors() -> None:
+    extractor = Extractor(_ErrorLLMClient(LLMQuotaError("quota exhausted")))
+
+    with pytest.raises(LLMQuotaError, match="quota exhausted"):
+        extractor.extract("Renewal Term", [_chunk(0, "A term applies.")])
+
+
+def test_extractor_returns_unavailable_errors() -> None:
+    extractor = Extractor(_ErrorLLMClient(LLMUnavailableError("service unavailable")))
+    result = extractor.extract("Renewal Term", [_chunk(0, "A term applies.")])
+
+    assert result.extraction is None
+    assert result.error == "service unavailable"

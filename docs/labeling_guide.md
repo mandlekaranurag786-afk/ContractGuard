@@ -9,7 +9,7 @@ FIELD DEFINITIONS
 - initial_term_months: length of the FIRST term in months (1 year = 12). null if the term is only given as an end date; do not calculate from dates
 - auto_renews: true if the contract renews automatically unless a party gives notice; false if renewal needs a new agreement or a party's option; null if not stated
 - renewal_term_months: length of EACH renewal period in months
-- notice_days: notice needed to STOP AUTOMATIC RENEWAL (non-renewal notice), in days (1 month = 30 days). NOT notice for termination for breach or for convenience
+- notice_days: notice needed to STOP AUTOMATIC RENEWAL (non-renewal notice), in days (1 month = 30 days; 1 year = 365 days). Notice of termination that takes effect at the END of the initial or a renewal term also counts as non-renewal notice. NOT notice for termination for breach or for convenience
 
 ## Cap On Liability
 

@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Contract document processing tools."
 requires-python = ">=3.11"
 dependencies = [
+    "google-genai>=2.31.0",
     "numpy>=1.26",
     "pydantic>=2.7",
     "pymupdf>=1.24",
