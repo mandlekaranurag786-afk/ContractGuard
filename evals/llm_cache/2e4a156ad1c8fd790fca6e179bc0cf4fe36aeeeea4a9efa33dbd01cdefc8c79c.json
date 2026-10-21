@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": false,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY CONSEQUENTIAL, INDIRECT, SPECIAL, INCIDENTAL OR PUNITIVE DAMAGES INCLUDING LOSS OF USE, REVENUES OR PROFITS\",\n  \"evidence_chunk_id\": \"5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:35\"\n}",
+  "input_tokens": 1739,
+  "output_tokens": 175,
+  "latency_ms": 1531.6497570020147,
+  "created_at": "2026-10-21T05:48:12.310165+00:00"
+}

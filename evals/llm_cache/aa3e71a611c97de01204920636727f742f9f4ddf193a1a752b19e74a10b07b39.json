@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 60,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": 365,\n  \"evidence_quote\": \"This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof.\",\n  \"evidence_chunk_id\": \"5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:5\"\n}",
+  "input_tokens": 1706,
+  "output_tokens": 192,
+  "latency_ms": 1559.8097410002083,
+  "created_at": "2026-10-21T05:51:45.370020+00:00"
+}

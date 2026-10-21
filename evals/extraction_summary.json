@@ -1,0 +1,290 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "top_k": 5,
+  "date": "2026-10-21",
+  "completed_rows": 60,
+  "per_clause_type": {
+    "Renewal Term": {
+      "rows": 30,
+      "found_accuracy": "28/30",
+      "fields": {
+        "initial_term_months": "5/5",
+        "auto_renews": "28/28",
+        "renewal_term_months": "22/23",
+        "notice_days": "16/16"
+      },
+      "fully_correct": "27/30",
+      "fully_correct_percent": 90.0
+    },
+    "Cap On Liability": {
+      "rows": 30,
+      "found_accuracy": "26/30",
+      "fields": {
+        "has_money_cap": "29/30",
+        "cap_amount": "3/3",
+        "currency": "4/4",
+        "cap_formula": "25/30",
+        "has_damages_exclusion": "22/30"
+      },
+      "fully_correct": "20/30",
+      "fully_correct_percent": 66.66666666666667
+    }
+  },
+  "abstention": "0/2",
+  "faithfulness": {
+    "grounded": "45/56",
+    "ungrounded_rows": [
+      {
+        "contract": "IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "MORPHO agrees that XIMAGE's total liability to MORPHO for any damages suffered in connection with, or arising out of, this Agreement or MORPHO's use of any documentation, product or service provided (or to be provided) hereunder, regardless of whether any such liability is based upon contract, tort or other basis, shall be limited to an amount not to exceed the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement."
+      },
+      {
+        "contract": "InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "CONTRACTOR\u2019S LIABILITY IS FURTHER LIMITED IN ANY EVENT, UNDER ANY LAW, RULE OR REGULATION, TO ANY AMOUNT IT ACTUALLY RECEIVED IN CONSIDERATION OF THE MANUFACTURING SUBJECT MATTER OF THE RESPECTIVE CLAIM OR DEMAND BY CUSTOMER OR ANY THIRD PARTY."
+      },
+      {
+        "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***]."
+      },
+      {
+        "contract": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "The term of this Agreement shall continue for one (1) year following the Launch Date, unless earlier terminated as provided herein. This Agreement may be renewed for any number of successive one (1) year terms by mutual written agreement of the parties prior to the conclusion of the term of this Agreement. A party wishing to renew this Agreement shall give the other party notice thereof no less than thirty (30) days before the expiration of the term then in effect. In the event that either party does not give such notice, the term of this Agreement shall be automatically renewed for another one (1) year."
+      },
+      {
+        "contract": "Apollo Endosurgery - Manufacturing and Supply Agreement.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof."
+      },
+      {
+        "contract": "BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "The Agreement shall have an initial term of ten (10) years commencing from the Effective Date and ending on the tenth (10th) anniversary thereof (the \u201cInitial Term\u201d), unless earlier terminated by either Party in accordance with the provisions of Section 15.2 or Section 15.3. Thereafter, Bellicum shall have consecutive separate options to extend the Term for successive renewal terms of five (5) years each (each, a \u201cRenewal Term\u201d, and ... Bellicum may exercise each such renewal option by giving written notice to Miltenyi not later than six (6) months prior to the expiration of the current Term."
+      },
+      {
+        "contract": "CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "The term of this Agreement for the Hosted Site shall commence upon April 1, 1999 and shall continue for a period of six (6) months, unless earlier terminated in accordance with provisions hereof. This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the Agreement, which notice must be given not less than fifteen (15) days before the end of the respective initial or renewal term."
+      },
+      {
+        "contract": "MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of three (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in accordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year term."
+      },
+      {
+        "contract": "ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "Should the Parties have not agreed to the following agreement by [* * *], this Agreement shall automatically stay in force for a maximum of [* * *] (unless otherwise mutually agreed by the Parties or as otherwise set forth in Section 18.1(a)) or until the Parties have signed the follow-on agreement (the \u201cRenewal Term\u201d)."
+      },
+      {
+        "contract": "VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "nd shall continue in effect for one (I) year, unless earlier terminated as expressly provided in Sections 1.3. 10.1. or 10.2 of this Agreement (the *Initial Term \"). This Agreement shall automatically renew beyond the Initial Term for successive one (I) year terms (each, a \"Renewal Term\"), unless a Party provides the other with written notice of termination at least one hundred eighty (180) days prior to the expiration of the Initial Term or the then-current Renewal Term."
+      },
+      {
+        "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "The initial term of this Agreement is one (1) year from the date of delivery of the Product to Licensee unless earlier terminated in accordance with this Agreement. The Agreement will be automatically renewed for additional one (1) year terms (subject to applicable fee adjustments) unless thirty (30) days prior to the anniversary of the Effective Date Licensee gives written notice to XACCT of its intention not to renew."
+      }
+    ]
+  },
+  "check_pass_rates": {
+    "required_fields_present": "58/60",
+    "not_found_is_clean": "60/60"
+  },
+  "error_split": {
+    "retrieval_miss": 5,
+    "extraction_error": 16
+  },
+  "extra_values": [
+    {
+      "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+      "clause_type": "Cap On Liability",
+      "field": "cap_formula",
+      "predicted_value": "[***]"
+    },
+    {
+      "contract": "PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF",
+      "clause_type": "Cap On Liability",
+      "field": "cap_formula",
+      "predicted_value": "[**] US Dollars ($[**])"
+    },
+    {
+      "contract": "ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf",
+      "clause_type": "Cap On Liability",
+      "field": "cap_formula",
+      "predicted_value": "[* * *]"
+    },
+    {
+      "contract": "PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf",
+      "clause_type": "Cap On Liability",
+      "field": "cap_formula",
+      "predicted_value": "*** per event or series of connected events and up to a further maximum of *** for all events (connected or not) in any period of 12 calendar months"
+    },
+    {
+      "contract": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "notice_days",
+      "predicted_value": 30
+    },
+    {
+      "contract": "AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "auto_renews",
+      "predicted_value": false
+    },
+    {
+      "contract": "BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 120
+    },
+    {
+      "contract": "BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF",
+      "clause_type": "Renewal Term",
+      "field": "notice_days",
+      "predicted_value": 180
+    },
+    {
+      "contract": "BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 36
+    },
+    {
+      "contract": "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "notice_days",
+      "predicted_value": 60
+    },
+    {
+      "contract": "CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 6
+    },
+    {
+      "contract": "FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 36
+    },
+    {
+      "contract": "MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 240
+    },
+    {
+      "contract": "MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "notice_days",
+      "predicted_value": 180
+    },
+    {
+      "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "auto_renews",
+      "predicted_value": false
+    },
+    {
+      "contract": "PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 120
+    },
+    {
+      "contract": "SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "notice_days",
+      "predicted_value": 365
+    },
+    {
+      "contract": "VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    }
+  ],
+  "cost": {
+    "uncached_calls": 59,
+    "total_input_tokens": 99706,
+    "total_output_tokens": 11951,
+    "latency_median_ms": 1631.4846250024857,
+    "latency_p95_ms": 2069.4862759992247,
+    "calls_with_metadata": 59
+  },
+  "errors": [],
+  "fake": false,
+  "total_rows": 60,
+  "complete": true
+}

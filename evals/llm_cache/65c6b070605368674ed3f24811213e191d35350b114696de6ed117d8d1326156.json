@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 36,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": null,\n  \"evidence_quote\": \"This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of three (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in accordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year term.\",\n  \"evidence_chunk_id\": \"4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:9\"\n}",
+  "input_tokens": 1768,
+  "output_tokens": 200,
+  "latency_ms": 1485.7358930021292,
+  "created_at": "2026-10-21T05:52:33.296925+00:00"
+}
