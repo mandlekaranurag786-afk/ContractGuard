@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": true,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"Should the Parties have not agreed to the following agreement by [* * *], this Agreement shall automatically stay in force for a maximum of [* * *] (unless otherwise mutually agreed by the Parties or as otherwise set forth in Section 18.1(a)) or until the Parties have signed the follow-on agreement (the \u201cRenewal Term\u201d).\",\n  \"evidence_chunk_id\": \"efdc607a19a80f5dd4d5a385baf876a08c5e51fdbaa08bc8332f16c422d4ae7e:24\"\n}",
+  "input_tokens": 1749,
+  "output_tokens": 199,
+  "latency_ms": 3238.1521919996885,
+  "created_at": "2026-10-21T18:00:38.635685+00:00"
+}

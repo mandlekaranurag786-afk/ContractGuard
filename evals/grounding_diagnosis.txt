@@ -1,0 +1,131 @@
+Grounding diagnosis: 11 saved found=True grounding failures
+Full text: chunk_document's _concatenate_pages (clean_text joined by newline).
+All chunk raw offset slices verified. T1-T5 use existing normalize().
+T6 contexts are raw characters mapped from the normalized prefix match.
+
+contract | clause_type | class | details
+--- | --- | --- | ---
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Cap On Liability | crosses_chunk_boundary | T3: full text only
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | other_chunk | T2: 7dfa0206dbcf443dc8334a2b1dcc50a824bf5666a75603b8c63b141aaaceacee:36
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | mismatch | T6: see prefix and repr context below
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | crosses_chunk_boundary | T3: full text only
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Renewal Term | mismatch | T6: see prefix and repr context below
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | joined_passages | T5: all 2 parts found
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Renewal Term | mismatch | T6: see prefix and repr context below
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Renewal Term | crosses_chunk_boundary | T3: full text only
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Renewal Term | crosses_chunk_boundary | T3: full text only
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | Renewal Term | whitespace | T4: cited chunk
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Renewal Term | crosses_chunk_boundary | T3: full text only
+
+Class counts: {'crosses_chunk_boundary': 5, 'other_chunk': 1, 'mismatch': 3, 'joined_passages': 1, 'whitespace': 1}
+
+[1] IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Cap On Liability | crosses_chunk_boundary
+Cited chunk: daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19
+Quote: "MORPHO agrees that XIMAGE's total liability to MORPHO for any damages suffered in connection with, or arising out of, this Agreement or MORPHO's use of any documentation, product or service provided (or to be provided) hereunder, regardless of whether any such liability is based upon contract, tort or other basis, shall be limited to an amount not to exceed the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement."
+T1 strict: False
+T2 other chunk: False
+T3 full text: True
+T4 no whitespace: cited=False, full=True
+T5 ellipsis: N/A (no ellipsis)
+
+[2] InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | other_chunk
+Cited chunk: 7dfa0206dbcf443dc8334a2b1dcc50a824bf5666a75603b8c63b141aaaceacee:35
+Quote: 'CONTRACTOR’S LIABILITY IS FURTHER LIMITED IN ANY EVENT, UNDER ANY LAW, RULE OR REGULATION, TO ANY AMOUNT IT ACTUALLY RECEIVED IN CONSIDERATION OF THE MANUFACTURING SUBJECT MATTER OF THE RESPECTIVE CLAIM OR DEMAND BY CUSTOMER OR ANY THIRD PARTY.'
+T1 strict: False
+T2 other chunk: ['7dfa0206dbcf443dc8334a2b1dcc50a824bf5666a75603b8c63b141aaaceacee:36']
+T3 full text: True
+T4 no whitespace: cited=False, full=True
+T5 ellipsis: N/A (no ellipsis)
+
+[3] Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | mismatch
+Cited chunk: ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:70
+Quote: 'NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***].'
+T1 strict: False
+T2 other chunk: False
+T3 full text: False
+T4 no whitespace: cited=False, full=False
+T5 ellipsis: N/A (no ellipsis)
+T6 prefix: 'NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON'
+T6 document raw offset: 59951 (first occurrence of longest prefix)
+T6 QUOTE next 80: ' CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [**'
+T6 DOCUMENT next 80: '\n 16\nCONFIDENTIAL TREATMENT REQUESTED. INFORMATION FOR WHICH CONFIDENTIAL TREATM'
+
+[4] 2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | crosses_chunk_boundary
+Cited chunk: db445255a65067160b9e9a7cf23afbd3379a715d000b0576fa8e7f64982e523c:17
+Quote: 'The term of this Agreement shall continue for one (1) year following the Launch Date, unless earlier terminated as provided herein. This Agreement may be renewed for any number of successive one (1) year terms by mutual written agreement of the parties prior to the conclusion of the term of this Agreement. A party wishing to renew this Agreement shall give the other party notice thereof no less than thirty (30) days before the expiration of the term then in effect. In the event that either party does not give such notice, the term of this Agreement shall be automatically renewed for another one (1) year.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: True
+T4 no whitespace: cited=False, full=True
+T5 ellipsis: N/A (no ellipsis)
+
+[5] Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Renewal Term | mismatch
+Cited chunk: 5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:5
+Quote: 'This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: False
+T4 no whitespace: cited=False, full=False
+T5 ellipsis: N/A (no ellipsis)
+T6 prefix: 'This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated'
+T6 document raw offset: 4947 (first occurrence of longest prefix)
+T6 QUOTE next 80: ' by either party with one (1) year written notice prior to the expiration of the'
+T6 DOCUMENT next 80: '\n\n -2-\nby either party with one (1) year written notice prior to the expiration '
+
+[6] BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | joined_passages
+Cited chunk: 021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:191
+Quote: 'The Agreement shall have an initial term of ten (10) years commencing from the Effective Date and ending on the tenth (10th) anniversary thereof (the “Initial Term”), unless earlier terminated by either Party in accordance with the provisions of Section 15.2 or Section 15.3. Thereafter, Bellicum shall have consecutive separate options to extend the Term for successive renewal terms of five (5) years each (each, a “Renewal Term”, and ... Bellicum may exercise each such renewal option by giving written notice to Miltenyi not later than six (6) months prior to the expiration of the current Term.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: False
+T4 no whitespace: cited=False, full=False
+T5 ellipsis: True; parts (normalized, no-whitespace)=[(True, True), (True, True)]
+
+[7] CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Renewal Term | mismatch
+Cited chunk: 89d9d3d6f25d254b1a2ef8c82dd9627c34db76a1206311fa74523378d70835a9:11
+Quote: 'The term of this Agreement for the Hosted Site shall commence upon April 1, 1999 and shall continue for a period of six (6) months, unless earlier terminated in accordance with provisions hereof. This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the Agreement, which notice must be given not less than fifteen (15) days before the end of the respective initial or renewal term.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: False
+T4 no whitespace: cited=False, full=False
+T5 ellipsis: N/A (no ellipsis)
+T6 prefix: 'The term of this Agreement for the Hosted Site shall commence upon April 1, 1999 and shall continue for a period of six (6) months, unless earlier terminated in accordance with provisions hereof. This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the'
+T6 document raw offset: 10156 (first occurrence of longest prefix)
+T6 QUOTE next 80: ' Agreement, which notice must be given not less than fifteen (15) days before th'
+T6 DOCUMENT next 80: '\n\n 4\nAgreement, which notice must be given not less than fifteen (15) days befor'
+
+[8] MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Renewal Term | crosses_chunk_boundary
+Cited chunk: 4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:9
+Quote: 'This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of three (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in accordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year term.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: True
+T4 no whitespace: cited=False, full=True
+T5 ellipsis: N/A (no ellipsis)
+
+[9] ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Renewal Term | crosses_chunk_boundary
+Cited chunk: efdc607a19a80f5dd4d5a385baf876a08c5e51fdbaa08bc8332f16c422d4ae7e:24
+Quote: 'Should the Parties have not agreed to the following agreement by [* * *], this Agreement shall automatically stay in force for a maximum of [* * *] (unless otherwise mutually agreed by the Parties or as otherwise set forth in Section 18.1(a)) or until the Parties have signed the follow-on agreement (the “Renewal Term”).'
+T1 strict: False
+T2 other chunk: False
+T3 full text: True
+T4 no whitespace: cited=False, full=True
+T5 ellipsis: N/A (no ellipsis)
+
+[10] VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | Renewal Term | whitespace
+Cited chunk: 28fcfe953491d7f677b7518e40d934773047e636a9b09fde364e9bc3c0e5bd6f:30
+Quote: 'nd shall continue in effect for one (I) year, unless earlier terminated as expressly provided in Sections 1.3. 10.1. or 10.2 of this Agreement (the *Initial Term "). This Agreement shall automatically renew beyond the Initial Term for successive one (I) year terms (each, a "Renewal Term"), unless a Party provides the other with written notice of termination at least one hundred eighty (180) days prior to the expiration of the Initial Term or the then-current Renewal Term.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: False
+T4 no whitespace: cited=True, full=True
+T5 ellipsis: N/A (no ellipsis)
+
+[11] XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Renewal Term | crosses_chunk_boundary
+Cited chunk: 4efb5d7e762f53cba7bf984cb496992cc20272c7b99ddca5a00ce3b91687eb21:9
+Quote: 'The initial term of this Agreement is one (1) year from the date of delivery of the Product to Licensee unless earlier terminated in accordance with this Agreement. The Agreement will be automatically renewed for additional one (1) year terms (subject to applicable fee adjustments) unless thirty (30) days prior to the anniversary of the Effective Date Licensee gives written notice to XACCT of its intention not to renew.'
+T1 strict: False
+T2 other chunk: False
+T3 full text: True
+T4 no whitespace: cited=False, full=True
+T5 ellipsis: N/A (no ellipsis)

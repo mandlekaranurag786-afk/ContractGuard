@@ -54,6 +54,29 @@ def test_invalid_boolean_label_is_rejected() -> None:
         parse_label("no", bool)
 
 
+@pytest.mark.parametrize("kind", [bool, int, float, str])
+def test_none_is_distinct_from_unlabelled(kind):
+    assert parse_label("NONE", kind) == "NONE"
+    assert parse_label("", kind) is None
+
+
+@pytest.mark.parametrize("prediction,correct", [(None, True), (0, False), (30, False)])
+def test_explicit_empty_is_scored(prediction, correct):
+    scores = score_row(
+        "Renewal Term",
+        {"found": "True", "notice_days": "NONE"},
+        renewal(notice_days=prediction),
+    )
+    assert scores["notice_days_correct"] is correct
+    assert scores["extra_values"] == []
+    assert (
+        score_row("Renewal Term", {"found": "True", "notice_days": "NONE"}, None)[
+            "notice_days_correct"
+        ]
+        is False
+    )
+
+
 def test_unlabelled_fields_are_not_scored_and_extras_include_false_and_zero() -> None:
     scores = score_row(
         "Renewal Term",

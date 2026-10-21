@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": false,\n  \"evidence_quote\": \"a) for direct damage to physical goods (property damage or \u201czaakschade\u201d) or directly resulting from death or personal injury: up to a maximum of *** per event or series of connected events and up to a further maximum of *** for all events (connected or not) in any period of 12 calendar months\u037e\",\n  \"evidence_chunk_id\": \"72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:48\"\n}",
+  "input_tokens": 1886,
+  "output_tokens": 208,
+  "latency_ms": 1944.7896379988379,
+  "created_at": "2026-10-21T15:42:33.797712+00:00"
+}

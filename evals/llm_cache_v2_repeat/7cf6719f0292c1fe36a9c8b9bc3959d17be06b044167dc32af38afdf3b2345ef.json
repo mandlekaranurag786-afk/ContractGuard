@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": false,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"The Agreement may be extended or renewed by the Parties in a writing executed by authorized representatives of each of the Parties.\",\n  \"evidence_chunk_id\": \"85d8a6e9f207cff06645154b288e03b5c60c7fea732ef90c80bd717cddc53810:19\"\n}",
+  "input_tokens": 1741,
+  "output_tokens": 154,
+  "latency_ms": 3724.8483399998804,
+  "created_at": "2026-10-21T18:00:31.122174+00:00"
+}

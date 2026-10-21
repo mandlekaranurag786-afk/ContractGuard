@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": false,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"Contract is renewable for 1 year extension by amendment to each opportunity. this agreement. Either Party may terminate this agreement for non-cause with a sixty (60) written notice.\",\n  \"evidence_chunk_id\": \"fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:1\"\n}",
+  "input_tokens": 1689,
+  "output_tokens": 166,
+  "latency_ms": 4029.221589998997,
+  "created_at": "2026-10-21T15:45:02.684797+00:00"
+}

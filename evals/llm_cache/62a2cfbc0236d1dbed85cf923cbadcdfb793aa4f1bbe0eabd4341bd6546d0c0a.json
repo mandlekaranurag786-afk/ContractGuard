@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 60,\n  \"auto_renews\": false,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"3. Term of this Agreement. This Agreement shall be valid for five (5) years from February 1, 2019 through January 31, 2024 unless this Agreement is terminated earlier pursuant to Section 14 (the \u201cTerm\u201d).\",\n  \"evidence_chunk_id\": \"cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:5\"\n}",
+  "input_tokens": 1822,
+  "output_tokens": 186,
+  "latency_ms": 4764.514500000587,
+  "created_at": "2026-10-21T15:44:40.862342+00:00"
+}

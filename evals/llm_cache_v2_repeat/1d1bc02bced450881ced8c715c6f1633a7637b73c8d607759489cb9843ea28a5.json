@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"twenty four (24) times the monthly administrative fee to be paid by Client as set forth in Exhibit B hereto\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"In no event will Agent be liable for special, indirect, incidental, consequential or punitive losses or damages of any kind whatsoever (including but not limited to lost profits), even if Agent has been advised of the possibility of such losses or damages and regardless of the form of action. Any liability of Agent will be limited in the aggregate to an amount equal to twenty four (24) times the monthly administrative fee to be paid by Client as set forth in Exhibit B hereto.\",\n  \"evidence_chunk_id\": \"26b7b289a90bba6b1bc9a9bbd36b69bee65da41475f580670eb3380c7f8c111e:10\"\n}",
+  "input_tokens": 1708,
+  "output_tokens": 254,
+  "latency_ms": 1819.8531570014893,
+  "created_at": "2026-10-21T17:56:21.184961+00:00"
+}

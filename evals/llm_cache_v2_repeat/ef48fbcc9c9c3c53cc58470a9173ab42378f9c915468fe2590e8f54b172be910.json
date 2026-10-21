@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 240,\n  \"auto_renews\": false,\n  \"renewal_term_months\": 60,\n  \"notice_days\": null,\n  \"evidence_quote\": \"Upon the expiration of the initial term of this Agreement, Franchisee shall have the one time right to obtain a successor franchise to operate a Pretzel Time Unit at the Site (a \\\"Successor Franchise\\\") for a single term of five (5) years immediately following the expiration of the initial term of the Franchise upon giving Pretzel Time six (6) months notice prior to the expiration of the then current term\",\n  \"evidence_chunk_id\": \"b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:56\"\n}",
+  "input_tokens": 1793,
+  "output_tokens": 217,
+  "latency_ms": 2409.9428879999323,
+  "created_at": "2026-10-21T18:00:21.807019+00:00"
+}

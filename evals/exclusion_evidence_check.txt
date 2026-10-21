@@ -1,0 +1,73 @@
+Exclusion evidence check (hybrid top 5, Cap On Liability query)
+Contexts show 100 raw characters before/after each match (repr).
+Full-text hits include all candidates, not just exclusion sentences.
+
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF
+has_damages_exclusion: label=True; v1=False; v2=False
+Retrieved chunk_ids (rank order):
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:95
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:98
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:96
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:15
+Retrieved matches:
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97: no matches
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:95: no matches
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:98: no matches
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:96: no matches
+3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:15: no matches
+Main exclusion sentence candidates (consequential + liability wording):
+sentence_range=[84336, 84884) contains=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:99'] overlaps=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:99'] retrieved_overlap=[]: 'Notwithstanding anything contained in this Agreement or the Transition Services and Inventory Agreement or the\n Supply Agreement in no circumstance shall either Party be liable to the other in contract, tort (including negligence or breach of statutory\n duty) or otherwise howsoever, and whatever the cause thereof, for any special, indirect or consequential loss or damage of any nature\n whatsoever except in the cases of fraud or intentional misconduct or in the case of PPI as a result of PPI’s breach of Section 7.2.12 of the\n Supply Agreement.'
+Full-document matches (raw offsets in chunk_document source):
+offset=46630 match='special' chunks=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:54'] retrieved=False: 'its up-to-date price list for\n the Product together with full details of standard discounts and any special pricing arrangements entered into or proposed\n to be entered into;\n\n (d) market the Product through'
+offset=51338 match='special' chunks=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:60'] retrieved=False: 'ut in any event not less than 2 times per Calendar\n Year. The Committee may invite individuals with special skills to attend such meetings where considered to be relevant and appropriate.\n The quorum for Com'
+offset=84660 match='special' chunks=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:99'] retrieved=False: 'gence or breach of statutory\n duty) or otherwise howsoever, and whatever the cause thereof, for any special, indirect or consequential loss or damage of any nature\n whatsoever except in the cases of fraud or'
+offset=84669 match='indirect' chunks=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:99'] retrieved=False: 'breach of statutory\n duty) or otherwise howsoever, and whatever the cause thereof, for any special, indirect or consequential loss or damage of any nature\n whatsoever except in the cases of fraud or intention'
+offset=84681 match='consequential' chunks=['3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:99'] retrieved=False: 'atutory\n duty) or otherwise howsoever, and whatever the cause thereof, for any special, indirect or consequential loss or damage of any nature\n whatsoever except in the cases of fraud or intentional misconduct or '
+
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf
+has_damages_exclusion: label=True; v1=False; v2=False
+Retrieved chunk_ids (rank order):
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:48
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:50
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:53
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:0
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:54
+Retrieved matches:
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:48: no matches
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:50: no matches
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:53: no matches
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:0: no matches
+72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:54: no matches
+Main exclusion sentence candidates (consequential + liability wording):
+sentence_range=[41895, 42585) contains=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:49'] overlaps=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:49', '72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:50'] retrieved_overlap=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:50']: 'Source: PARETEUM CORP, 8-K, 10/1/2008\n CONFIDENTIAL TREATMENT REQUESTED\n WITH RESPECT TO CERTAIN PORTIONS HEREOF\n DENOTED WITH “***”\n\n Hosting Agreement between ELEPHANT TALK and T-Mobile, 18/9/2008\n\n12.2 In no event shall either Party be liable for indirect or consequential loss or damage, including but not limited to, loss of profit, loss of sales\n or turnover, loss of or damage to reputation, loss of contract, loss of business, loss of anticipated savings and interest, increased\n operation costs, increase maintenance costs even if such loss or damage was reasonably foreseeable or if a Party had been advised by the\n other Party of the possibility of incurring such loss or damage.'
+Full-document matches (raw offsets in chunk_document source):
+offset=4590 match='indirect' chunks=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:5'] retrieved=False: ' directly or indirectly owning or controlling the Party (Mother company), or\n · under the direct or indirect ownership or control of the same legal entity (Mother company) directly or indirectly owning or con'
+offset=4891 match='indirect' chunks=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:5'] retrieved=False: 'ng as such ownership or control lasts.\n\n "Ownership" or "control" shall exist through the direct or indirect ownership of more than fifty (50) percent of the nominal value of the\n issued equity share capital '
+offset=42145 match='indirect' chunks=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:49'] retrieved=False: 'nt between ELEPHANT TALK and T-Mobile, 18/9/2008\n\n12.2 In no event shall either Party be liable for indirect or consequential loss or damage, including but not limited to, loss of profit, loss of sales\n or tu'
+offset=42157 match='consequential' chunks=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:49'] retrieved=False: 'LEPHANT TALK and T-Mobile, 18/9/2008\n\n12.2 In no event shall either Party be liable for indirect or consequential loss or damage, including but not limited to, loss of profit, loss of sales\n or turnover, loss of o'
+offset=42217 match='loss of profit' chunks=['72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:49'] retrieved=False: ' either Party be liable for indirect or consequential loss or damage, including but not limited to, loss of profit, loss of sales\n or turnover, loss of or damage to reputation, loss of contract, loss of business, l'
+
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf
+has_damages_exclusion: label=True; v1=False; v2=False
+Retrieved chunk_ids (rank order):
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:43
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:42
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:39
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:40
+Retrieved matches:
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:43: no matches
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:42 offset=36242 match='Special': '9\n 10.05. XSPA shall obtain, and thereafter maintain during the Term, the following insurance:\n (a) Special form property policy covering all stock on premises of the Store, including with respect to all Pro'
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45: no matches
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:39: no matches
+f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:40: no matches
+Main exclusion sentence candidates (consequential + liability wording):
+sentence_range=[37837, 38416) contains=[] overlaps=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44', 'f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45'] retrieved_overlap=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45']: 'EXCEPT WITH RESPECT TO EACH PARTY’S INDEMNIFICATION OBLIGATIONS UNDER THIS AGREEMENT, (A) UNDER NO\nCIRCUMSTANCE AND UNDER NO LEGAL THEORY (TORT, CONTRACT, OR OTHERWISE), SHALL EITHER PARTY BE LIABLE TO THE\nOTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL\nDAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGREEMENT; AND (B) THE MAXIMUM LIABILITY\nOF EACH PARTY IN ANY WAY RELATED TO THIS AGREEMENT SHALL NOT EXCEED $2,000,000.00 (EXCLUDING ANY AMOUNTS DUE AND\nPAYABLE PURSUANT TO SECTION \u200b8 HEREUNDER).'
+Full-document matches (raw offsets in chunk_document source):
+offset=36242 match='Special' chunks=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:42'] retrieved=True: '9\n 10.05. XSPA shall obtain, and thereafter maintain during the Term, the following insurance:\n (a) Special form property policy covering all stock on premises of the Store, including with respect to all Pro'
+offset=38063 match='LOST PROFITS' chunks=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44'] retrieved=False: 'EGAL THEORY (TORT, CONTRACT, OR OTHERWISE), SHALL EITHER PARTY BE LIABLE TO THE\nOTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL\nDAMAGES SUFFERED BY THE'
+offset=38106 match='SPECIAL' chunks=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44'] retrieved=False: ' SHALL EITHER PARTY BE LIABLE TO THE\nOTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL\nDAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WIT'
+offset=38115 match='PUNITIVE' chunks=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44'] retrieved=False: 'THER PARTY BE LIABLE TO THE\nOTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL\nDAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGR'
+offset=38125 match='INDIRECT' chunks=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44'] retrieved=False: ' BE LIABLE TO THE\nOTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL\nDAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGREEMENT; AN'
+offset=38138 match='CONSEQUENTIAL' chunks=['f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44'] retrieved=False: ' THE\nOTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL\nDAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGREEMENT; AND (B) THE MAXIMUM '

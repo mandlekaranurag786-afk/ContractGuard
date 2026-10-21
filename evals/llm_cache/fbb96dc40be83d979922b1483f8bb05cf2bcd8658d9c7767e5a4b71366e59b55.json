@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 60,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 60,\n  \"notice_days\": 60,\n  \"evidence_quote\": \"provided that the Reseller has achieved the Annual Milestones, the term of the Agreement shall be automatically renewed for an additional five (5) years. Thereafter, at the end of each renewal term, the Agreement shall renew for an additional two (2) years unless one party provides the other party with prior written notice of non-renewal at least sixty (60) days prior to the expiration of the then-current term.\",\n  \"evidence_chunk_id\": \"e0e2e96e105138d030e44a2d0d94072264bb166a54ac1f7272fd6cff952bf578:26\"\n}",
+  "input_tokens": 1759,
+  "output_tokens": 224,
+  "latency_ms": 4523.549440000352,
+  "created_at": "2026-10-21T15:47:27.258438+00:00"
+}

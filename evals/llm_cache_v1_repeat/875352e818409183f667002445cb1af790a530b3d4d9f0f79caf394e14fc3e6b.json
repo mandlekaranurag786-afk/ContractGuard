@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the amount of all fees actually received by VOTOCAST from Licensee under this Agreement\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"TO THE MAXIMUM EXTENT PERMITTED BY LAW, VOTOCAST'S AGGREGATE LIABILITY ARISING FROM OR RELATING TO THIS AGREEMENT OR THE USE OR INABILITY TO USE THE SERVICES SHALL BE LIMITED TO THE AMOUNT OF ALL FEES ACTUALLY RECEIVED BY VOTOCAST FROM LICENSEE UNDER THIS AGREEMENT.\",\n  \"evidence_chunk_id\": \"28fcfe953491d7f677b7518e40d934773047e636a9b09fde364e9bc3c0e5bd6f:26\"\n}",
+  "input_tokens": 1745,
+  "output_tokens": 221,
+  "latency_ms": 1741.5758030001598,
+  "created_at": "2026-10-21T17:32:04.962860+00:00"
+}

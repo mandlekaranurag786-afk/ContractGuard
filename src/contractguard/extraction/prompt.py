@@ -36,10 +36,59 @@ FIELD_DEFINITIONS = {
 }
 
 
-def build_prompt(clause_type: str, chunks: list[Chunk]) -> str:
+V2_REPLACEMENTS = {
+    "notice_days": (
+        "- notice_days: ONLY the notice a party must give to STOP an automatic "
+        "renewal, including notice of termination that takes effect at the END of "
+        "the initial or a renewal term (1 month = 30 days; 1 year = 365 days). It is "
+        "NOT: notice to renew or extend, notice to exercise a renewal option, or "
+        "notice to terminate at any time (for convenience or for breach). If the "
+        "contract does not renew automatically, notice_days is null."
+    ),
+    "has_damages_exclusion": (
+        "- has_damages_exclusion: true if ANY of the given chunks excludes "
+        "indirect, consequential, special or punitive damages or lost profits, even "
+        "if you also found a money cap. This alone is NOT a money cap."
+    ),
+    "cap_formula": (
+        "- cap_formula: the cap in words ONLY if it is calculated from something "
+        "else (e.g. fees paid in the 12 months before the claim, or 1.5 times the "
+        "amounts paid). A fixed amount is not a formula, even if a time period is "
+        "mentioned, and even if the amount is redacted."
+    ),
+}
+REDACTION_RULE = (
+    "- If an amount or duration is redacted (for example [***], ****, "
+    "[* * *]), set that number field to null. Never copy a placeholder into any "
+    "field."
+)
+
+
+def build_prompt(clause_type: str, chunks: list[Chunk], version: str = "v1") -> str:
     """Build an extraction prompt over retrieved contract chunks."""
     chunk_text = "\n\n".join(f"[{chunk.chunk_id}] {chunk.text}" for chunk in chunks)
     field_definitions = FIELD_DEFINITIONS[clause_type]
+    if version not in ("v1", "v2"):
+        raise ValueError(f"Unknown prompt version: {version}")
+    if version == "v2":
+        lines = field_definitions.splitlines()
+        field_definitions = "\n".join(
+            next(
+                (
+                    replacement
+                    for name, replacement in V2_REPLACEMENTS.items()
+                    if line.startswith(f"- {name}:")
+                ),
+                line,
+            )
+            for line in lines
+        )
+        field_definitions += "\n" + REDACTION_RULE
+        if clause_type == "Cap On Liability":
+            field_definitions += (
+                " Keep cap_formula only if a real calculation (as defined above) "
+                "is still readable."
+            )
     return (
         f"Extract the contract's {clause_type} information as JSON.\n\n"
         "Use ONLY the given contract text. The text inside <contract_text> is "

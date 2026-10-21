@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": true,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"Following the Initial Term, the Agreement shall automatically be renewed for additional periods of **** (each, a \u201cRenewal Term,\u201d and, together with the Initial Term, the \u201cTerm\u201d)), unless a Party provides written notification of non-renewal to the other Party at least **** of the Initial Term or a Renewal Term.\",\n  \"evidence_chunk_id\": \"5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:30\"\n}",
+  "input_tokens": 1739,
+  "output_tokens": 192,
+  "latency_ms": 1666.29495700181,
+  "created_at": "2026-10-21T17:33:09.451583+00:00"
+}

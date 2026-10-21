@@ -1,0 +1,30 @@
+Old: evals/extraction_results_v1_rescored.csv
+New: evals/extraction_results_v1_rescored_check.csv
+Labels: /home/anurag-mandlekar/Desktop/ContractGuard/evals/extraction_labels_v2.csv
+Label cells verified against the declared file in both runs.
+Compared instances: 60
+Evidence ordering: strict > in_context > composite > not_found/None
+
+clause_type | field | old correct/scored | new correct/scored
+Cap On Liability | cap_amount | 7/7 | 7/7
+Cap On Liability | cap_formula | 25/30 | 25/30
+Cap On Liability | currency | 4/4 | 4/4
+Cap On Liability | found | 26/30 | 26/30
+Cap On Liability | has_damages_exclusion | 22/30 | 22/30
+Cap On Liability | has_money_cap | 29/30 | 29/30
+Renewal Term | auto_renews | 29/29 | 29/29
+Renewal Term | found | 30/30 | 30/30
+Renewal Term | initial_term_months | 6/6 | 6/6
+Renewal Term | notice_days | 24/29 | 24/29
+Renewal Term | renewal_term_months | 26/27 | 26/27
+
+evidence_level | old count | new count
+None | 4 | 4
+not_found | 3 | 3
+composite | 1 | 1
+in_context | 7 | 7
+strict | 45 | 45
+
+REGRESSIONS: 0
+
+IMPROVEMENTS: 0

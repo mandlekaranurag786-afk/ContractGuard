@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the aggregate amount of the product prices paid by Bellicum for the Miltenyi Product(s) during the twelve (12) month period immediately preceding the event giving rise to such liability\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"IN NO ONE EVENT SHALL EITHER PARTY\u2019S AGGREGATE LIABILITY FOR DAMAGES OR LOSSES UNDER THIS AGREEMENT EXCEED THE AGGREGATE AMOUNT OF THE PRODUCT PRICES PAID BY BELLICUM FOR THE MILTENYI PRODUCT(S) DURING THE TWELVE (12) MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO SUCH LIABILITY\u037e AND FURTHER PROVIDED THAT SUCH AGGREGATE LIABILITY DURING SUCH PERIOD ALSO SHALL NOT EXCEED THE AMOUNT OF SUCH PARTY\u2019S INSURANCE COVERAGE FOR SUCH AGGREGATE LIABILITY.\",\n  \"evidence_chunk_id\": \"021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:172\"\n}",
+  "input_tokens": 1768,
+  "output_tokens": 288,
+  "latency_ms": 5806.853058998968,
+  "created_at": "2026-10-21T15:34:44.716978+00:00"
+}

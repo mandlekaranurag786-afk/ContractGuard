@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 36,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 36,\n  \"notice_days\": 60,\n  \"evidence_quote\": \"and shall continue for three years thereafter (the \u201cInitial Term\u201d). Unless either party gives written notice of termination of this Agreement at least 60 days prior to the end of the Initial Term, or any successive three-year term, this Agreement shall automatically renew for successive additional three-year terms\",\n  \"evidence_chunk_id\": \"26b7b289a90bba6b1bc9a9bbd36b69bee65da41475f580670eb3380c7f8c111e:1\"\n}",
+  "input_tokens": 1681,
+  "output_tokens": 196,
+  "latency_ms": 1889.7029670006305,
+  "created_at": "2026-10-21T17:59:37.285576+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"MORPHO agrees that XIMAGE's total liability to MORPHO for any damages suffered in connection with, or arising out of, this Agreement or MORPHO's use of any documentation, product or service provided (or to be provided) hereunder, regardless of whether any such liability is based upon contract, tort or other basis, shall be limited to an amount not to exceed the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement.\",\n  \"evidence_chunk_id\": \"daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:18\"\n}",
+  "input_tokens": 1595,
+  "output_tokens": 252,
+  "latency_ms": 2180.748514001607,
+  "created_at": "2026-10-21T17:29:39.537235+00:00"
+}

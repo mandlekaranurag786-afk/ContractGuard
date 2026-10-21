@@ -1,0 +1,99 @@
+Old: evals/extraction_results_v1_rescored.csv
+New: evals/extraction_results_v1_rescored.csv
+Labels: /home/anurag-mandlekar/Desktop/ContractGuard/evals/extraction_labels_v2.csv
+Label cells verified against the declared file in both runs.
+Compared instances: 60
+Evidence ordering: strict > in_context > composite > not_found/None
+
+clause_type | field | old correct/scored | new correct/scored
+Cap On Liability | cap_amount | 7/7 | 7/7
+Cap On Liability | cap_formula | 25/30 | 25/30
+Cap On Liability | currency | 4/4 | 4/4
+Cap On Liability | found | 26/30 | 26/30
+Cap On Liability | has_damages_exclusion | 22/30 | 22/30
+Cap On Liability | has_money_cap | 29/30 | 29/30
+Renewal Term | auto_renews | 29/29 | 29/29
+Renewal Term | found | 30/30 | 30/30
+Renewal Term | initial_term_months | 6/6 | 6/6
+Renewal Term | notice_days | 24/29 | 24/29
+Renewal Term | renewal_term_months | 26/27 | 26/27
+
+evidence_level | old count | new count
+None | 4 | 4
+not_found | 3 | 3
+composite | 1 | 1
+in_context | 7 | 7
+strict | 45 | 45
+
+REGRESSIONS: 0
+
+IMPROVEMENTS: 0
+
+ROW-LEVEL
+Fully-correct regressions: 0
+Fully-correct improvements: 0
+Field-level prediction changes (all predicted_* columns): 0
+
+RETRIEVAL IDENTITY (rank order matters)
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | Cap On Liability | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | Renewal Term | IDENTICAL | old=recomputed (historical ids unavailable); new=recomputed (historical ids unavailable)
+Rows with different retrieval: 0
+Rows with retrieval not available: 0

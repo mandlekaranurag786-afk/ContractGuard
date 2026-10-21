@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 12,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": 30,\n  \"evidence_quote\": \"The initial term of this Agreement is one (1) year from the date of delivery of the Product to Licensee unless earlier terminated in accordance with this Agreement. The Agreement will be automatically renewed for additional one (1) year terms (subject to applicable fee adjustments) unless thirty (30) days prior to the anniversary of the Effective Date Licensee gives written notice to XACCT of its intention not to renew.\",\n  \"evidence_chunk_id\": \"4efb5d7e762f53cba7bf984cb496992cc20272c7b99ddca5a00ce3b91687eb21:9\"\n}",
+  "input_tokens": 1649,
+  "output_tokens": 216,
+  "latency_ms": 1558.5773210004845,
+  "created_at": "2026-10-21T17:34:09.345527+00:00"
+}

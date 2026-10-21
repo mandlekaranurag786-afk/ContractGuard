@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 12,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": 90,\n  \"evidence_quote\": \"13.1. The present Agreement is effective as from 1 January 2009. It is established by calendar year and renewed tacitly every year. \\n\\n 13.2. The Agreement rests, for all that, cancellable at any time by any of the parties before the expiry date of the Agreement or any of its \\n renewals, upon three months prior written notice.\",\n  \"evidence_chunk_id\": \"9d8734bf7d20fe8e2e2503c7608e5f19f4ebf5858c65a26ef38cb84bc79eeaa3:25\"\n}",
+  "input_tokens": 1812,
+  "output_tokens": 219,
+  "latency_ms": 1557.8328850024263,
+  "created_at": "2026-10-21T17:32:49.342593+00:00"
+}

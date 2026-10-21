@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***].\",\n  \"evidence_chunk_id\": \"ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:70\"\n}",
+  "input_tokens": 1723,
+  "output_tokens": 210,
+  "latency_ms": 53630.339441000615,
+  "created_at": "2026-10-21T15:41:37.069691+00:00"
+}

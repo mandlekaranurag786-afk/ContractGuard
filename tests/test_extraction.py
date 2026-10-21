@@ -82,7 +82,10 @@ def test_valid_renewal_json_is_parsed_and_checked() -> None:
     )
 
     assert isinstance(result.extraction, RenewalTermExtraction)
-    assert all(result.checks.values())
+    assert all(
+        result.checks[k]
+        for k in ("evidence_grounded", "required_fields_present", "not_found_is_clean")
+    )
     assert result.attempts == 1
     assert result.model == "fake-model"
 
@@ -95,23 +98,28 @@ def test_valid_cap_formula_without_amount_is_parsed_and_checked() -> None:
 
     assert isinstance(result.extraction, LiabilityCapExtraction)
     assert result.extraction.cap_amount is None
-    assert all(result.checks.values())
+    assert all(
+        result.checks[k]
+        for k in ("evidence_grounded", "required_fields_present", "not_found_is_clean")
+    )
 
 
 def test_clean_not_found_output_passes_not_found_check() -> None:
     chunks = [_chunk(0, "No renewal language appears here.")]
     result = Extractor(
-        _FakeLLMClient([
-            _renewal_json(
-                found=False,
-                initial_term_months=None,
-                auto_renews=None,
-                renewal_term_months=None,
-                notice_days=None,
-                evidence_quote=None,
-                evidence_chunk_id=None,
-            )
-        ])
+        _FakeLLMClient(
+            [
+                _renewal_json(
+                    found=False,
+                    initial_term_months=None,
+                    auto_renews=None,
+                    renewal_term_months=None,
+                    notice_days=None,
+                    evidence_quote=None,
+                    evidence_chunk_id=None,
+                )
+            ]
+        )
     ).extract("Renewal Term", chunks)
 
     assert result.checks["not_found_is_clean"] is True
@@ -119,18 +127,20 @@ def test_clean_not_found_output_passes_not_found_check() -> None:
 
 def test_clean_cap_not_found_output_passes_not_found_check() -> None:
     result = Extractor(
-        _FakeLLMClient([
-            _cap_json(
-                found=False,
-                has_money_cap=False,
-                cap_amount=None,
-                currency=None,
-                cap_formula=None,
-                has_damages_exclusion=False,
-                evidence_quote=None,
-                evidence_chunk_id=None,
-            )
-        ])
+        _FakeLLMClient(
+            [
+                _cap_json(
+                    found=False,
+                    has_money_cap=False,
+                    cap_amount=None,
+                    currency=None,
+                    cap_formula=None,
+                    has_damages_exclusion=False,
+                    evidence_quote=None,
+                    evidence_chunk_id=None,
+                )
+            ]
+        )
     ).extract("Cap On Liability", [_chunk(0, "No liability terms appear here.")])
 
     assert result.checks["not_found_is_clean"] is True
@@ -140,8 +150,7 @@ def test_evidence_quote_missing_from_named_chunk_fails_grounding() -> None:
     extraction = RenewalTermExtraction.model_validate_json(_renewal_json())
 
     assert (
-        evidence_grounded(extraction, [_chunk(0, "A different term applies.")])
-        is False
+        evidence_grounded(extraction, [_chunk(0, "A different term applies.")]) is False
     )
 
 

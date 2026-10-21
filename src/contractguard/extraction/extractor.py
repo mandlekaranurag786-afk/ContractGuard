@@ -36,13 +36,14 @@ def _sum_optional_float(values: list[float | None]) -> float | None:
 class Extractor:
     """Extracts a clause using a structured-output language-model client."""
 
-    def __init__(self, client: LLMClient) -> None:
+    def __init__(self, client: LLMClient, prompt_version: str = "v1") -> None:
         self._client = client
+        self._prompt_version = prompt_version
 
     def extract(self, clause_type: str, chunks: list[Chunk]) -> ExtractionResult:
         """Extract a clause, retrying once when the model returns invalid JSON."""
         schema = SCHEMAS[clause_type]
-        prompt = build_prompt(clause_type, chunks)
+        prompt = build_prompt(clause_type, chunks, version=self._prompt_version)
         response: LLMResponse | None = None
         responses: list[LLMResponse] = []
         error: ValidationError | ValueError | None = None
@@ -78,9 +79,7 @@ class Extractor:
                 attempts=len(responses),
                 model=response.model,
                 cached=response.cached,
-                latency_ms=_sum_optional_float(
-                    [item.latency_ms for item in responses]
-                ),
+                latency_ms=_sum_optional_float([item.latency_ms for item in responses]),
                 input_tokens=_sum_optional_int(
                     [item.input_tokens for item in responses]
                 ),
@@ -100,11 +99,7 @@ class Extractor:
             model=response.model,
             cached=response.cached,
             latency_ms=_sum_optional_float([item.latency_ms for item in responses]),
-            input_tokens=_sum_optional_int(
-                [item.input_tokens for item in responses]
-            ),
-            output_tokens=_sum_optional_int(
-                [item.output_tokens for item in responses]
-            ),
+            input_tokens=_sum_optional_int([item.input_tokens for item in responses]),
+            output_tokens=_sum_optional_int([item.output_tokens for item in responses]),
             error=str(error),
         )

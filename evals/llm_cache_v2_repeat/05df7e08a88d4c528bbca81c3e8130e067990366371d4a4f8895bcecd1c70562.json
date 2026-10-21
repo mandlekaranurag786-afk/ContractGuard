@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": true,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"Parties can mutually agree in writing to deviate from an automatic extension of *** by extending this Agreement for a longer period than ***.\",\n  \"evidence_chunk_id\": \"72031417b50f6e52fef4056c57923b08f6d643413b5770a838aa9069a717aa47:64\"\n}",
+  "input_tokens": 1836,
+  "output_tokens": 160,
+  "latency_ms": 3467.096942000353,
+  "created_at": "2026-10-21T18:00:42.864716+00:00"
+}

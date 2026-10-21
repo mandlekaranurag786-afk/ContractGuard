@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": 2000000.0,\n  \"currency\": \"USD\",\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": false,\n  \"evidence_quote\": \"LIABILITY OF EACH PARTY IN ANY WAY RELATED TO THIS AGREEMENT SHALL NOT EXCEED $2,000,000.00 (EXCLUDING ANY AMOUNTS DUE AND PAYABLE PURSUANT TO SECTION \u200b8 HEREUNDER).\",\n  \"evidence_chunk_id\": \"f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45\"\n}",
+  "input_tokens": 1839,
+  "output_tokens": 200,
+  "latency_ms": 4458.287957997527,
+  "created_at": "2026-10-21T17:59:17.471396+00:00"
+}

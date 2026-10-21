@@ -35,7 +35,7 @@ class ExtractionResult(BaseModel):
 
     clause_type: str
     extraction: RenewalTermExtraction | LiabilityCapExtraction | None
-    checks: dict[str, bool]
+    checks: dict[str, bool | str | None]
     attempts: int
     model: str | None
     cached: bool

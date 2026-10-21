@@ -22,10 +22,12 @@ FIELD_KINDS = {
 
 
 def parse_label(value: str, kind: type) -> None | bool | int | float | str:
-    """Parse a CSV label using bool/int/float/str; blank means unlabelled."""
+    """Parse typed labels; blank is unlabelled, 'NONE' means expected null."""
     value = value.strip()
     if not value:
         return None
+    if value == "NONE":
+        return "NONE"
     if kind is bool:
         if value not in ("True", "False"):
             raise ValueError(f"Invalid boolean label: {value!r}")
@@ -56,6 +58,8 @@ def score_row(clause_type: str, label_row: dict, extraction: Extraction | None) 
             continue
         if extraction is None:
             correct = False
+        elif label == "NONE":
+            correct = prediction is None
         elif field == "cap_formula":
             correct = (label is not None) == (prediction is not None)
         elif field == "cap_amount":

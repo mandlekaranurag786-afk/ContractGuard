@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": 500000.0,\n  \"currency\": \"USD\",\n  \"cap_formula\": \"the lesser of: the amount paid under this agreement by distributor to developer within the six (6) month period immediately preceding the cause giving rise to the claim; or five hundred thousand dollars ($500,000)\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER INDIRECT DAMAGES UNDER ANY CAUSE OF ACTION ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, CLAIMS ARISING FROM MALFUNCTION OR DEFECTS IN THE PRODUCTS. DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM\u037e OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000).\",\n  \"evidence_chunk_id\": \"5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:28\"\n}",
+  "input_tokens": 1743,
+  "output_tokens": 336,
+  "latency_ms": 2277.323702997819,
+  "created_at": "2026-10-21T17:56:45.857473+00:00"
+}

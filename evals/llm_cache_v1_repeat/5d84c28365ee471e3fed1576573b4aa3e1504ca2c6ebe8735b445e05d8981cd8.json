@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": false,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"Except with respect to any claim or liability arising from an infringement of any third party intellectual property right, in no event shall either party be liable for any special, indirect, consequential, punitive or incidental damages of any kind.\",\n  \"evidence_chunk_id\": \"ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:18\"\n}",
+  "input_tokens": 1656,
+  "output_tokens": 176,
+  "latency_ms": 1615.6154829986917,
+  "created_at": "2026-10-21T17:29:21.604540+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 120,\n  \"auto_renews\": false,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"2. TERM\u037e SUCCESSOR FRANCHISE AGREEMENTS\\n 2.1. Term. This Agreement expires ten (10) years from the Agreement Date (the \u201cTerm\u201d), unless it is terminated sooner as provided in\\nother sections of this Agreement.\",\n  \"evidence_chunk_id\": \"74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:14\"\n}",
+  "input_tokens": 1764,
+  "output_tokens": 188,
+  "latency_ms": 2054.1666239987535,
+  "created_at": "2026-10-21T18:00:49.452055+00:00"
+}

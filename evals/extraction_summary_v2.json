@@ -1,0 +1,230 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "labels": "evals/extraction_labels_v2.csv",
+  "top_k": 5,
+  "date": "2026-10-21",
+  "completed_rows": 60,
+  "per_clause_type": {
+    "Renewal Term": {
+      "rows": 30,
+      "found_accuracy": "30/30",
+      "fields": {
+        "initial_term_months": "6/6",
+        "auto_renews": "27/29",
+        "renewal_term_months": "23/27",
+        "notice_days": "28/29"
+      },
+      "fully_correct": "25/30",
+      "fully_correct_percent": 83.33333333333333
+    },
+    "Cap On Liability": {
+      "rows": 30,
+      "found_accuracy": "25/30",
+      "fields": {
+        "has_money_cap": "29/30",
+        "cap_amount": "7/7",
+        "currency": "4/4",
+        "cap_formula": "29/30",
+        "has_damages_exclusion": "22/30"
+      },
+      "fully_correct": "22/30",
+      "fully_correct_percent": 73.33333333333333
+    }
+  },
+  "abstention": "0/0",
+  "faithfulness": {
+    "found_predictions": 55,
+    "levels": {
+      "strict": 47,
+      "in_context": 4,
+      "composite": 1,
+      "not_found": 3
+    },
+    "cited_chunk_correct": "51/51",
+    "not_found_rows": [
+      {
+        "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***]."
+      },
+      {
+        "contract": "Apollo Endosurgery - Manufacturing and Supply Agreement.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof."
+      },
+      {
+        "contract": "MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of\nthree (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this \n\n[4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:10] rs from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year\nterm."
+      }
+    ],
+    "grounded": "47/55",
+    "ungrounded_rows": [
+      {
+        "contract": "IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "MORPHO agrees that XIMAGE's total liability to MORPHO for any damages suffered in connection with, or arising out of, this Agreement or MORPHO's use of any documentation, product or service provided (or to be provided) hereunder, regardless of whether any such liability is based upon contract, tort or other basis, shall be limited to an amount not to exceed the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement."
+      },
+      {
+        "contract": "InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY INCIDENTAL, CONSEQUENTIAL, SPECIAL OR PUNITIVE DAMAGES OF ANY KIND OR NATURE ARISING OUT OF THIS AGREEMENT OR THE SALE OF PRODUCTS..."
+      },
+      {
+        "contract": "KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "neither Party shall be liable to the other Party (whether in contract, tort (including negligence) or for breach of statutory duty or otherwise) for any loss of profits, use, opportunity, goodwill, business or anticipated savings, for any indirect, incidental, special, indirect, punitive or consequential losses"
+      },
+      {
+        "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***]."
+      },
+      {
+        "contract": "Apollo Endosurgery - Manufacturing and Supply Agreement.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof."
+      },
+      {
+        "contract": "MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of\nthree (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this \n\n[4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:10] rs from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year\nterm."
+      },
+      {
+        "contract": "ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "Should the Parties have not agreed to the following agreement by [* * *], this Agreement shall automatically stay in force for a maximum of [* * *] (unless otherwise mutually agreed by the Parties or as otherwise set forth in Section 18.1(a)) or until the Parties have signed the follow-on agreement (the \u201cRenewal Term\u201d)."
+      },
+      {
+        "contract": "VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf",
+        "clause_type": "Renewal Term",
+        "evidence_quote": "nd shall continue in effect for one (I) year, unless earlier terminated as expressly provided in Sections 1.3. 10.1. or 10.2 of this Agreement (the *Initial Term \"). This Agreement shall automatically renew beyond the Initial Term for successive one (I) year terms (each, a \"Renewal Term\"), unless a Party provides the other with written notice of termination at least one hundred eighty (180) days prior to the expiration of the Initial Term or the then-current Renewal Term."
+      }
+    ]
+  },
+  "check_pass_rates": {
+    "required_fields_present": "59/60",
+    "not_found_is_clean": "60/60"
+  },
+  "error_split": {
+    "retrieval_miss": 6,
+    "extraction_error": 16
+  },
+  "extra_values": [
+    {
+      "contract": "2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "auto_renews",
+      "predicted_value": false
+    },
+    {
+      "contract": "BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 120
+    },
+    {
+      "contract": "BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 36
+    },
+    {
+      "contract": "CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 6
+    },
+    {
+      "contract": "FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 36
+    },
+    {
+      "contract": "MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 240
+    },
+    {
+      "contract": "Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 120
+    },
+    {
+      "contract": "SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 60
+    },
+    {
+      "contract": "VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "initial_term_months",
+      "predicted_value": 12
+    }
+  ],
+  "cost": {
+    "uncached_calls": 60,
+    "total_input_tokens": 106536,
+    "total_output_tokens": 12195,
+    "latency_median_ms": 7120.656973000223,
+    "latency_p95_ms": 41461.565505998806,
+    "calls_with_metadata": 60
+  },
+  "errors": [],
+  "fake": false,
+  "total_rows": 60,
+  "complete": true
+}

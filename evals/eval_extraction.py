@@ -1,11 +1,11 @@
 """Evaluate hand-labelled extractions with hybrid top-5 retrieval.
 
 Usage:
-    uv run --env-file .env python evals/eval_extraction.py
-    uv run python evals/eval_extraction.py --fake
+    uv run --env-file .env python evals/eval_extraction.py --tag live
+    uv run python evals/eval_extraction.py --fake --tag fake
 
-Fake mode uses cached local embeddings, never Gemini, and a separate LLM
-cache namespace. Results include the model/mode to distinguish dry runs.
+Fake mode uses cached local embeddings, never Gemini, and a temporary LLM
+cache directory. Results include the model/mode to distinguish dry runs.
 """
 
 from __future__ import annotations
@@ -15,14 +15,16 @@ import csv
 import json
 import math
 import os
+import re
 import statistics
 import sys
 from datetime import datetime
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from zoneinfo import ZoneInfo
 
 # Hugging Face reads offline flags at import time, before main() runs.
-if __name__ == "__main__" and "--fake" in sys.argv:
+if __name__ == "__main__" and any(a in sys.argv for a in ("--fake", "--cache-only")):
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
@@ -37,7 +39,7 @@ from contractguard.evaluation.extraction_metrics import (
     score_row,
 )
 from contractguard.extraction.extractor import Extractor
-from contractguard.llm.cache import CachedLLMClient
+from contractguard.llm.cache import DEFAULT_CACHE_DIR, CachedLLMClient
 from contractguard.llm.client import LLMClient, LLMResponse
 from contractguard.llm.errors import LLMQuotaError
 from contractguard.llm.gemini import GeminiClient
@@ -61,6 +63,16 @@ RESULTS_OUT = Path("evals/extraction_results.csv")
 SUMMARY_OUT = Path("evals/extraction_summary.json")
 TOP_K = 5
 FIELDS = ["found", *(f for fields in FIELD_KINDS.values() for f in fields)]
+PROMPT_VERSION = "v1"
+
+
+class CacheOnlyClient:
+    """Fail outside the LLMError hierarchy so Extractor cannot hide a miss."""
+
+    model = "gemini-3.5-flash-lite"
+
+    def generate_json(self, prompt: str, schema: type[BaseModel]) -> LLMResponse:
+        raise RuntimeError("CACHE MISS: --cache-only forbids generating a response")
 
 
 class FakeLLMClient:
@@ -177,6 +189,8 @@ def summarize(rows: list[dict], model: str, recorder: CallRecorder) -> dict:
     found = [r for r in rows if r["predicted_found"] is True]
     return {
         "model": model,
+        "prompt_version": PROMPT_VERSION,
+        "labels": str(LABELS),
         "top_k": TOP_K,
         "date": datetime.now(ZoneInfo("Asia/Kolkata")).date().isoformat(),
         "completed_rows": len(rows),
@@ -185,6 +199,23 @@ def summarize(rows: list[dict], model: str, recorder: CallRecorder) -> dict:
             [r["found_correct"] for r in rows if r["is_abstention_case"]]
         ),
         "faithfulness": {
+            "found_predictions": len(found),
+            "levels": {
+                level: sum(r["checks"].get("evidence_level") == level for r in found)
+                for level in ("strict", "in_context", "composite", "not_found")
+            },
+            "cited_chunk_correct": ratio(
+                [
+                    r["checks"]["cited_chunk_correct"]
+                    for r in found
+                    if r["checks"].get("cited_chunk_correct") is not None
+                ]
+            ),
+            "not_found_rows": [
+                {k: r[k] for k in ("contract", "clause_type", "evidence_quote")}
+                for r in found
+                if r["checks"].get("evidence_level") == "not_found"
+            ],
             "grounded": ratio(
                 [r["checks"].get("evidence_grounded", False) for r in found]
             ),
@@ -248,6 +279,9 @@ def write_results(rows: list[dict], summary: dict) -> None:
         "error",
         "model",
         "fake",
+        "prompt_version",
+        "cache_dir",
+        "retrieved_chunk_ids",
     ]
     RESULTS_OUT.parent.mkdir(parents=True, exist_ok=True)
     with RESULTS_OUT.open("w", newline="", encoding="utf-8") as handle:
@@ -262,6 +296,8 @@ def write_results(rows: list[dict], summary: dict) -> None:
                     },
                     "model": summary["model"],
                     "fake": summary["fake"],
+                    "prompt_version": summary["prompt_version"],
+                    "cache_dir": summary["cache_dir"],
                 }
             )
     rendered = json.dumps(summary, indent=2, allow_nan=False)
@@ -269,7 +305,27 @@ def write_results(rows: list[dict], summary: dict) -> None:
     print(rendered, flush=True)
 
 
-def run_eval(client: LLMClient, model: str, *, fake: bool = False) -> int:
+def run_eval(
+    client: LLMClient,
+    model: str,
+    *,
+    fake: bool = False,
+    cache_dir: Path = DEFAULT_CACHE_DIR,
+) -> int:
+    """Keep fake responses in an automatically cleaned temporary directory."""
+    if fake:
+        with TemporaryDirectory(prefix="contractguard-fake-") as cache_dir:
+            return _run_eval(client, model, fake=True, cache_dir=Path(cache_dir))
+    return _run_eval(client, model, cache_dir=cache_dir)
+
+
+def _run_eval(
+    client: LLMClient,
+    model: str,
+    *,
+    fake: bool = False,
+    cache_dir: Path = DEFAULT_CACHE_DIR,
+) -> int:
     """Run every labelled row; preserve completed rows on quota exhaustion."""
     with LABELS.open(newline="", encoding="utf-8") as handle:
         labels = list(csv.DictReader(handle))
@@ -279,7 +335,10 @@ def run_eval(client: LLMClient, model: str, *, fake: bool = False) -> int:
     }
     answers = load_cuad_answers(MASTER_CLAUSES_CSV)
     recorder = CallRecorder(client)
-    extractor = Extractor(CachedLLMClient(recorder, model=model))
+    extractor = Extractor(
+        CachedLLMClient(recorder, model=model, cache_dir=cache_dir),
+        prompt_version=PROMPT_VERSION,
+    )
     indexes = {}
     rows = []
     quota_error = None
@@ -318,9 +377,21 @@ def run_eval(client: LLMClient, model: str, *, fake: bool = False) -> int:
             )
             break
         rows.append(make_result(label, result, retrieval_hit))
+        rows[-1]["retrieved_chunk_ids"] = [chunk.chunk_id for chunk in retrieved]
         print(f"  cached={result.cached} error={result.error}", flush=True)
     summary = summarize(rows, model, recorder)
     summary.update(fake=fake, total_rows=len(labels), complete=quota_error is None)
+    summary["cache_dir"] = str(cache_dir)
+    summary["retrieved_chunk_ids"] = [
+        {
+            "contract": row["contract"],
+            "clause_type": row["clause_type"],
+            "chunk_ids": row["retrieved_chunk_ids"],
+        }
+        for row in rows
+    ]
+    if isinstance(client, CacheOnlyClient):
+        summary.update(cache_only=True, cache_misses=recorder.calls)
     if quota_error:
         summary["errors"].append(quota_error)
     write_results(rows, summary)
@@ -328,18 +399,34 @@ def run_eval(client: LLMClient, model: str, *, fake: bool = False) -> int:
 
 
 def main() -> int:
+    global LABELS, RESULTS_OUT, SUMMARY_OUT, PROMPT_VERSION
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--fake", action="store_true", help="Offline always-abstain LLM"
     )
+    parser.add_argument("--labels", type=Path, default=LABELS)
+    parser.add_argument("--tag", required=True, help="Versioned output suffix")
+    parser.add_argument("--cache-only", action="store_true")
+    parser.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
+    parser.add_argument("--prompt-version", choices=("v1", "v2"), default="v1")
     args = parser.parse_args()
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", args.tag):
+        parser.error("--tag must contain only letters, digits, underscores or hyphens")
+    if args.fake and args.cache_only:
+        parser.error("--fake and --cache-only are mutually exclusive")
+    LABELS = args.labels
+    PROMPT_VERSION = args.prompt_version
+    RESULTS_OUT = Path(f"evals/extraction_results_{args.tag}.csv")
+    SUMMARY_OUT = Path(f"evals/extraction_summary_{args.tag}.json")
     if args.fake:
         os.environ["HF_HUB_OFFLINE"] = "1"
         os.environ["TRANSFORMERS_OFFLINE"] = "1"
         client = FakeLLMClient()
+    elif args.cache_only:
+        client = CacheOnlyClient()
     else:
         client = GeminiClient()
-    return run_eval(client, client.model, fake=args.fake)
+    return run_eval(client, client.model, fake=args.fake, cache_dir=args.cache_dir)
 
 
 if __name__ == "__main__":

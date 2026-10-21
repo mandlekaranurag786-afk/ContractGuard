@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": false,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"AFFILIATES, ANY SUCCESSORS IN INTEREST OR ANY BENEFICIARY OR ASSIGNEE OF THIS AGREEMENT FOR ANY CONSEQUENTIAL, MULTIPLE, INCIDENTAL, INDIRECT, SPECIAL, EXEMPLARY OR PUNITIVE DAMAGES, OR LOSS OF PROFITS OR REVENUES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR ANY BREACH HEREOF\",\n  \"evidence_chunk_id\": \"9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35\"\n}",
+  "input_tokens": 1734,
+  "output_tokens": 200,
+  "latency_ms": 9545.469893999325,
+  "created_at": "2026-10-21T15:43:14.408138+00:00"
+}

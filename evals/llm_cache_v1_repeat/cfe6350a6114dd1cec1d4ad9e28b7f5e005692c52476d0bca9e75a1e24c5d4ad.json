@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": false,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"10. LIMITATION ON LIABILITY. EXCEPT IN THE EVENT OF A BREACH OF SECTION 11, NEITHER PARTY SHALL BE LIABLE FOR SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES OR LOST PROFITS (HOWEVER ARISING, INCLUDING NEGLIGENCE) ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT, EVEN IF THE PARTIES ARE AWARE OF THE POSSIBILITY OF SUCH DAMAGES.\",\n  \"evidence_chunk_id\": \"db445255a65067160b9e9a7cf23afbd3379a715d000b0576fa8e7f64982e523c:23\"\n}",
+  "input_tokens": 1766,
+  "output_tokens": 211,
+  "latency_ms": 1996.2016030003724,
+  "created_at": "2026-10-21T17:28:38.472152+00:00"
+}

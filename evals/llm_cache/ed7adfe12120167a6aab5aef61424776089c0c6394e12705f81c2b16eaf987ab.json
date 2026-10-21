@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"one (1) month's fees and the remaining portion of any prepaid fees\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"i-on's liability for damages to the Customer for any cause whatsoever, regardless of the form of action, and whether in contract or in tort, including negligence, shall be limited to one (1) month's fees and the remaining portion of any prepaid fees.\",\n  \"evidence_chunk_id\": \"89d9d3d6f25d254b1a2ef8c82dd9627c34db76a1206311fa74523378d70835a9:12\"\n}",
+  "input_tokens": 1771,
+  "output_tokens": 211,
+  "latency_ms": 7611.173391000193,
+  "created_at": "2026-10-21T15:36:45.636545+00:00"
+}

@@ -1,0 +1,54 @@
+Old: evals/extraction_results_v1_rescored.csv
+New: evals/extraction_results_v2.csv
+Labels: /home/anurag-mandlekar/Desktop/ContractGuard/evals/extraction_labels_v2.csv
+Label cells verified against the declared file in both runs.
+Compared instances: 60
+Evidence ordering: strict > in_context > composite > not_found/None
+
+clause_type | field | old correct/scored | new correct/scored
+Cap On Liability | cap_amount | 7/7 | 7/7
+Cap On Liability | cap_formula | 25/30 | 29/30
+Cap On Liability | currency | 4/4 | 4/4
+Cap On Liability | found | 26/30 | 25/30
+Cap On Liability | has_damages_exclusion | 22/30 | 22/30
+Cap On Liability | has_money_cap | 29/30 | 29/30
+Renewal Term | auto_renews | 29/29 | 27/29
+Renewal Term | found | 30/30 | 30/30
+Renewal Term | initial_term_months | 6/6 | 6/6
+Renewal Term | notice_days | 24/29 | 28/29
+Renewal Term | renewal_term_months | 26/27 | 23/27
+
+evidence_level | old count | new count
+None | 4 | 5
+not_found | 3 | 3
+composite | 1 | 1
+in_context | 7 | 4
+strict | 45 | 47
+
+REGRESSIONS: 11
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | auto_renews | label='True' | old='True' | new='False'
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | renewal_term_months | label='12' | old='12' | new=''
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Renewal Term | renewal_term_months | label='12' | old='12' | new=''
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | evidence_level | label=grounded evidence | old='in_context' | new='composite'
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | Cap On Liability | evidence_level | label=grounded evidence | old='strict' | new='in_context'
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Renewal Term | evidence_level | label=grounded evidence | old='in_context' | new='not_found'
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Renewal Term | auto_renews | label='True' | old='True' | new='False'
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Renewal Term | notice_days | label='30' | old='30' | new=''
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | Cap On Liability | found | label='True' | old='True' | new='False'
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | Cap On Liability | evidence_level | label=grounded evidence | old='strict' | new=None
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Renewal Term | renewal_term_months | label='12' | old='12' | new=''
+
+IMPROVEMENTS: 13
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | notice_days | label='NONE' | old='30' | new=''
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | evidence_level | label=grounded evidence | old='in_context' | new='strict'
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | notice_days | label='NONE' | old='180' | new=''
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | evidence_level | label=grounded evidence | old='composite' | new='strict'
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Renewal Term | notice_days | label='NONE' | old='60' | new=''
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Renewal Term | evidence_level | label=grounded evidence | old='not_found' | new='strict'
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Renewal Term | notice_days | label='NONE' | old='180' | new=''
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | cap_formula | label='' | old='[***]' | new=''
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Cap On Liability | cap_formula | label='' | old='[**] US Dollars ($[**])' | new=''
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Cap On Liability | cap_formula | label='' | old='[* * *]' | new=''
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Cap On Liability | cap_formula | label='' | old='*** per event or series of connected events and up to a further maximum of *** for all events (connected or not) in any period of 12 calendar months' | new=''
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Renewal Term | notice_days | label='NONE' | old='365' | new=''
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Renewal Term | evidence_level | label=grounded evidence | old='in_context' | new='strict'

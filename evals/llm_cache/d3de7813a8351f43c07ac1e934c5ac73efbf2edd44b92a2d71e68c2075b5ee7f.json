@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 6,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 1,\n  \"notice_days\": 15,\n  \"evidence_quote\": \"The term of this Agreement for the Hosted Site shall commence upon April 1, 1999 and shall continue for a period of six (6) months, unless earlier terminated in accordance with provisions hereof. This Agreement shall automatically be renewed for one (1) or more one (1) month periods unless either the Customer or i-on gives notice to the other party of its intention not to renew the\\n\\n 4\\nAgreement, which notice must be given not less than fifteen (15) days before the\\nend of the respective initial or renewal term.\",\n  \"evidence_chunk_id\": \"89d9d3d6f25d254b1a2ef8c82dd9627c34db76a1206311fa74523378d70835a9:11\"\n}",
+  "input_tokens": 1756,
+  "output_tokens": 257,
+  "latency_ms": 7983.864173998882,
+  "created_at": "2026-10-21T15:45:10.695621+00:00"
+}

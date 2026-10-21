@@ -1,0 +1,107 @@
+Old: evals/extraction_results_v1_rescored.csv
+New: evals/extraction_results_v1_repeat.csv
+Labels: /home/anurag-mandlekar/Desktop/ContractGuard/evals/extraction_labels_v2.csv
+Label cells verified against the declared file in both runs.
+Compared instances: 60
+Evidence ordering: strict > in_context > composite > not_found/None
+
+clause_type | field | old correct/scored | new correct/scored
+Cap On Liability | cap_amount | 7/7 | 7/7
+Cap On Liability | cap_formula | 25/30 | 26/30
+Cap On Liability | currency | 4/4 | 4/4
+Cap On Liability | found | 26/30 | 26/30
+Cap On Liability | has_damages_exclusion | 22/30 | 22/30
+Cap On Liability | has_money_cap | 29/30 | 29/30
+Renewal Term | auto_renews | 29/29 | 29/29
+Renewal Term | found | 30/30 | 30/30
+Renewal Term | initial_term_months | 6/6 | 6/6
+Renewal Term | notice_days | 24/29 | 24/29
+Renewal Term | renewal_term_months | 26/27 | 26/27
+
+evidence_level | old count | new count
+None | 4 | 4
+not_found | 3 | 1
+composite | 1 | 1
+in_context | 7 | 8
+strict | 45 | 46
+
+REGRESSIONS: 3
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Cap On Liability | evidence_level | label=grounded evidence | old='strict' | new='in_context'
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | evidence_level | label=grounded evidence | old='in_context' | new='composite'
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | Cap On Liability | evidence_level | label=grounded evidence | old='strict' | new='in_context'
+
+IMPROVEMENTS: 4
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Renewal Term | evidence_level | label=grounded evidence | old='not_found' | new='strict'
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | evidence_level | label=grounded evidence | old='composite' | new='strict'
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Renewal Term | evidence_level | label=grounded evidence | old='not_found' | new='strict'
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Cap On Liability | cap_formula | label='' | old='[* * *]' | new=''
+
+ROW-LEVEL
+Fully-correct regressions: 0
+Fully-correct improvements: 1
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Cap On Liability | False -> True
+Field-level prediction changes (all predicted_* columns): 3
+
+RETRIEVAL IDENTITY (rank order matters)
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Cap On Liability | not available | old=not available; new=recorded
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Renewal Term | not available | old=not available; new=recorded
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Cap On Liability | not available | old=not available; new=recorded
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | Renewal Term | not available | old=not available; new=recorded
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | not available | old=not available; new=recorded
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Renewal Term | not available | old=not available; new=recorded
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Cap On Liability | not available | old=not available; new=recorded
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Renewal Term | not available | old=not available; new=recorded
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | Cap On Liability | not available | old=not available; new=recorded
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | Renewal Term | not available | old=not available; new=recorded
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Cap On Liability | not available | old=not available; new=recorded
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | Renewal Term | not available | old=not available; new=recorded
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | Cap On Liability | not available | old=not available; new=recorded
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | Renewal Term | not available | old=not available; new=recorded
+Rows with different retrieval: 0
+Rows with retrieval not available: 60

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 240,\n  \"auto_renews\": false,\n  \"renewal_term_months\": 60,\n  \"notice_days\": null,\n  \"evidence_quote\": \"The term of this Agreement shall commence on the Effective Date of this Agreement and shall expire twenty (20) years from the effective date of this Agreement.\",\n  \"evidence_chunk_id\": \"b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:43\"\n}",
+  "input_tokens": 1793,
+  "output_tokens": 165,
+  "latency_ms": 16794.296411999312,
+  "created_at": "2026-10-21T15:46:39.988335+00:00"
+}

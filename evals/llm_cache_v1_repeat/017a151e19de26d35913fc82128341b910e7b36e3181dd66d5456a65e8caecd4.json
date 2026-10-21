@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 12,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": 60,\n  \"evidence_quote\": \"This Agreement shall automatically renew for consecutive one (1) year terms at XIMAGE's then prevailing rates at the end of each one (1) year term unless either party gives at least sixty (60) days prior written notice of the non-renewal of this Agreement.\",\n  \"evidence_chunk_id\": \"daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:5\"\n}",
+  "input_tokens": 1629,
+  "output_tokens": 191,
+  "latency_ms": 1680.4408600000897,
+  "created_at": "2026-10-21T17:33:01.465434+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 60,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 36,\n  \"notice_days\": 90,\n  \"evidence_quote\": \"This Agreement becomes effective on the Effective Date and, unless earlier terminated as provided in this ARTICLE 11, shall continue until the five (5) year anniversary of the Effective Date (the \u201cInitial Term\u201d). This Agreement shall be automatically renewed for successive three (3) year terms thereafter (each a \u201cRenewal Term\u201d and together with the Initial Term, the \u201cTerm\u201d) until and unless (i) either Party provides the other Party written notice of non-renewal no later than ninety (90) days prior the end of the Initial Term or any Renewal Term\",\n  \"evidence_chunk_id\": \"61faf0deb528449f54b4183562084d6e807ea7beea7f141a9be753d21fa4be4f:121\"\n}",
+  "input_tokens": 1646,
+  "output_tokens": 248,
+  "latency_ms": 1363.558639997791,
+  "created_at": "2026-10-21T17:33:53.149925+00:00"
+}
