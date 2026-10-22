@@ -1,0 +1,153 @@
+RUN: extraction_results_v2.csv
+level | rows | fully correct | wrong
+HIGH | 42 | 36 | 6
+MEDIUM | 9 | 7 | 2
+LOW | 4 | 4 | 0
+NOT_FOUND | 5 | 0 | 5
+HIGH-but-wrong: 6/42 (14.3%)
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Cap On Liability | wrong fields: has_damages_exclusion: label='True', prediction=False | reasons=[] | quote excerpt='Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or i'
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Cap On Liability | wrong fields: has_damages_exclusion: label='True', prediction=False | reasons=[] | quote excerpt='a) for direct damage to physical goods (property damage or “zaakschade”) or directly resulting from death or personal injury: up to a maximum of *** per event or series of connected events and up to a further maximum of *** for all events (connected or not) in any period of 12 calendar months;'
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | Cap On Liability | wrong fields: has_damages_exclusion: label='True', prediction=False | reasons=[] | quote excerpt='LIABILITY OF EACH PARTY IN ANY WAY RELATED TO THIS AGREEMENT SHALL NOT EXCEED $2,000,000.00 (EXCLUDING ANY AMOUNTS DUE AND PAYABLE PURSUANT TO SECTION \u200b8 HEREUNDER).'
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | Renewal Term | wrong fields: auto_renews: label='True', prediction=False; renewal_term_months: label='12', prediction=None | reasons=[] | quote excerpt='The term of this Agreement shall continue for one (1) year following the Launch Date, unless earlier terminated as provided herein. This Agreement may be renewed for any number of successive one (1) year terms by mutual written agreement of the parties prior to the conclusion of the term of this Agr'
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Renewal Term | wrong fields: renewal_term_months: label='12', prediction=None | reasons=[] | quote excerpt='Contract is renewable for 1 year extension by amendment to each opportunity. this agreement. Either Party may terminate this agreement for non-cause with a sixty (60) written notice.'
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Renewal Term | wrong fields: renewal_term_months: label='12', prediction=None | reasons=[] | quote excerpt='Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, '
+Errors caught: 7/13 (53.8%)
+Review rate: 18/60 (30.0%)
+Correct-but-downgraded: 11
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Cap On Liability | LOW | reasons=['required_fields_present_failed']
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Cap On Liability | MEDIUM | reasons=['cap_amount_not_supported_by_quote']
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | MEDIUM | reasons=['composite_evidence']
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | LOW | reasons=['evidence_not_found']
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | Renewal Term | LOW | reasons=['evidence_not_found']
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | Renewal Term | MEDIUM | reasons=['renewal_term_months_not_supported_by_quote', 'initial_term_months_not_supported_by_quote']
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Renewal Term | MEDIUM | reasons=['notice_days_not_supported_by_quote']
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | Renewal Term | LOW | reasons=['evidence_not_found']
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Renewal Term | MEDIUM | reasons=['renewal_term_months_not_supported_by_quote']
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+Numeric support x correctness (scored fields only):
+field | support | correct | wrong
+notice_days | supported | 14 | 0
+notice_days | unsupported | 1 | 0
+notice_days | not_applicable | 13 | 1
+renewal_term_months | supported | 17 | 0
+renewal_term_months | unsupported | 2 | 0
+renewal_term_months | not_applicable | 4 | 4
+initial_term_months | supported | 4 | 0
+initial_term_months | unsupported | 2 | 0
+initial_term_months | not_applicable | 0 | 0
+cap_amount | supported | 2 | 0
+cap_amount | unsupported | 1 | 0
+cap_amount | not_applicable | 4 | 0
+not_applicable: null numeric prediction (or failed extraction); excluded from the 2x2 supported/unsupported table.
+Field status x correctness (scored fields only; nonzero rows):
+clause_type | field | status | correct | wrong
+Cap On Liability | cap_amount | absence_claim | 4 | 0
+Cap On Liability | cap_amount | supported | 2 | 0
+Cap On Liability | cap_amount | unsupported | 1 | 0
+Cap On Liability | cap_formula | absence_claim | 17 | 1
+Cap On Liability | cap_formula | unsupported | 12 | 0
+Cap On Liability | currency | unsupported | 4 | 0
+Cap On Liability | found | absence_claim | 0 | 5
+Cap On Liability | found | unsupported | 25 | 0
+Cap On Liability | has_damages_exclusion | absence_claim | 2 | 8
+Cap On Liability | has_damages_exclusion | keyword_signal | 12 | 0
+Cap On Liability | has_damages_exclusion | unsupported | 8 | 0
+Cap On Liability | has_money_cap | absence_claim | 11 | 1
+Cap On Liability | has_money_cap | conflicting | 3 | 0
+Cap On Liability | has_money_cap | keyword_signal | 12 | 0
+Cap On Liability | has_money_cap | unsupported | 3 | 0
+Renewal Term | auto_renews | absence_claim | 4 | 1
+Renewal Term | auto_renews | explicit_negative | 3 | 1
+Renewal Term | auto_renews | keyword_signal | 18 | 0
+Renewal Term | auto_renews | unsupported | 2 | 0
+Renewal Term | found | unsupported | 30 | 0
+Renewal Term | initial_term_months | supported | 4 | 0
+Renewal Term | initial_term_months | unsupported | 2 | 0
+Renewal Term | notice_days | absence_claim | 9 | 1
+Renewal Term | notice_days | explicit_negative | 4 | 0
+Renewal Term | notice_days | supported | 14 | 0
+Renewal Term | notice_days | unsupported | 1 | 0
+Renewal Term | renewal_term_months | absence_claim | 4 | 4
+Renewal Term | renewal_term_months | supported | 17 | 0
+Renewal Term | renewal_term_months | unsupported | 2 | 0
+HIGH-but-wrong after field status: 0
+None
+This count requires EVERY wrong field to be supported or keyword_signal; it does not change confidence levels.
+No support rule was specified for found, currency or cap_formula: present values are unsupported; null/False values are absence_claim.
+
+RUN: extraction_results_v2_repeat.csv
+level | rows | fully correct | wrong
+HIGH | 43 | 39 | 4
+MEDIUM | 10 | 9 | 1
+LOW | 2 | 2 | 0
+NOT_FOUND | 5 | 0 | 5
+HIGH-but-wrong: 4/43 (9.3%)
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | Cap On Liability | wrong fields: has_damages_exclusion: label='True', prediction=False | reasons=[] | quote excerpt='10.8 PPI Liability Limitation. Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury cause'
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | Cap On Liability | wrong fields: has_damages_exclusion: label='True', prediction=False | reasons=[] | quote excerpt='a) for direct damage to physical goods (property damage or “zaakschade”) or directly resulting from death or personal injury: up to a maximum of *** per event or series of connected events and up to a further maximum of *** for all events (connected or not) in any period of 12 calendar months;'
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | Cap On Liability | wrong fields: has_damages_exclusion: label='True', prediction=False | reasons=[] | quote excerpt='LIABILITY OF EACH PARTY IN ANY WAY RELATED TO THIS AGREEMENT SHALL NOT EXCEED $2,000,000.00 (EXCLUDING ANY AMOUNTS DUE AND PAYABLE PURSUANT TO SECTION \u200b8 HEREUNDER).'
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | Renewal Term | wrong fields: renewal_term_months: label='12', prediction=None | reasons=[] | quote excerpt='Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, '
+Errors caught: 6/10 (60.0%)
+Review rate: 17/60 (28.3%)
+Correct-but-downgraded: 11
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | Cap On Liability | LOW | reasons=['required_fields_present_failed']
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Cap On Liability | MEDIUM | reasons=['cap_amount_not_supported_by_quote']
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | Cap On Liability | MEDIUM | reasons=['composite_evidence']
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | Cap On Liability | LOW | reasons=['evidence_not_found']
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | Renewal Term | MEDIUM | reasons=['renewal_term_months_not_supported_by_quote', 'initial_term_months_not_supported_by_quote']
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | Renewal Term | MEDIUM | reasons=['notice_days_not_supported_by_quote']
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | Renewal Term | MEDIUM | reasons=['renewal_term_months_not_supported_by_quote', 'initial_term_months_not_supported_by_quote']
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+Numeric support x correctness (scored fields only):
+field | support | correct | wrong
+notice_days | supported | 15 | 0
+notice_days | unsupported | 1 | 0
+notice_days | not_applicable | 13 | 0
+renewal_term_months | supported | 19 | 0
+renewal_term_months | unsupported | 2 | 0
+renewal_term_months | not_applicable | 4 | 2
+initial_term_months | supported | 3 | 0
+initial_term_months | unsupported | 3 | 0
+initial_term_months | not_applicable | 0 | 0
+cap_amount | supported | 2 | 0
+cap_amount | unsupported | 1 | 0
+cap_amount | not_applicable | 4 | 0
+not_applicable: null numeric prediction (or failed extraction); excluded from the 2x2 supported/unsupported table.
+Field status x correctness (scored fields only; nonzero rows):
+clause_type | field | status | correct | wrong
+Cap On Liability | cap_amount | absence_claim | 4 | 0
+Cap On Liability | cap_amount | supported | 2 | 0
+Cap On Liability | cap_amount | unsupported | 1 | 0
+Cap On Liability | cap_formula | absence_claim | 17 | 1
+Cap On Liability | cap_formula | unsupported | 12 | 0
+Cap On Liability | currency | unsupported | 4 | 0
+Cap On Liability | found | absence_claim | 0 | 5
+Cap On Liability | found | unsupported | 25 | 0
+Cap On Liability | has_damages_exclusion | absence_claim | 2 | 8
+Cap On Liability | has_damages_exclusion | keyword_signal | 12 | 0
+Cap On Liability | has_damages_exclusion | unsupported | 8 | 0
+Cap On Liability | has_money_cap | absence_claim | 11 | 1
+Cap On Liability | has_money_cap | conflicting | 3 | 0
+Cap On Liability | has_money_cap | keyword_signal | 12 | 0
+Cap On Liability | has_money_cap | unsupported | 3 | 0
+Renewal Term | auto_renews | absence_claim | 4 | 0
+Renewal Term | auto_renews | explicit_negative | 3 | 0
+Renewal Term | auto_renews | keyword_signal | 19 | 0
+Renewal Term | auto_renews | unsupported | 3 | 0
+Renewal Term | found | unsupported | 30 | 0
+Renewal Term | initial_term_months | supported | 3 | 0
+Renewal Term | initial_term_months | unsupported | 3 | 0
+Renewal Term | notice_days | absence_claim | 10 | 0
+Renewal Term | notice_days | explicit_negative | 3 | 0
+Renewal Term | notice_days | supported | 15 | 0
+Renewal Term | notice_days | unsupported | 1 | 0
+Renewal Term | renewal_term_months | absence_claim | 4 | 2
+Renewal Term | renewal_term_months | supported | 19 | 0
+Renewal Term | renewal_term_months | unsupported | 2 | 0
+HIGH-but-wrong after field status: 0
+None
+This count requires EVERY wrong field to be supported or keyword_signal; it does not change confidence levels.
+No support rule was specified for found, currency or cap_formula: present values are unsupported; null/False values are absence_claim.

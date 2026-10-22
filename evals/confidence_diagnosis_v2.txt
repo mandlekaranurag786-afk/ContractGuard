@@ -1,0 +1,86 @@
+
+RUN: v2
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | cap_amount | 500000.0
+QUOTE: "IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER INDIRECT DAMAGES UNDER ANY CAUSE OF ACTION ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, CLAIMS ARISING FROM MALFUNCTION OR DEFECTS IN THE PRODUCTS. DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM; OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000)."
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: 'five hundred thousand', unit=dollars, unit_present=True, keyword_near=False, context='y distributor to developer within the six (6) month period immediately preceding the cause giving rise to the claim; or five hundred thousand dollars ($5oo,000).'
+FIX: not fixed: outside permitted bug classes
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | renewal_term_months | 36
+QUOTE: 'and shall continue for three years thereafter (the “Initial Term”). Unless either party gives written notice of termination of this Agreement at least 60 days prior to the end of the Initial Term, or any successive three-year term, this Agreement shall automatically renew for successive additional three-year terms'
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: 'three', unit=years, unit_present=True, keyword_near=False, context='and shall continue for three years thereafter (the "initial term"). unless either party gives written notice of termination of this agreement at lea'
+FIX: fixed: hyphenated number-unit boundary
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | renewal_term_months | 12
+QUOTE: '13.1. The present Agreement is effective as from 1 January 2009. It is established by calendar year and renewed tacitly every year.  13.2. The Agreement rests, for all that, cancellable at any time by any of the parties before the expiry date of the Agreement or any of its  renewals, upon three months prior written notice.'
+WHY: (b) number found but no matching unit within 20 chars
+MATCH: '1', unit=years, unit_present=False, keyword_near=True, context='13.1. the present agreement is effective as from 1 january 2009. it is established by calendar year and renewed tacitly every year. 13.2. the agreement rests, for all tha'
+FIX: not fixed: outside permitted bug classes
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | notice_days | 90
+QUOTE: 'This Agreement shall have an initial term of one (1) year from the date first above written (the "Initial Term"), and shall thereafter automatically renew for successive two (2) year periods (each a "Renewal Term"), unless earlier terminated in accordance with the terms o'
+WHY: (a) no number form found
+FIX: not fixed: outside permitted bug classes
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | renewal_term_months | 12
+QUOTE: 'This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of\nthree (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this \n\n[4ad65d6b4c9386358a48bd131e89d48c6ab6e2d3f1f296ca6ccb91ed68cc523a:10] rs from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year\nterm.'
+WHY: (a) no number form found
+FIX: fixed: hyphenated number-unit boundary
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | renewal_term_months | 60
+QUOTE: 'The term of this Agreement shall commence on the Effective Date of this Agreement and shall expire twenty (20) years from the effective date of this Agreement.'
+WHY: (a) no number form found
+FIX: not fixed: outside permitted bug classes
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | initial_term_months | 180
+QUOTE: 'This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party'
+WHY: (a) no number form found
+FIX: not fixed: outside permitted bug classes
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | initial_term_months | 180
+QUOTE: '2.1 Term. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party (such fifteen (15) Contract Year period, as may be further extended as provided herein is referr'
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: '15', unit=years, unit_present=True, keyword_near=False, context="her party by providing thirty (30) calendar days' prior written notice of termination to the other party (such fifteen (15) contract year period, as may be further extended as provided herein is referr"
+MATCH: 'fifteen', unit=years, unit_present=True, keyword_near=False, context="ed by either party by providing thirty (30) calendar days' prior written notice of termination to the other party (such fifteen (15) contract year period, as may be further extended as provided herein is referr"
+FIX: not fixed: outside permitted bug classes
+
+RUN: v2_repeat
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | cap_amount | 500000.0
+QUOTE: "IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER INDIRECT DAMAGES UNDER ANY CAUSE OF ACTION ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, CLAIMS ARISING FROM MALFUNCTION OR DEFECTS IN THE PRODUCTS. DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM; OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000)."
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: 'five hundred thousand', unit=dollars, unit_present=True, keyword_near=False, context='y distributor to developer within the six (6) month period immediately preceding the cause giving rise to the claim; or five hundred thousand dollars ($5oo,000).'
+FIX: not fixed: outside permitted bug classes
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | initial_term_months | 60
+QUOTE: 'This Agreement shall be valid for five (5) years from February 1, 2019 through January 31, 2024 unless this Agreement is terminated earlier pursuant to Section 14 (the “Term”).'
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: '5', unit=years, unit_present=True, keyword_near=False, context='this agreement shall be valid for five (5) years from february 1, 2019 through january 31, 2024 unless this agreement is terminated earlier pursuant to section 1'
+MATCH: 'five', unit=years, unit_present=True, keyword_near=False, context='this agreement shall be valid for five (5) years from february 1, 2019 through january 31, 2024 unless this agreement is terminated earlier pursuant to sectio'
+FIX: not fixed: outside permitted bug classes
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | renewal_term_months | 36
+QUOTE: 'and shall continue for three years thereafter (the “Initial Term”). Unless either party gives written notice of termination of this Agreement at least 60 days prior to the end of the Initial Term, or any successive three-year term, this Agreement shall automatically renew for successive additional three-year terms'
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: 'three', unit=years, unit_present=True, keyword_near=False, context='and shall continue for three years thereafter (the "initial term"). unless either party gives written notice of termination of this agreement at lea'
+FIX: fixed: hyphenated number-unit boundary
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | renewal_term_months | 12
+QUOTE: '13.1. The present Agreement is effective as from 1 January 2009. It is established by calendar year and renewed tacitly every year. \n\n 13.2. The Agreement rests, for all that, cancellable at any time by any of the parties before the expiry date of the Agreement or any of its\n renewals, upon three months prior written notice.'
+WHY: (b) number found but no matching unit within 20 chars
+MATCH: '1', unit=years, unit_present=False, keyword_near=True, context='13.1. the present agreement is effective as from 1 january 2009. it is established by calendar year and renewed tacitly every year. 13.2. the agreement rests, for all tha'
+FIX: not fixed: outside permitted bug classes
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | notice_days | 90
+QUOTE: 'This Agreement shall have an initial term of one (1) year from the date first above written (the "Initial Term"), and shall thereafter automatically renew for successive two (2) year periods (each a "Renewal Term"), unless earlier terminated in accordance with the terms o'
+WHY: (a) no number form found
+FIX: not fixed: outside permitted bug classes
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | renewal_term_months | 12
+QUOTE: 'This Agreement shall commence as of the Effective Date and shall continue in full force and effect for an initial term of\nthree (3) years from the Promotion Commencement Date, divided into three one-year periods. Unless terminated in\naccordance with the provisions of Section 18, this Agreement shall automatically renew for each subsequent one-year\nterm.'
+WHY: (a) no number form found
+FIX: fixed: hyphenated number-unit boundary
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | renewal_term_months | 60
+QUOTE: 'Upon the expiration of the initial term of this Agreement, Franchisee shall have the one time right to obtain a successor franchise to operate a Pretzel Time Unit at the Site (a "Successor Franchise") for a single term of five (5) years immediately following the expiration of the initial term of the Franchise upon giving Pretzel Time six (6) months notice prior to the expiration of the then current term'
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: '5', unit=years, unit_present=True, keyword_near=False, context='n a successor franchise to operate a pretzel time unit at the site (a "successor franchise") for a single term of five (5) years immediately following the expiration of the initial term of the franchise upon giving pretzel time six (6) month'
+MATCH: 'five', unit=years, unit_present=True, keyword_near=False, context=' obtain a successor franchise to operate a pretzel time unit at the site (a "successor franchise") for a single term of five (5) years immediately following the expiration of the initial term of the franchise upon giving pretzel time six (6) mo'
+FIX: not fixed: outside permitted bug classes
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | initial_term_months | 180
+QUOTE: 'This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party'
+WHY: (a) no number form found
+FIX: not fixed: outside permitted bug classes
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | initial_term_months | 180
+QUOTE: '2.1 Term. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party (such fifteen (15) Contract Year period, as may be further extended as provided herein is referr'
+WHY: (c) number+unit found but no field keyword within 120 chars
+MATCH: '15', unit=years, unit_present=True, keyword_near=False, context="her party by providing thirty (30) calendar days' prior written notice of termination to the other party (such fifteen (15) contract year period, as may be further extended as provided herein is referr"
+MATCH: 'fifteen', unit=years, unit_present=True, keyword_near=False, context="ed by either party by providing thirty (30) calendar days' prior written notice of termination to the other party (such fifteen (15) contract year period, as may be further extended as provided herein is referr"
+FIX: not fixed: outside permitted bug classes
