@@ -29,9 +29,14 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from contractguard.chunking import Chunk
-from contractguard.chunking.fixed import chunk_document
 from contractguard.evaluation.metrics import first_hit_rank, mrr_at_k, recall_at_k
-from contractguard.ingestion import load_parsed_document
+from contractguard.pipeline import (
+    CLAUSE_QUERIES,
+    build_filename_to_docid_map,
+    chunk_document,
+    load_parsed_document,
+    normalize_filename,
+)
 from contractguard.retrieval.hybrid import HybridSearchIndex
 from contractguard.retrieval.rerank import CrossEncoderScorer, RerankingRetriever
 from contractguard.retrieval.vector import InMemoryVectorIndex
@@ -48,11 +53,6 @@ RERANK_POOL_SIZE = 20
 MINILM_RERANKER = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 BGE_RERANKER = "BAAI/bge-reranker-base"
 
-# clause_type -> (CUAD raw-span column name, query we run against our index)
-CLAUSE_QUERIES = {
-    "Renewal Term": "what is the renewal term",
-    "Cap On Liability": "what is the liability cap",
-}
 
 # Contracts manually verified to have incorrect CUAD labels.
 # (normalized_filename, clause_type) -> reason
@@ -156,13 +156,6 @@ class _TimedPairScorer:
 
 # ---- Filename matching -----------------------------------------------------
 
-def normalize_filename(name: str) -> str:
-    """
-    Loosen filename matching so small formatting differences (A&R vs A_R,
-    extra spaces, case) don't silently drop a contract from the CUAD join.
-    Keep only alphanumeric characters, lowercased.
-    """
-    return re.sub(r"[^a-z0-9]", "", name.lower())
 
 
 # ---- Scoring ------------------------------------------------------------
@@ -232,17 +225,6 @@ def load_cuad_answers(csv_path: Path) -> dict[str, dict[str, list[str]]]:
 
 # ---- Loading our 30 selected contracts + mapping filename -> doc_id -------
 
-def build_filename_to_docid_map(parsed_dir: Path) -> dict[str, str]:
-    """
-    Our parsed JSON files are named <doc_id>.json and each one stores
-    original_filename internally. We need the reverse lookup to join
-    against master_clauses.csv, which only has filenames.
-    """
-    mapping = {}
-    for json_path in parsed_dir.glob("*.json"):
-        doc = load_parsed_document(json_path)
-        mapping[doc.original_filename] = doc.doc_id
-    return mapping
 
 
 # ---- Main eval loop -------------------------------------------------------

@@ -51,8 +51,8 @@ class Rule(BaseModel):
         if self.operator in (">=", "<="):
             if self.threshold is None:
                 raise ValueError(f"{self.operator} requires a numeric threshold")
-            if not types <= {int, float}:
-                raise ValueError(f"{self.operator} requires a numeric field")
+        if self.operator in (">=", "<=", "==") and not types <= {int, float}:
+            raise ValueError(f"{self.operator} requires a numeric field")
         if self.operator in ("is_true", "is_false") and types != {bool}:
             raise ValueError(f"{self.operator} requires a boolean field")
         if self.currency is not None and "currency" not in schema.model_fields:
@@ -101,6 +101,8 @@ def load_rules(path: str | Path) -> list[Rule]:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         if not isinstance(data, list):
             raise ValueError("Expected a JSON list of rules")
+        if not data:
+            raise ValueError("Rule list must not be empty")
         rules = [Rule.model_validate(item) for item in data]
         ids = [rule.id for rule in rules]
         if len(ids) != len(set(ids)):

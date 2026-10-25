@@ -43,19 +43,21 @@ from contractguard.llm.cache import DEFAULT_CACHE_DIR, CachedLLMClient
 from contractguard.llm.client import LLMClient, LLMResponse
 from contractguard.llm.errors import LLMQuotaError
 from contractguard.llm.gemini import GeminiClient
+from contractguard.pipeline import (
+    CLAUSE_QUERIES,
+    build_filename_to_docid_map,
+    chunk_document,
+    load_parsed_document,
+    normalize_filename,
+)
 from contractguard.retrieval.hybrid import HybridSearchIndex
 from evals.eval_retrieval import (  # noqa: E402
-    CLAUSE_QUERIES,
     KNOWN_BAD_LABELS,
     MASTER_CLAUSES_CSV,
     PARSED_DIR,
     best_overlap_against_spans,
-    build_filename_to_docid_map,
-    chunk_document,
     first_hit_rank,
     load_cuad_answers,
-    load_parsed_document,
-    normalize_filename,
 )
 
 LABELS = Path("evals/extraction_labels.csv")

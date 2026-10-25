@@ -3,15 +3,15 @@
 from functools import lru_cache
 
 from contractguard.chunking.fixed import _concatenate_pages
-from contractguard.retrieval.hybrid import HybridSearchIndex
-from evals.eval_retrieval import (
+from contractguard.pipeline import (
     CLAUSE_QUERIES,
-    PARSED_DIR,
     build_filename_to_docid_map,
     chunk_document,
     load_parsed_document,
     normalize_filename,
 )
+from contractguard.retrieval.hybrid import HybridSearchIndex
+from evals.eval_retrieval import PARSED_DIR
 
 
 class LocalRetrieval:

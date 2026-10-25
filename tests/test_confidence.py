@@ -260,3 +260,21 @@ def test_report(tmp_path):
 def test_currency_status(currency, quote, status):
     ex = extraction("cap_amount", 2000000).model_copy(update={"currency": currency})
     assert field_status(ex, "currency", quote) == status
+
+
+@pytest.mark.parametrize(
+    "country",
+    [
+        "canadian",
+        "australian",
+        "hong kong",
+        "singapore",
+        "new zealand",
+    ],
+)
+def test_foreign_dollars_do_not_support_usd(country):
+    ex = extraction("cap_amount", 2000000).model_copy(update={"currency": "USD"})
+    quote = f"The cap is two million {country.upper()} DOLLARS."
+    assert field_status(ex, "currency", quote) == "unsupported"
+    assert field_status(ex, "currency", quote + " ($2,000,000)") == "supported"
+    assert field_status(ex, "currency", quote + " Alternatively USD.") == "supported"

@@ -222,6 +222,7 @@ def test_currency_gate(currency, quote, code):
         ({"operator": "is_false"}, "boolean field"),
         ({"when": {"field": "missing", "equals": True}}, "Unknown field"),
         ({"threshold": True}, "validation error"),
+        ({"field": "auto_renews", "operator": "==", "threshold": 1}, "numeric field"),
     ],
 )
 def test_load_invalid(tmp_path, update, message):

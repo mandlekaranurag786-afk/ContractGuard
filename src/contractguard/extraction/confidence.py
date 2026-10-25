@@ -152,6 +152,12 @@ def field_status(extraction: Extraction, field: str, quote: str) -> str:
     if field == "currency":
         text = normalize(quote).casefold()
         code = value.strip().casefold()
+        if code == "usd":
+            text = re.sub(
+                r"\b(?:canadian|australian|hong kong|singapore|new zealand) dollars\b",
+                "",
+                text,
+            )
         pattern = (
             r"\$|\b(?:usd|us dollars|dollars)\b"
             if code == "usd"

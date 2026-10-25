@@ -40,6 +40,10 @@ class Extractor:
         self._client = client
         self._prompt_version = prompt_version
 
+    @property
+    def prompt_version(self) -> str:
+        return self._prompt_version
+
     def extract(self, clause_type: str, chunks: list[Chunk]) -> ExtractionResult:
         """Extract a clause, retrying once when the model returns invalid JSON."""
         schema = SCHEMAS[clause_type]
