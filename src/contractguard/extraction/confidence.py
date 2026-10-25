@@ -133,7 +133,7 @@ EXPLICIT_RENEWAL_NEGATIVE = (
 def field_status(extraction: Extraction, field: str, quote: str) -> str:
     """Describe local support, without changing confidence or interpreting law.
 
-    For fields without specified rules (found and textual/evidence fields),
+    For fields without specified rules (found, cap_formula and evidence fields),
     null/False is an absence claim; other values are unsupported. This avoids
     inventing support criteria for those fields.
     """
@@ -149,6 +149,15 @@ def field_status(extraction: Extraction, field: str, quote: str) -> str:
         return "absence_claim"
     if value is None:
         return "absence_claim"
+    if field == "currency":
+        text = normalize(quote).casefold()
+        code = value.strip().casefold()
+        pattern = (
+            r"\$|\b(?:usd|us dollars|dollars)\b"
+            if code == "usd"
+            else rf"(?<!\w){re.escape(code)}(?!\w)"
+        )
+        return "supported" if code and re.search(pattern, text) else "unsupported"
     if field not in BOOLEAN_KEYWORDS:
         return "absence_claim" if value is False else "unsupported"
     text = normalize(quote).casefold()

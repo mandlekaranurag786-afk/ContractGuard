@@ -241,3 +241,22 @@ def test_report(tmp_path):
     assert "notice_days | supported | 0 | 1" in report
     assert "label='90', prediction=60" in report
     assert rebuild_extraction({**row, "error": "failed"}) is None
+
+
+@pytest.mark.parametrize(
+    "currency,quote,status",
+    [
+        ("USD", "...SHALL NOT EXCEED $2,000,000.00 ...", "supported"),
+        ("USD", "No currency is stated", "unsupported"),
+        (None, "...SHALL NOT EXCEED $2,000,000.00 ...", "absence_claim"),
+        ("usd", "US Dollars", "supported"),
+        ("USD", "USD 200", "supported"),
+        ("USD", "US$200", "supported"),
+        ("USD", "two hundred dollars", "supported"),
+        ("EUR", "EUR 200", "supported"),
+        ("EUR", "$200", "unsupported"),
+    ],
+)
+def test_currency_status(currency, quote, status):
+    ex = extraction("cap_amount", 2000000).model_copy(update={"currency": currency})
+    assert field_status(ex, "currency", quote) == status
