@@ -46,7 +46,7 @@ class ClauseSummary(BaseModel):
 
 
 class Cost(BaseModel):
-    """Logical generation attempts; response tokens include cached metadata.
+    """Logical generation attempts; cached response tokens are counted separately.
 
     These are not billable-token estimates. Provider-internal retries and mixed
     cache outcomes within one extraction are not exposed by ExtractionResult.
@@ -56,6 +56,8 @@ class Cost(BaseModel):
     cache_hits: int
     input_tokens: int
     output_tokens: int
+    cached_input_tokens: int
+    cached_output_tokens: int
     elapsed_ms: float
 
 

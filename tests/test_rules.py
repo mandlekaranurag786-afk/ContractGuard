@@ -243,3 +243,83 @@ def test_load_list_and_duplicates(tmp_path):
     path.write_text("{}")
     with pytest.raises(ValueError, match="JSON list"):
         load_rules(path)
+
+
+@pytest.mark.parametrize(
+    "status,reason",
+    [
+        (
+            "absence_claim",
+            "No value was found and the text gives no proof either way; "
+            "a person must check.",
+        ),
+        ("unsupported", "A value was found but the quote does not prove it."),
+        ("conflicting", "The value disagrees with the quoted wording."),
+    ],
+)
+def test_plain_english_value_reasons(status, reason):
+    result, confidence = inputs()
+    confidence.field_status["notice_days"] = status
+    answer = evaluate_rule(rule(), result, confidence, TrustPolicy.KEYWORD)
+    assert answer.decision == Decision.NEEDS_REVIEW
+    assert answer.reason_code == "value_" + status
+    assert answer.reason == reason
+
+
+def test_condition_reason_names_field_and_status():
+    result, confidence = inputs()
+    answer = evaluate_rule(
+        rule(when={"field": "auto_renews", "equals": True}),
+        result,
+        confidence,
+        TrustPolicy.STRICT,
+    )
+    assert answer.decision == Decision.NEEDS_REVIEW
+    assert answer.reason_code == "condition_unverified"
+    assert "auto_renews" in answer.reason and "keyword_signal" in answer.reason
+
+
+@pytest.mark.parametrize("cap_amount", [None, 500000, 0])
+def test_formula_cap_reason(cap_amount):
+    from contractguard.extraction.schemas import LiabilityCapExtraction
+
+    result, _ = inputs()
+    result.clause_type = "Cap On Liability"
+    result.extraction = LiabilityCapExtraction(
+        found=True,
+        has_money_cap=True,
+        cap_amount=cap_amount,
+        currency="USD",
+        cap_formula="fees paid in twelve months",
+        has_damages_exclusion=False,
+        evidence_quote="Liability is limited to fees paid in twelve months",
+        evidence_chunk_id="doc:0",
+    )
+    confidence = compute_confidence(
+        result.extraction, result.checks, result.clause_type
+    )
+    answer = evaluate_rule(
+        rule(
+            clause_type=result.clause_type,
+            field="cap_amount",
+            threshold=2000000,
+            currency="USD",
+        ),
+        result,
+        confidence,
+        TrustPolicy.KEYWORD,
+    )
+    assert answer.decision == Decision.NEEDS_REVIEW
+    if cap_amount is None:
+        assert answer.reason_code == "cap_is_formula"
+        assert answer.reason == (
+            "The cap is a formula (fees paid in twelve months), not a fixed amount, "
+            "so it cannot be compared with 2000000 USD."
+        )
+    else:
+        assert answer.field_status == "unsupported"
+        assert answer.reason_code == "value_unsupported"
+        assert answer.reason == (
+            "A value was found but the quote does not prove it. "
+            "The extraction also found a formula: fees paid in twelve months."
+        )

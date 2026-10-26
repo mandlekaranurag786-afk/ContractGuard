@@ -5,6 +5,7 @@ from pathlib import Path
 
 from contractguard.checker import ContractChecker
 from contractguard.extraction.extractor import Extractor
+from contractguard.extraction.prompt import PRODUCT_PROMPT_VERSION
 from contractguard.llm.cache import DEFAULT_CACHE_DIR, CachedLLMClient
 from contractguard.llm.errors import LLMQuotaError
 from contractguard.llm.gemini import GeminiClient
@@ -22,17 +23,23 @@ def main(argv: list[str] | None = None) -> int:
         client = GeminiClient()
         extractor = Extractor(
             CachedLLMClient(client, model=client.model, cache_dir=DEFAULT_CACHE_DIR),
-            prompt_version="v2",
+            prompt_version=PRODUCT_PROMPT_VERSION,
         )
         report = ContractChecker(extractor).check(args.pdf, rules, args.policy)
     except (LLMQuotaError, ValueError, OSError) as exc:
         parser.exit(1, f"Check failed: {exc}\n")
     print(f"{report.overall_status}: {report.overall_reason}")
     for result in report.rule_results:
+        strength = (
+            "weak signal (keyword only)"
+            if result.evidence_strength == "weak_signal"
+            else result.evidence_strength
+        )
         print(
             f"{result.rule_id} | {result.decision} | {result.value!r} | "
-            f"{result.field_status} | {result.evidence_strength} | {result.reason}"
+            f"{result.field_status} | {strength} | {result.reason}"
         )
+        print(f"  Quote: {(result.evidence_quote or '')[:160]}")
     print(f"Cost: {report.cost.model_dump_json()}")
     if args.json_out:
         args.json_out.write_text(

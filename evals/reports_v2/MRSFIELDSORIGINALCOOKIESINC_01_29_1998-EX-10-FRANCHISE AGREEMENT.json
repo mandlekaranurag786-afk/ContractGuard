@@ -1,0 +1,151 @@
+{
+  "contract": "data/contracts/MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "FAIL",
+  "overall_reason": "At least one evaluated rule failed.",
+  "counts": {
+    "PASS": 2,
+    "FAIL": 2,
+    "NEEDS_REVIEW": 1,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "FAIL",
+      "reason_code": "compared",
+      "reason": "cap_amount=5000.0 does not satisfy >= 2000000.",
+      "field": "cap_amount",
+      "value": 5000.0,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "supported",
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Pretzel Time shall not be liable to Franchisee, the contractor, or any other person, and Franchisee waives all claims for liability or damages of any type whatsoever (whether direct, indirect, incidental, consequential, or exemplary), on account of the rendition of any services by Pretzel Time in accordance with this Section, except to the extent caused by the gross negligence or intentional misconduct of Pretzel Time, and then any such liability or damages shall be limited to five thousand dollars ($5,000.00).",
+      "evidence_chunk_id": "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:91"
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_money_cap=True satisfies is_true.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Pretzel Time shall not be liable to Franchisee, the contractor, or any other person, and Franchisee waives all claims for liability or damages of any type whatsoever (whether direct, indirect, incidental, consequential, or exemplary), on account of the rendition of any services by Pretzel Time in accordance with this Section, except to the extent caused by the gross negligence or intentional misconduct of Pretzel Time, and then any such liability or damages shall be limited to five thousand dollars ($5,000.00).",
+      "evidence_chunk_id": "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:91"
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Pretzel Time shall not be liable to Franchisee, the contractor, or any other person, and Franchisee waives all claims for liability or damages of any type whatsoever (whether direct, indirect, incidental, consequential, or exemplary), on account of the rendition of any services by Pretzel Time in accordance with this Section, except to the extent caused by the gross negligence or intentional misconduct of Pretzel Time, and then any such liability or damages shall be limited to five thousand dollars ($5,000.00).",
+      "evidence_chunk_id": "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:91"
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "The term of this Agreement shall commence on the Effective Date of this Agreement and shall expire twenty (20) years from the effective date of this Agreement.",
+      "evidence_chunk_id": "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:43"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "FAIL",
+      "reason_code": "compared",
+      "reason": "initial_term_months=240 does not satisfy <= 60.",
+      "field": "initial_term_months",
+      "value": 240,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "The term of this Agreement shall commence on the Effective Date of this Agreement and shall expire twenty (20) years from the effective date of this Agreement.",
+      "evidence_chunk_id": "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:43"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:91",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:225",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:149",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:224",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:223"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "renewal_term_months_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:60",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:43",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:51",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:56",
+        "b33a2c2de56069ee326fc9df4e0dc48dcc1640c2488c2816c4d73e828dd17cbe:188"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3534,
+    "cached_output_tokens": 417,
+    "elapsed_ms": 22193.58808999823
+  }
+}

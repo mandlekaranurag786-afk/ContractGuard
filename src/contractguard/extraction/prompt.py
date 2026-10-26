@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from contractguard.chunking import Chunk
 
+PRODUCT_PROMPT_VERSION = "v2"
+
 FIELD_DEFINITIONS = {
     "Renewal Term": (
         "FIELD DEFINITIONS\n"

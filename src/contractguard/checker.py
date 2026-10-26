@@ -7,6 +7,7 @@ from typing import Protocol
 
 from contractguard.chunking import Chunk
 from contractguard.extraction.confidence import compute_confidence
+from contractguard.extraction.prompt import PRODUCT_PROMPT_VERSION
 from contractguard.extraction.schemas import ExtractionResult
 from contractguard.ingestion import ParsedDocument
 from contractguard.pipeline import (
@@ -44,6 +45,10 @@ class ContractChecker:
     ) -> None:
         if top_k < 1:
             raise ValueError("top_k must be positive")
+        if extractor.prompt_version != PRODUCT_PROMPT_VERSION:
+            raise ValueError(
+                f"Product checker requires prompt {PRODUCT_PROMPT_VERSION}"
+            )
         self.extractor = extractor
         self.policy = policy
         self.top_k = top_k
@@ -104,8 +109,18 @@ class ContractChecker:
             cost=Cost(
                 llm_calls=sum(r.attempts for r in results.values() if not r.cached),
                 cache_hits=sum(r.attempts for r in results.values() if r.cached),
-                input_tokens=sum(r.input_tokens or 0 for r in results.values()),
-                output_tokens=sum(r.output_tokens or 0 for r in results.values()),
+                input_tokens=sum(
+                    r.input_tokens or 0 for r in results.values() if not r.cached
+                ),
+                output_tokens=sum(
+                    r.output_tokens or 0 for r in results.values() if not r.cached
+                ),
+                cached_input_tokens=sum(
+                    r.input_tokens or 0 for r in results.values() if r.cached
+                ),
+                cached_output_tokens=sum(
+                    r.output_tokens or 0 for r in results.values() if r.cached
+                ),
                 elapsed_ms=(perf_counter() - started) * 1000,
             ),
         )

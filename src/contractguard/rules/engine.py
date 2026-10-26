@@ -76,7 +76,10 @@ def evaluate_rule(
     if condition:
         if condition_status not in policy.statuses:
             return finish(
-                review, "condition_unverified", "The condition is not trusted."
+                review,
+                "condition_unverified",
+                f"The condition field {condition.field} has status {condition_status} "
+                "and is not trusted.",
             )
         used.append(condition_status)
         if condition_value != condition.equals:
@@ -86,9 +89,25 @@ def evaluate_rule(
                 "The trusted condition does not match the required value.",
             )
     if status not in policy.statuses:
-        return finish(
-            review, f"value_{status}", f"The field status {status} is not trusted."
-        )
+        formula = getattr(extraction, "cap_formula", None)
+        if rule.field == "cap_amount" and value is None and formula is not None:
+            target = f"{rule.threshold} {rule.currency or ''}".strip()
+            return finish(
+                review,
+                "cap_is_formula",
+                f"The cap is a formula ({formula}), not a fixed amount, "
+                f"so it cannot be compared with {target}.",
+            )
+        reasons = {
+            "absence_claim": "No value was found and the text gives no proof either "
+            "way; a person must check.",
+            "unsupported": "A value was found but the quote does not prove it.",
+            "conflicting": "The value disagrees with the quoted wording.",
+        }
+        reason = reasons.get(status, f"The field status {status} is not trusted.")
+        if rule.field == "cap_amount" and value is not None and formula is not None:
+            reason += f" The extraction also found a formula: {formula}."
+        return finish(review, f"value_{status}", reason)
     used.append(status)
     if rule.currency is not None:
         if currency_status not in policy.statuses:
@@ -100,7 +119,10 @@ def evaluate_rule(
             )
     if rule.operator in (">=", "<=") and value is None:
         return finish(
-            review, "value_absence_claim", "There is no numeric value to compare."
+            review,
+            "value_absence_claim",
+            "No value was found and the text gives no proof either way; "
+            "a person must check.",
         )
     if rule.operator == ">=":
         passed = value >= rule.threshold

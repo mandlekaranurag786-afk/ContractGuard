@@ -1,0 +1,153 @@
+{
+  "contract": "data/contracts/HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 3,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 2,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it. The extraction also found a formula: the lesser of: the amount paid under this agreement by distributor to developer within the six (6) month period immediately preceding the cause giving rise to the claim; or five hundred thousand dollars ($500,000).",
+      "field": "cap_amount",
+      "value": 500000.0,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "supported",
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER INDIRECT DAMAGES UNDER ANY CAUSE OF ACTION ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, CLAIMS ARISING FROM MALFUNCTION OR DEFECTS IN THE PRODUCTS. DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM; OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000).",
+      "evidence_chunk_id": "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:28"
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_money_cap=True satisfies is_true.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER INDIRECT DAMAGES UNDER ANY CAUSE OF ACTION ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, CLAIMS ARISING FROM MALFUNCTION OR DEFECTS IN THE PRODUCTS. DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM; OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000).",
+      "evidence_chunk_id": "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:28"
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "IN NO EVENT SHALL DEVELOPER BE LIABLE FOR ANY LOSS OF PROFIT OR ANY OTHER COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER INDIRECT DAMAGES UNDER ANY CAUSE OF ACTION ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, CLAIMS ARISING FROM MALFUNCTION OR DEFECTS IN THE PRODUCTS. DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM; OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000).",
+      "evidence_chunk_id": "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:28"
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "notice_days",
+      "value": 90,
+      "field_status": "unsupported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "This Agreement shall have an initial term of one (1) year from the date first above written (the \"Initial Term\"), and shall thereafter automatically renew for successive two (2) year periods (each a \"Renewal Term\"), unless earlier terminated in accordance with the terms o",
+      "evidence_chunk_id": "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:30"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "initial_term_months=12 satisfies <= 60.",
+      "field": "initial_term_months",
+      "value": 12,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "This Agreement shall have an initial term of one (1) year from the date first above written (the \"Initial Term\"), and shall thereafter automatically renew for successive two (2) year periods (each a \"Renewal Term\"), unless earlier terminated in accordance with the terms o",
+      "evidence_chunk_id": "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:30"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "cap_amount_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:28",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:37",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:27",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:19",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:20"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "notice_days_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:31",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:30",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:16",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:26",
+        "5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:10"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3433,
+    "cached_output_tokens": 525,
+    "elapsed_ms": 5054.066768003395
+  }
+}

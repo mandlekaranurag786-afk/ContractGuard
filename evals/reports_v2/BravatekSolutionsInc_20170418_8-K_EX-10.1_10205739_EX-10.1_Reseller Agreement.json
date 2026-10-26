@@ -1,0 +1,151 @@
+{
+  "contract": "data/contracts/BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 5,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "12. Liability Limitation. EXCEPT FOR IN THE EVENT OF WILLFUL MISCONDUCT OR GROSS NEGLIGENCE, THE RESELLER AND ITS AFFILIATES SHALL NOT BE LIABLE TO THE COMPANY, AND SHALL HAVE NO OBLIGATION TO INDEMNIFY OR HOLD HARMLESS THE COMPANY, WITH RESPECT TO OR IN CONNECTION WITH ANY LOSS RESULTING FROM OR CAUSED BY THE COMPANY PRODUCTS.",
+      "evidence_chunk_id": "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:12"
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "12. Liability Limitation. EXCEPT FOR IN THE EVENT OF WILLFUL MISCONDUCT OR GROSS NEGLIGENCE, THE RESELLER AND ITS AFFILIATES SHALL NOT BE LIABLE TO THE COMPANY, AND SHALL HAVE NO OBLIGATION TO INDEMNIFY OR HOLD HARMLESS THE COMPANY, WITH RESPECT TO OR IN CONNECTION WITH ANY LOSS RESULTING FROM OR CAUSED BY THE COMPANY PRODUCTS.",
+      "evidence_chunk_id": "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:12"
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "12. Liability Limitation. EXCEPT FOR IN THE EVENT OF WILLFUL MISCONDUCT OR GROSS NEGLIGENCE, THE RESELLER AND ITS AFFILIATES SHALL NOT BE LIABLE TO THE COMPANY, AND SHALL HAVE NO OBLIGATION TO INDEMNIFY OR HOLD HARMLESS THE COMPANY, WITH RESPECT TO OR IN CONNECTION WITH ANY LOSS RESULTING FROM OR CAUSED BY THE COMPANY PRODUCTS.",
+      "evidence_chunk_id": "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:12"
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status explicit_negative and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "explicit_negative",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "explicit_negative",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Contract is renewable for 1 year extension by amendment to each opportunity. this agreement. Either Party may terminate this agreement for non-cause with a sixty (60) written notice.",
+      "evidence_chunk_id": "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:1"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Contract is renewable for 1 year extension by amendment to each opportunity. this agreement. Either Party may terminate this agreement for non-cause with a sixty (60) written notice.",
+      "evidence_chunk_id": "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:1"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "LOW",
+      "confidence_reasons": [
+        "required_fields_present_failed"
+      ],
+      "retrieved_chunk_ids": [
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:12",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:11",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:9",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:1",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:14"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:4",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:11",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:1",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:3",
+        "fa0947b28a7ac9a78dcb1f47c6090a2a173cb66db62d92fa05f4d017918744af:10"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3442,
+    "cached_output_tokens": 380,
+    "elapsed_ms": 1211.2523289979436
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "contract": "data/contracts/Apollo Endosurgery - Manufacturing and Supply Agreement.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "LIABILITIES ARISING UNDER THIS ARTICLE 8, OR CASES OF GROSS NEGLIGENCE OR WILLFUL MISCONDUCT, IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY CONSEQUENTIAL, INDIRECT, SPECIAL, INCIDENTAL OR PUNITIVE DAMAGES INCLUDING LOSS OF USE, REVENUES OR PROFITS, INTERRUPTION OF BUSINESS OR CLAIMS AGAINST EITHER PARTY OR ITS CUSTOMERS BY ANY THIRD PARTY, WHETHER SUCH CLAIM IS BASED IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "evidence_chunk_id": "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:35"
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "LIABILITIES ARISING UNDER THIS ARTICLE 8, OR CASES OF GROSS NEGLIGENCE OR WILLFUL MISCONDUCT, IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY CONSEQUENTIAL, INDIRECT, SPECIAL, INCIDENTAL OR PUNITIVE DAMAGES INCLUDING LOSS OF USE, REVENUES OR PROFITS, INTERRUPTION OF BUSINESS OR CLAIMS AGAINST EITHER PARTY OR ITS CUSTOMERS BY ANY THIRD PARTY, WHETHER SUCH CLAIM IS BASED IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "evidence_chunk_id": "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:35"
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "LIABILITIES ARISING UNDER THIS ARTICLE 8, OR CASES OF GROSS NEGLIGENCE OR WILLFUL MISCONDUCT, IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY CONSEQUENTIAL, INDIRECT, SPECIAL, INCIDENTAL OR PUNITIVE DAMAGES INCLUDING LOSS OF USE, REVENUES OR PROFITS, INTERRUPTION OF BUSINESS OR CLAIMS AGAINST EITHER PARTY OR ITS CUSTOMERS BY ANY THIRD PARTY, WHETHER SUCH CLAIM IS BASED IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "evidence_chunk_id": "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:35"
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "notice_days",
+      "value": 365,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof.",
+      "evidence_chunk_id": "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:5"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "initial_term_months",
+      "value": 60,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "This Agreement shall commence on the Effective Date and shall be valid for a period of five (5) years with automatic renewal of one year thereafter until terminated by either party with one (1) year written notice prior to the expiration of the initial period or any extension period thereof.",
+      "evidence_chunk_id": "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:5"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:35",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:42",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:34",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:36",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:32"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "LOW",
+      "confidence_reasons": [
+        "evidence_not_found"
+      ],
+      "retrieved_chunk_ids": [
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:5",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:20",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:21",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:16",
+        "5a9777b1089b4890fafb88ef6337b01dccb4598aa81dc289e36f691a9a429e33:2"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3615,
+    "cached_output_tokens": 438,
+    "elapsed_ms": 4218.707526000799
+  }
+}

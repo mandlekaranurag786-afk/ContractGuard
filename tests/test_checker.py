@@ -112,6 +112,8 @@ def test_clause_once_report_roundtrip_and_cost():
     assert report.cost.cache_hits == 0
     assert report.cost.input_tokens == 10
     assert report.cost.output_tokens == 2
+    assert report.cost.cached_input_tokens == 0
+    assert report.cost.cached_output_tokens == 0
     assert report.cost.elapsed_ms >= 0
     assert ContractReport.model_validate_json(report.model_dump_json()) == report
     assert report.prompt_version == "v2"
@@ -164,6 +166,14 @@ def test_cached_result_cost():
     cost = service.check("fake.pdf", rules(), "policy.json").cost
     assert cost.llm_calls == 0
     assert cost.cache_hits == 1
+    assert cost.input_tokens == cost.output_tokens == 0
+    assert cost.cached_input_tokens == 10
+    assert cost.cached_output_tokens == 2
+
+
+def test_product_checker_requires_product_prompt():
+    with pytest.raises(ValueError, match="requires prompt v2"):
+        checker(FakeExtractor(prompt_version="v1"))
 
 
 def test_each_used_clause_once_and_quota_after_first_clause():
@@ -222,6 +232,16 @@ def test_cli_json_and_v2_without_network(tmp_path, monkeypatch, capsys):
     )
     service, _ = checker(FakeExtractor())
 
+    original_check = service.check
+
+    def render_fixture(*args):
+        report = original_check(*args)
+        report.rule_results[0].evidence_strength = "weak_signal"
+        report.rule_results[0].evidence_quote = "Q" * 160 + "DO_NOT_PRINT"
+        return report
+
+    monkeypatch.setattr(service, "check", render_fixture)
+
     def factory(extractor):
         assert extractor.prompt_version == "v2"
         return service
@@ -231,4 +251,8 @@ def test_cli_json_and_v2_without_network(tmp_path, monkeypatch, capsys):
         check.main(["fake.pdf", "--policy", str(policy), "--json-out", str(out)]) == 0
     )
     assert ContractReport.model_validate_json(out.read_text()).overall_status == "PASS"
-    assert "Cost:" in capsys.readouterr().out
+    printed = capsys.readouterr().out
+    assert "Cost:" in printed
+    assert "weak signal (keyword only)" in printed
+    assert "  Quote: " + "Q" * 160 in printed
+    assert "DO_NOT_PRINT" not in printed

@@ -1,0 +1,149 @@
+{
+  "contract": "data/contracts/KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "neither Party shall be liable to the other Party (whether in contract, tort (including negligence) or for breach of statutory duty or otherwise) for any loss of profits, use, opportunity, goodwill, business or anticipated savings, for any indirect, incidental, special, indirect, punitive or consequential losses",
+      "evidence_chunk_id": "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:58"
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "neither Party shall be liable to the other Party (whether in contract, tort (including negligence) or for breach of statutory duty or otherwise) for any loss of profits, use, opportunity, goodwill, business or anticipated savings, for any indirect, incidental, special, indirect, punitive or consequential losses",
+      "evidence_chunk_id": "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:58"
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "neither Party shall be liable to the other Party (whether in contract, tort (including negligence) or for breach of statutory duty or otherwise) for any loss of profits, use, opportunity, goodwill, business or anticipated savings, for any indirect, incidental, special, indirect, punitive or consequential losses",
+      "evidence_chunk_id": "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:58"
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Following the Initial Term, the Agreement shall automatically be renewed for additional periods of **** (each, a “Renewal Term,” and, together with the Initial Term, the “Term”)), unless a Party provides written notification of non-renewal to the other Party at least **** of the Initial Term or a Renewal Term.",
+      "evidence_chunk_id": "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:30"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Following the Initial Term, the Agreement shall automatically be renewed for additional periods of **** (each, a “Renewal Term,” and, together with the Initial Term, the “Term”)), unless a Party provides written notification of non-renewal to the other Party at least **** of the Initial Term or a Renewal Term.",
+      "evidence_chunk_id": "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:30"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:56",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:53",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:58",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:52",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:57"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:30",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:12",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:32",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:57",
+        "5850e801153af9b95cc558739ba1aef8d094042edf928163c8bbf5f8f00ef746:14"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3575,
+    "cached_output_tokens": 388,
+    "elapsed_ms": 6301.872056996217
+  }
+}

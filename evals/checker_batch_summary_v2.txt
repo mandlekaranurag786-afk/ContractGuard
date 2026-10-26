@@ -1,0 +1,63 @@
+Policy: policies/eval_policy.json | KEYWORD | prompt=v2
+Cache-only: ON | cache=evals/llm_cache
+Embedding model: loaded once; shared by pipeline via _load_model lru_cache
+Model load time (separate): 420.65 ms
+contract | overall_status | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE | llm_calls | cache_hits | elapsed_ms
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 7382.31
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 5754.21
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 4218.71
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | FAIL | 1 | 1 | 3 | 0 | 0 | 2 | 16066.50
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | NEEDS_REVIEW | 4 | 0 | 1 | 0 | 0 | 2 | 3326.37
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 1211.25
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | FAIL | 2 | 1 | 2 | 0 | 0 | 2 | 962.82
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 2833.67
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 3530.36
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 5351.33
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 5054.07
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 5134.66
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 3704.20
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 6301.87
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 6139.46
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | FAIL | 2 | 2 | 1 | 0 | 0 | 2 | 22193.59
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 5892.81
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 1756.76
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 15742.62
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 10450.17
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 6277.03
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 4140.39
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 14735.55
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 15105.05
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 27023.01
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 4723.22
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 33135.79
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 6630.40
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 1962.28
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 6707.20
+Overall status counts: FAIL=3, NEEDS_REVIEW=27, PASS=0, NO_APPLICABLE_RULES=0
+Decision counts: PASS=50, FAIL=4, NEEDS_REVIEW=96, NOT_APPLICABLE=0
+Review rate: 96/150 (64.00%)
+Reason code counts: cap_is_formula=11, clause_not_found=15, compared=54, condition_unverified=12, low_confidence=10, value_absence_claim=30, value_unsupported=18
+Median elapsed_ms: 5823.51
+p95 elapsed_ms (nearest rank): 27023.01
+Total llm_calls: 0
+Total cache_hits: 60
+
+CONSISTENCY: evals/rule_results_v2_keyword_v2.csv
+Compared fields: (decision, reason_code, evidence_strength); reason text ignored
+Rows compared: 150
+Rows identical: 139
+Allowed cap_is_formula changes: 11
+Rows identical after allowed exception: 150
+Decision differences: 0
+Unexpected differences: 0
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | cap_min_2m | batch=('NEEDS_REVIEW', 'cap_is_formula', None) | offline=('NEEDS_REVIEW', 'value_absence_claim', None) | allowed cap_is_formula reason change

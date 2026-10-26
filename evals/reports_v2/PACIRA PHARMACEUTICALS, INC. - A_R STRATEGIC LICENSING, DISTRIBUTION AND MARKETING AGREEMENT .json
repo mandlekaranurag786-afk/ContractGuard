@@ -1,0 +1,149 @@
+{
+  "contract": "data/contracts/PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "supported",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]); provided",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97"
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]); provided",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97"
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]); provided",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97"
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "notice_days=180 satisfies >= 30.",
+      "field": "notice_days",
+      "value": 180,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Thereafter the term of this Agreement shall automatically renew for consecutive periods of two (2) years each. Notwithstanding the foregoing, this Agreement can be terminated by EKR at the end of the Initial Term by delivery of written notice to PPI at least one hundred eighty (180) days prior to the end of the Initial Term or any renewal term.",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Thereafter the term of this Agreement shall automatically renew for consecutive periods of two (2) years each. Notwithstanding the foregoing, this Agreement can be terminated by EKR at the end of the Initial Term by delivery of written notice to PPI at least one hundred eighty (180) days prior to the end of the Initial Term or any renewal term.",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:95",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:98",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:96",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:15"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:110",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:37",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:16",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:125"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3488,
+    "cached_output_tokens": 429,
+    "elapsed_ms": 15742.620239994721
+  }
+}

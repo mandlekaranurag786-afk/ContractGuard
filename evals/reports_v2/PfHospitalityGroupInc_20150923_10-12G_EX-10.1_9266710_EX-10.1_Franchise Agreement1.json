@@ -1,0 +1,154 @@
+{
+  "contract": "data/contracts/PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 5,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "2.1. Term. This Agreement expires ten (10) years from the Agreement Date (the “Term”), unless it is terminated sooner as provided in other sections of this Agreement.",
+      "evidence_chunk_id": "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:14"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "initial_term_months",
+      "value": 120,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "2.1. Term. This Agreement expires ten (10) years from the Agreement Date (the “Term”), unless it is terminated sooner as provided in other sections of this Agreement.",
+      "evidence_chunk_id": "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:14"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "NOT_FOUND",
+      "confidence_reasons": [
+        "absence_not_trusted",
+        "evidence_not_found"
+      ],
+      "retrieved_chunk_ids": [
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:41",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:73",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:75",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:175",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:77"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "initial_term_months_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:16",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:168",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:14",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:70",
+        "74c17bbd0db5536cf09e6eb2826f765954d4e1624f93448245d28e0bc36cc552:69"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3641,
+    "cached_output_tokens": 249,
+    "elapsed_ms": 14735.552229001769
+  }
+}
