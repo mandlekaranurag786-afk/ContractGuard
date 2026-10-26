@@ -215,7 +215,6 @@ specific reason logged, distinct from Finding 2's exclusion.
 
 Hybrid (RRF k=60) vs dense, recall@1 at overlap≥0.5: Renewal Term net +2 (5 gained, 3 lost), Cap On Liability net −3 (0 gained, 3 lost). BM25 helps clauses with distinctive vocabulary (“renew”) and hurts clauses whose key word is common across the contract (“liability”) while the operative wording (“shall not exceed”) doesn’t match the query. Overall recall@1 hides this, so recall should be reported per clause type from now on.
 
-
 ## Correction: earlier numbers in this file used a buggy metric
 
 The "Baseline results" and "Hybrid Search" sections above were measured
@@ -335,3 +334,245 @@ PYTHONUNBUFFERED=1 and tee to see progress.
 - Eval runs use ONE fixed model (no automatic fallback), so results are
   not mixed. The product API may fall back to another model.
 - Cache every LLM response on disk, so re-runs cost no API calls.
+
+
+
+## Structured extraction: design (19 Oct 2026)
+
+* Two Pydantic schemas, one per clause type:
+  * Renewal Term: found, initial_term_months, auto_renews, renewal_term_months,
+    notice_days, evidence_quote, evidence_chunk_id.
+  * Cap On Liability: found, has_money_cap, cap_amount, currency, cap_formula,
+    has_damages_exclusion, evidence_quote, evidence_chunk_id.
+* Why two schemas: each clause type needs different facts, every field has a
+  clear type for rules, and each prompt only contains its own definitions
+  ("clause isolation").
+* Separate has_money_cap and has_damages_exclusion: CUAD's "Cap On Liability"
+  mixes caps and exclusions; a rule "cap >= $2M" must never pass because of an
+  exclusion.
+* Nullable fields: "not stated" is a real answer; forcing a number forces a guess.
+* Evidence quote + chunk id: a person can verify it, and my code can check it.
+* Input: top 5 hybrid chunks (rank 1 is right only ~3 times in 4). Temperature 0.
+* Prompt says the contract text is data, not instructions (prompt injection).
+* Field definitions live in one place (FIELD_DEFINITIONS); the labelling guide
+  is generated from them, so the model and the labeller use the same meaning.
+* Invalid JSON: retry once, then return an error result. Never crash.
+
+## Gemini client, cache, fallback (20 Oct)
+
+* Model: gemini-3.5-flash-lite (AI Studio free tier). New dependency: google-genai only.
+* Pacing 4 s between calls (15 requests/min). Retries on 429/5xx: 5 s, 15 s, 45 s.
+* LLMQuotaError STOPS an eval run. Recording failures would make accuracy look
+  bad for a reason unrelated to the model.
+* Disk cache key = sha256(model + schema name + schema JSON + prompt). Only valid
+  JSON is cached (otherwise the retry gets the same broken answer).
+* FallbackLLMClient exists for the product only. Eval runs use one model, so
+  results never mix models.
+* API key in .env (git-ignored). Before every commit: review staged files and
+  grep the staged diff for the key prefix (must be 0).
+
+## Labels (19-20 Oct, corrected 21 Oct)
+
+* CUAD gives clause spans, not values, so I made my own labels: 30 contracts x 2
+  clause types = 60 cases. First draft with AI help; every row reviewed by me
+  plus a second review; CHECK rows discussed and fixed with written reasons.
+* Labels v2: empty = not scored; NONE = "the correct answer is empty" and IS
+  scored. Same v1 answers: fully correct 47/60 -> 44/60. The model didn't get
+  worse; the test got stricter.
+* The two abstention cases were wrong, the model was right:
+  * AlliedEsports: no renewal wording, but a 5-year term is stated, and my
+    definition of found includes the term length -> found = True.
+  * OPERALTD: "may be extended or renewed by the Parties in a writing
+    executed by..." exists. My Part 1 note "no renewal clause exists" was
+    WRONG. CUAD's span is still the wrong clause, so it stays a bad label.
+* Labels v2 changed 44 cells in 17 rows, each with a reason in label_notes.
+  The original labels file is kept unchanged.
+* After this, the set has 0 true "no answer" cases (abstention 0/0).
+
+## First real run, prompt v1 (21 Oct)
+
+* Fully correct (labels v2): Renewal 24/30, Cap 20/30 = 44/60.
+* Weak fields: notice_days 24/29, cap_formula 25/30, has_damages_exclusion 22/30.
+* cap_amount 7/7 sounds perfect but only 7 rows are scorable (3 real numbers +
+  4 redacted). Too small to claim anything.
+* Error split (per wrong field): retrieval_miss 5, extraction_error 19.
+  Known flaw: decided per ROW (was CUAD's clause in the top 5?), but a field can
+  live in another chunk. It blames the model for some retrieval misses.
+* Cost: ~1,700 input tokens and ~200 output tokens per call; median 1.6 s.
+
+## Faithfulness (21 Oct)
+
+* Strict check: quote must be in the cited chunk (after cleaning). v1: 45/56.
+* I diagnosed all 11 failures before changing anything: 5 crossed a chunk
+  border, 3 had page numbers/headers inside, 1 cited the wrong chunk,
+  1 whitespace only, 1 joined two passages with "...". Mostly my chunking and
+  the PDF, not invented text.
+* I did NOT loosen the strict check. I added levels: strict > in_context
+  (touching retrieved chunks only, never the full contract) > composite
+  ("..." parts all found) > not_found. Plus cited_chunk_correct (52/52).
+* Zero-width space bug: the PDF had an invisible U+200B in "SECTION 8".
+  normalize() now removes invisible characters. Lesson: print with repr().
+* Faithful is not the same as correct; both are measured separately.
+* Tooling bug: --fake wrote 120 fake answers into the real cache. Deleted them;
+  --fake now uses a temporary folder that is always cleaned up.
+
+## Prompt v2 (21 Oct)
+
+* notice_days: ONLY notice to STOP an automatic renewal (incl. termination at
+  the end of the term). Not notice to renew/extend/exercise an option, not
+  termination for convenience. Null if not automatic. (Bellicum 180 and
+  Bravatek 60 were wrong in v1.)
+* Redacted amounts: number null, never copy "[***]". A fixed amount is not a
+  formula.
+* has_damages_exclusion: true if ANY chunk excludes these damages. This rule
+  did not help (still 22/30), see the exclusion check below.
+* v1 is protected by a hash test. The cache key includes the prompt, so v1
+  and v2 answers never mix. Results files are versioned, never overwritten.
+
+## Repeat runs and the v1 vs v2 decision (21 Oct)
+
+* Temperature 0 is not deterministic. Repeat runs used identical settings and
+  a separate empty cache folder.
+* v1: 44 -> 45 fully correct (3 prediction changes).
+  v2: 47 -> 50 (7 prediction changes).
+* v2's first run showed 7 field regressions; the repeat fixed 5 of them.
+  I called them "systematic" before the repeat. That was wrong.
+* Decision: prompt v2 is the product default. More accurate in both runs, and
+  its errors are mostly EMPTY values (-> review) instead of WRONG values
+  (-> confident wrong decision). Cost: ~7% more tokens, a bit less stable on
+  borderline contracts.
+* v2's first run had median 7.1 s (p95 41 s); the repeat had 2.2 s. The API
+  was slow that day, not the prompt.
+* One repeat is evidence, not a full noise measurement.
+
+## Exclusion misses (21 Oct)
+
+* has_damages_exclusion stayed 22/30 in every run. For PACIRA, Pareteum and
+  Xpresspa, the exclusion sentence was in a chunk NOT in the top 5
+  (:99, :49, :44). Retrieval misses, wrongly counted as extraction errors.
+* My earlier guess (a model pattern over 8 cases) was wrong. I only checked
+  these 3.
+* Possible fix: a second retrieval query just for exclusions.
+
+## Confidence and field status (22 Oct)
+
+* Confidence comes ONLY from code checks, never from the model:
+  NOT_FOUND (model said found=false, always review), LOW (quote not found or
+  required fields missing), MEDIUM (composite quote or a number not in the
+  quote), HIGH (otherwise).
+* Number support: number in the quote in any common form, unit within 20
+  characters, field keyword within 120 characters. Fixed "three-year" /
+  "one-year" (hyphen). Left Hyperion and ordinals as they are (safe: review).
+* Result: HIGH-but-wrong 14.3% (v2) and 9.3% (repeat). Target was 5%: missed.
+* Every wrong HIGH answer was the model saying false/null.
+* Field status: supported / keyword_signal / explicit_negative /
+  absence_claim / conflicting / unsupported.
+  supported and keyword_signal: 0 wrong in both runs. absence_claim holds the
+  errors (exclusion 2 correct / 8 wrong; Cap found=false 0/5).
+* Negation bug: "SHALL NOT EXCEED" was treated as negative. In contracts a
+  limit is written as a prohibition. Negation is now checked only for
+  auto_renews.
+* Limits: designed and measured on the same 60 rows; one quote can't support
+  every field; no true "no answer" cases (so found=false can never be right
+  in this data).
+
+## Rule engine (24-25 Oct)
+
+* Gemini extracts facts; deterministic Python makes the compliance decision.
+  No LLM in the decision.
+* Rules in JSON (no new dependency): field, operator (>=, <=, ==, is_true,
+  is_false), threshold, currency, optional "when" condition.
+  "==" only on numbers (True == 1 in Python).
+* Decisions: PASS, FAIL, NEEDS_REVIEW, NOT_APPLICABLE.
+* Order: extraction error -> NOT_FOUND (never "FAIL: no cap") -> LOW ->
+  condition -> field status -> currency -> compare. MEDIUM does not block:
+  trust is checked per field.
+* Currency must be proven by the quote ($, USD, US Dollars); "Canadian
+  dollars" etc. do not count. Unknown or different currency -> review.
+* Three trust policies: STRICT (supported), KEYWORD (+ keyword_signal),
+  BALANCED (+ explicit_negative). Pre-registered choice: move to a looser
+  policy only with 0 unsafe in BOTH runs and >= 3 fewer reviews.
+* Unsafe = any final decision (PASS, FAIL or NOT_APPLICABLE) that differs from
+  the true decision. A wrong NOT_APPLICABLE silently skips a check.
+* Truth = the same rules applied to the labels.
+* Bug in my own spec: the truth function checked NONE before the condition,
+  so non-auto-renewing contracts got NEEDS_REVIEW instead of NOT_APPLICABLE
+  (truth NOT_APPLICABLE showed 0). It made BALANCED look like 4 unsafe; the
+  real number was 1 (2Themart, v2 run only).
+* Result (scored rule-rows, v2 / repeat):
+  STRICT 0 unsafe, 95% review (useless in practice).
+  KEYWORD 0 / 0 unsafe, 58% / 57% review. SELECTED.
+  BALANCED 1 / 0 unsafe -> blocked.
+* Every automatic decision under KEYWORD was correct (42 / 43), but 37-38 of
+  them rest on a weak keyword signal.
+* The engine PASSes easily with proof but rarely FAILs on missing things
+  (2 engine FAILs vs 18 true FAILs): "there is no cap" can't be proven by one
+  quote, so it goes to a person.
+* Limits: designed on the same rows; keyword is a weak signal; only 3 real cap
+  amounts; exceptions like "EXCEPT WITH RESPECT TO INDEMNIFICATION" are not
+  handled.
+
+## Contract checker and the 30-contract run (25-26 Oct)
+
+* check_contract(PDF, policy) -> one JSON report + CLI. Each clause type is
+  extracted once, only if a rule needs it.
+* Overall status: any FAIL -> FAIL; else any NEEDS_REVIEW -> NEEDS_REVIEW;
+  else at least one PASS -> PASS; all NOT_APPLICABLE -> NO_APPLICABLE_RULES
+  ("this is not an approval"). An empty policy is an error.
+* Quota error -> no partial report presented as complete.
+* PRODUCT_PROMPT_VERSION = "v2" for checker/CLI/API. Eval code keeps v1
+  defaults so old commands reproduce old results.
+* Token counts: uncached tokens only; cached tokens reported separately.
+* Plain-English reasons, e.g. "The cap is a formula (...), not a fixed amount".
+  cap_is_formula only when cap_amount is empty (Hyperion has both a fixed
+  amount and a formula).
+* 30 contracts, cache only: 0 LLM calls, 0 decision differences vs the
+  offline eval (150 rule results). The product path matches the eval.
+* Result: 3 FAIL (Bellicum, Centrack, MrsFields), 27 NEEDS_REVIEW, 0 PASS.
+  Rule-level review rate 64% (96/150, includes unscored rows).
+* All 4 FAILs checked against the text: correct (3 with numeric proof).
+* Hyperion: "the lesser of ... or $500,000" can never be >= $2M, so it should
+  logically FAIL. The engine doesn't parse formulas -> review (safe miss).
+* Time: median 3.9 s, p95 15.9 s per contract with 0 LLM calls (PDF parsing +
+  embedding long contracts).
+* Incident: Codex recreated .venv in its offline sandbox and Torch was missing.
+  Fixed with uv sync in my terminal. Rule: Codex never touches .venv,
+  pyproject.toml or uv.lock.
+
+## Evidence follow-up loop: design (26 Oct)
+
+* Goal: fewer unnecessary reviews with 0 unsafe decisions. Improve the
+  evidence, don't lower the safety threshold.
+* Deterministic controller + 3 tools: search (fixed query per field, skip seen
+  chunks, top 3), extract ONE field with its own quote (LLM), verify (code).
+* Targets: absence_claim, unsupported, condition_unverified. Not
+  clause_not_found, low_confidence, cap_is_formula.
+* A follow-up needs a PATTERN, not a keyword: we searched for those words, so a
+  keyword proves little. E.g. exclusion wording + damage type in the same
+  sentence, and no reversing wording ("shall be liable for", "shall not apply").
+* Evidence per field as an overlay; the original extraction is never changed;
+  each field is checked only against its own quote.
+* Merge: unverified or untrusted -> discard; a follow-up "no" never changes
+  anything; null -> accept; unproven false + proven true -> accept;
+  explicit_negative + proven true -> conflict; same value -> accept as
+  confirmation; different value or currency -> conflict -> review.
+  A follow-up only changes NEEDS_REVIEW decisions, never PASS/FAIL.
+* Limits: 1 follow-up per field, <= 4 extra LLM calls per contract, 3 new
+  chunks. Quota error -> return the original report marked followup_skipped.
+* Acceptance (written before the run): 0 unsafe on scored cases, >= 10 fewer
+  reviews, every changed decision checked by hand.
+* Caution: still the same 30 development contracts. Must be confirmed on
+  held-out contracts.
+
+## Open items (updated 26 Oct)
+
+* Held-out set: label ~10 new CUAD contracts and run the full system once,
+  without tuning.
+* No true "no answer" contracts in the eval.
+* Exclusion retrieval misses (follow-up loop or a second query).
+* Error attribution per row, not per field.
+* Page numbers/headers inside text still break some quotes.
+* Formula caps ("lesser of") are not parsed.
+* Labels drafted with AI help; labeller agreement not measured.
+* Still open from before: hybrid vs dense, TOC/heading filtering,
+  clause-aware chunking, selected_30 filter check, bge-small truncation.
