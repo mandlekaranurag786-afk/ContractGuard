@@ -40,4 +40,4 @@ build/
 *.egg-info/
 
 # Logs
-*.log
+*.logmanual_check/
