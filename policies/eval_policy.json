@@ -1,0 +1,7 @@
+[
+  {"id": "cap_min_2m", "description": "Require a USD cap of at least two million", "clause_type": "Cap On Liability", "field": "cap_amount", "operator": ">=", "threshold": 2000000, "currency": "USD"},
+  {"id": "cap_required", "description": "Require a money cap", "clause_type": "Cap On Liability", "field": "has_money_cap", "operator": "is_true"},
+  {"id": "excludes_consequential", "description": "Require a damages exclusion", "clause_type": "Cap On Liability", "field": "has_damages_exclusion", "operator": "is_true"},
+  {"id": "renewal_notice_min_30", "description": "Require thirty days notice for automatic renewal", "clause_type": "Renewal Term", "field": "notice_days", "operator": ">=", "threshold": 30, "when": {"field": "auto_renews", "equals": true}},
+  {"id": "initial_term_max_60", "description": "Initial term must not exceed sixty months", "clause_type": "Renewal Term", "field": "initial_term_months", "operator": "<=", "threshold": 60}
+]

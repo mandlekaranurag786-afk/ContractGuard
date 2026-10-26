@@ -1,0 +1,134 @@
+Offline rule evaluation; labels: evals/extraction_labels_v2.csv
+
+All metrics and decision/strength counts exclude UNSCORED rule-rows.
+
+Empty required label -> UNSCORED; NONE in any required label -> NEEDS_REVIEW before condition evaluation. Label found=False -> UNSCORED.
+
+Label found=False rows: 0
+
+RUN: v2 | POLICY: STRICT
+Rule-rows: 150; scored: 98; UNSCORED: 52
+decision | engine | truth
+PASS | 4 | 67
+FAIL | 1 | 18
+NEEDS_REVIEW | 93 | 13
+NOT_APPLICABLE | 0 | 0
+Correct: 18/98
+Review: 93/98 (94.9%)
+UNNECESSARY_REVIEW: 80
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 4 | 3 | 0 | 2
+cap_required | 30 | 0 | 0 | 30
+excludes_consequential | 30 | 0 | 0 | 30
+renewal_notice_min_30 | 28 | 12 | 0 | 28
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=0, explicit_negative=0
+
+RUN: v2 | POLICY: KEYWORD
+Rule-rows: 150; scored: 98; UNSCORED: 52
+decision | engine | truth
+PASS | 40 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 56 | 13
+NOT_APPLICABLE | 0 | 0
+Correct: 55/98
+Review: 56/98 (57.1%)
+UNNECESSARY_REVIEW: 43
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 4 | 3 | 0 | 2
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 24 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=37, explicit_negative=0
+
+RUN: v2 | POLICY: BALANCED
+Rule-rows: 150; scored: 98; UNSCORED: 52
+decision | engine | truth
+PASS | 40 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 52 | 13
+NOT_APPLICABLE | 4 | 0
+Correct: 51/98
+Review: 52/98 (53.1%)
+UNNECESSARY_REVIEW: 43
+UNSAFE: 4
+contract='2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='The term of this Agreement shall continue for one (1) year following the Launch Date, unless earlier terminated as provided herein. This Agreement may be renewed for any number of successive one (1) year terms by mutual written agreement of the parties prior to the conclusion of the term of this Agr'
+contract='BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='Contract is renewable for 1 year extension by amendment to each opportunity. this agreement. Either Party may terminate this agreement for non-cause with a sixty (60) written notice.'
+contract='OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='The Agreement may be extended or renewed by the Parties in a writing executed by authorized representatives of each of the Parties.'
+contract='UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, '
+rule | scored | correct | unsafe | review
+cap_min_2m | 4 | 3 | 0 | 2
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 20 | 4 | 12
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=37, explicit_negative=4
+
+RUN: v2_repeat | POLICY: STRICT
+Rule-rows: 150; scored: 98; UNSCORED: 52
+decision | engine | truth
+PASS | 4 | 67
+FAIL | 1 | 18
+NEEDS_REVIEW | 93 | 13
+NOT_APPLICABLE | 0 | 0
+Correct: 18/98
+Review: 93/98 (94.9%)
+UNNECESSARY_REVIEW: 80
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 4 | 3 | 0 | 2
+cap_required | 30 | 0 | 0 | 30
+excludes_consequential | 30 | 0 | 0 | 30
+renewal_notice_min_30 | 28 | 12 | 0 | 28
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=0, explicit_negative=0
+
+RUN: v2_repeat | POLICY: KEYWORD
+Rule-rows: 150; scored: 98; UNSCORED: 52
+decision | engine | truth
+PASS | 41 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 55 | 13
+NOT_APPLICABLE | 0 | 0
+Correct: 56/98
+Review: 55/98 (56.1%)
+UNNECESSARY_REVIEW: 42
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 4 | 3 | 0 | 2
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 25 | 0 | 15
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=38, explicit_negative=0
+
+RUN: v2_repeat | POLICY: BALANCED
+Rule-rows: 150; scored: 98; UNSCORED: 52
+decision | engine | truth
+PASS | 41 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 52 | 13
+NOT_APPLICABLE | 3 | 0
+Correct: 53/98
+Review: 52/98 (53.1%)
+UNNECESSARY_REVIEW: 42
+UNSAFE: 3
+contract='BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='Contract is renewable for 1 year extension by amendment to each opportunity. this agreement. Either Party may terminate this agreement for non-cause with a sixty (60) written notice.'
+contract='OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='The Agreement may be extended or renewed by the Parties in a writing executed by authorized representatives of each of the Parties.'
+contract='UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, '
+rule | scored | correct | unsafe | review
+cap_min_2m | 4 | 3 | 0 | 2
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 22 | 3 | 12
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=38, explicit_negative=3
+
+PRE-REGISTERED SELECTION
+Start at STRICT.
+KEYWORD: unsafe-free in both runs=True; fewer reviews versus STRICT=[37, 38]; accepted.
+BALANCED: unsafe-free in both runs=False; fewer reviews versus KEYWORD=[4, 3]; blocked.
+Selected policy: KEYWORD

@@ -1,0 +1,128 @@
+Offline rule evaluation; labels: evals/extraction_labels_v2.csv
+
+All metrics and decision/strength counts exclude UNSCORED rule-rows.
+
+Truth order: found=False -> UNSCORED; condition empty -> UNSCORED, NONE -> NEEDS_REVIEW, unequal -> NOT_APPLICABLE (ignore rule field); rule field empty -> UNSCORED, NONE -> NEEDS_REVIEW; currency empty -> UNSCORED, NONE/different -> NEEDS_REVIEW; then compare.
+
+Label found=False rows: 0
+
+RUN: v2 | POLICY: STRICT
+Rule-rows: 150; scored: 101; UNSCORED: 49
+decision | engine | truth
+PASS | 4 | 67
+FAIL | 1 | 18
+NEEDS_REVIEW | 96 | 9
+NOT_APPLICABLE | 0 | 7
+Correct: 14/101
+Review: 96/101 (95.0%)
+UNNECESSARY_REVIEW: 87
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 0 | 0 | 30
+excludes_consequential | 30 | 0 | 0 | 30
+renewal_notice_min_30 | 28 | 5 | 0 | 28
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=0, explicit_negative=0
+
+RUN: v2 | POLICY: KEYWORD
+Rule-rows: 150; scored: 101; UNSCORED: 49
+decision | engine | truth
+PASS | 40 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 59 | 9
+NOT_APPLICABLE | 0 | 7
+Correct: 51/101
+Review: 59/101 (58.4%)
+UNNECESSARY_REVIEW: 50
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=37, explicit_negative=0
+
+RUN: v2 | POLICY: BALANCED
+Rule-rows: 150; scored: 101; UNSCORED: 49
+decision | engine | truth
+PASS | 40 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 55 | 9
+NOT_APPLICABLE | 4 | 7
+Correct: 53/101
+Review: 55/101 (54.5%)
+UNNECESSARY_REVIEW: 47
+UNSAFE: 1
+contract='2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf' | rule_id='renewal_notice_min_30' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='NOT_APPLICABLE' | field='notice_days' | value=None | field_status='explicit_negative' | condition_status='explicit_negative' | currency_status=None | evidence_strength='explicit_negative' | quote excerpt='The term of this Agreement shall continue for one (1) year following the Launch Date, unless earlier terminated as provided herein. This Agreement may be renewed for any number of successive one (1) year terms by mutual written agreement of the parties prior to the conclusion of the term of this Agr'
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 19 | 1 | 12
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=37, explicit_negative=4
+
+RUN: v2_repeat | POLICY: STRICT
+Rule-rows: 150; scored: 101; UNSCORED: 49
+decision | engine | truth
+PASS | 4 | 67
+FAIL | 1 | 18
+NEEDS_REVIEW | 96 | 9
+NOT_APPLICABLE | 0 | 7
+Correct: 14/101
+Review: 96/101 (95.0%)
+UNNECESSARY_REVIEW: 87
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 0 | 0 | 30
+excludes_consequential | 30 | 0 | 0 | 30
+renewal_notice_min_30 | 28 | 5 | 0 | 28
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=0, explicit_negative=0
+
+RUN: v2_repeat | POLICY: KEYWORD
+Rule-rows: 150; scored: 101; UNSCORED: 49
+decision | engine | truth
+PASS | 41 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 58 | 9
+NOT_APPLICABLE | 0 | 7
+Correct: 52/101
+Review: 58/101 (57.4%)
+UNNECESSARY_REVIEW: 49
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 18 | 0 | 15
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=38, explicit_negative=0
+
+RUN: v2_repeat | POLICY: BALANCED
+Rule-rows: 150; scored: 101; UNSCORED: 49
+decision | engine | truth
+PASS | 41 | 67
+FAIL | 2 | 18
+NEEDS_REVIEW | 55 | 9
+NOT_APPLICABLE | 3 | 7
+Correct: 55/101
+Review: 55/101 (54.5%)
+UNNECESSARY_REVIEW: 46
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 21 | 0 | 12
+initial_term_max_60 | 6 | 3 | 0 | 3
+Auto-decisions by evidence_strength: proof=5, weak_signal=38, explicit_negative=3
+
+PRE-REGISTERED SELECTION
+Start at STRICT.
+KEYWORD: unsafe-free in both runs=True; fewer reviews versus STRICT=[37, 38]; accepted.
+BALANCED: unsafe-free in both runs=False; fewer reviews versus KEYWORD=[4, 3]; blocked.
+Selected policy: KEYWORD

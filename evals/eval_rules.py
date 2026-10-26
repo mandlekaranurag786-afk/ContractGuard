@@ -204,8 +204,8 @@ def summarize(run: str, policy: TrustPolicy, records: list[dict], rules: list[Ru
 
 def main() -> None:
     output = ROOT / "evals"
-    paths = [output / "rules_eval_v2.txt"] + [
-        output / f"rule_results_{run}_{policy.value.lower()}_v2.csv"
+    paths = [output / "rules_eval_v3.txt"] + [
+        output / f"rule_results_{run}_{policy.value.lower()}_v3.csv"
         for run in RUNS
         for policy in TrustPolicy
     ]
@@ -233,7 +233,7 @@ def main() -> None:
             records = evaluate(rows, labels, rules, policy)
             report, metrics[run][policy] = summarize(run, policy, records, rules)
             sections.append(report)
-            outputs[output / f"rule_results_{run}_{policy.value.lower()}_v2.csv"] = (
+            outputs[output / f"rule_results_{run}_{policy.value.lower()}_v3.csv"] = (
                 records
             )
     chosen, selection = select_policy(metrics)
