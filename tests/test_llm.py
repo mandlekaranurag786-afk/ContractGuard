@@ -7,7 +7,9 @@ from typing import Any
 import pytest
 from pydantic import BaseModel
 
+from contractguard.extraction.extractor import SCHEMAS
 from contractguard.extraction.schemas import RenewalTermExtraction
+from contractguard.followup.extract import FIELD_SCHEMAS
 from contractguard.llm.cache import CachedLLMClient
 from contractguard.llm.client import LLMResponse
 from contractguard.llm.errors import LLMQuotaError, LLMUnavailableError
@@ -132,6 +134,34 @@ def _sdk_response() -> object:
         text=_renewal_json(),
         usage_metadata=SimpleNamespace(prompt_token_count=11, candidates_token_count=7),
     )
+
+
+def _additional_properties_paths(value: Any, path: str = "$") -> list[str]:
+    if isinstance(value, dict):
+        paths = [path] if "additionalProperties" in value else []
+        for key, child in value.items():
+            paths.extend(_additional_properties_paths(child, f"{path}.{key}"))
+        return paths
+    if isinstance(value, list):
+        paths = []
+        for index, child in enumerate(value):
+            paths.extend(_additional_properties_paths(child, f"{path}[{index}]"))
+        return paths
+    return []
+
+
+@pytest.mark.parametrize(
+    ("name", "schema"),
+    [
+        *SCHEMAS.items(),
+        *(
+            (f"{clause}/{field}", schema)
+            for (clause, field), schema in FIELD_SCHEMAS.items()
+        ),
+    ],
+)
+def test_gemini_response_schemas_have_no_additional_properties(name, schema) -> None:
+    assert _additional_properties_paths(schema.model_json_schema()) == [], name
 
 
 def test_gemini_retries_rate_limits_then_returns_response(monkeypatch) -> None:

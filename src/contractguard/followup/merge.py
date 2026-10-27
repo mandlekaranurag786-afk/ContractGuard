@@ -34,11 +34,15 @@ def merge(
             evidence_chunk_id=new.evidence_chunk_id,
         )
 
+    if new.value is None or new.value is False:
+        return finish(
+            MergeOutcome.NO_VALUE, "The follow-up supplies no positive value."
+        )
     if not new.verified:
         return finish(
             MergeOutcome.DISCARDED_UNVERIFIED, "The new quote was not verified."
         )
-    if new.value is None or new.value is False or new.status not in TRUSTED_FOLLOWUP:
+    if new.status not in TRUSTED_FOLLOWUP:
         return finish(MergeOutcome.DISCARDED_UNTRUSTED, "The follow-up is not trusted.")
     if old_status == "conflicting":
         return finish(

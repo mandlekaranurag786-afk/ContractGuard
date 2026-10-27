@@ -1,0 +1,209 @@
+{
+  "contract": "data/contracts/UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status explicit_negative and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "explicit_negative",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "explicit_negative",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, 7.6 or 7.7. A Facility Addendum may be extended for up to three (3) additional periods of twelve (12) months (each, an “Extension Period”) by written notice given by Customer to Manufacturer not less than twelve (12) months prior to the expiration of the Initial Term or the applicable Extension Period, as the case may be.",
+      "evidence_chunk_id": "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:173",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, 7.6 or 7.7. A Facility Addendum may be extended for up to three (3) additional periods of twelve (12) months (each, an “Extension Period”) by written notice given by Customer to Manufacturer not less than twelve (12) months prior to the expiration of the Initial Term or the applicable Extension Period, as the case may be.",
+      "condition_evidence_chunk_id": "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:173"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "initial_term_months=48 satisfies <= 60.",
+      "field": "initial_term_months",
+      "value": 48,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Unless otherwise provided in the applicable Facility Addendum, each Facility Addendum shall commence on the Effective Date and shall continue for a period of four (4) years from such date (the “Initial Term” of the Facility Addendum), unless extended or terminated pursuant to Section 7.3, 7.4, 7.5, 7.6 or 7.7. A Facility Addendum may be extended for up to three (3) additional periods of twelve (12) months (each, an “Extension Period”) by written notice given by Customer to Manufacturer not less than twelve (12) months prior to the expiration of the Initial Term or the applicable Extension Period, as the case may be.",
+      "evidence_chunk_id": "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:173",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "NOT_FOUND",
+      "confidence_reasons": [
+        "absence_not_trusted",
+        "evidence_not_found"
+      ],
+      "retrieved_chunk_ids": [
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:229",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:227",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:228",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:223",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:215"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:172",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:173",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:26",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:174",
+        "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:34"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 1,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3641,
+    "cached_output_tokens": 356,
+    "elapsed_ms": 16617.77974299912
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 1,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:261",
+          "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:263",
+          "893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:260"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 1,
+    "cached_calls": 0,
+    "uncached_input_tokens": 0,
+    "uncached_output_tokens": 0
+  }
+}

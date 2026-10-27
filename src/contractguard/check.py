@@ -18,6 +18,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--json-out", type=Path)
     parser.add_argument("--followup", action="store_true")
+    parser.add_argument("--followup-version", choices=("v1", "v2"), default="v1")
     args = parser.parse_args(argv)
     try:
         rules = load_rules(args.policy)
@@ -28,7 +29,10 @@ def main(argv: list[str] | None = None) -> int:
         )
         checker = ContractChecker(extractor)
         report = (
-            checker.check(args.pdf, rules, args.policy, followup=True)
+            checker.check(
+                args.pdf, rules, args.policy, followup=True,
+                followup_version=args.followup_version,
+            )
             if args.followup
             else checker.check(args.pdf, rules, args.policy)
         )

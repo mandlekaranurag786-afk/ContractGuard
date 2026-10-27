@@ -1,0 +1,282 @@
+{
+  "contract": "data/contracts/PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "supported",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]); provided",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]); provided",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]); provided",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "notice_days=180 satisfies >= 30.",
+      "field": "notice_days",
+      "value": 180,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Thereafter the term of this Agreement shall automatically renew for consecutive periods of two (2) years each. Notwithstanding the foregoing, this Agreement can be terminated by EKR at the end of the Initial Term by delivery of written notice to PPI at least one hundred eighty (180) days prior to the end of the Initial Term or any renewal term.",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "Thereafter the term of this Agreement shall automatically renew for consecutive periods of two (2) years each. Notwithstanding the foregoing, this Agreement can be terminated by EKR at the end of the Initial Term by delivery of written notice to PPI at least one hundred eighty (180) days prior to the end of the Initial Term or any renewal term.",
+      "condition_evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Thereafter the term of this Agreement shall automatically renew for consecutive periods of two (2) years each. Notwithstanding the foregoing, this Agreement can be terminated by EKR at the end of the Initial Term by delivery of written notice to PPI at least one hundred eighty (180) days prior to the end of the Initial Term or any renewal term.",
+      "evidence_chunk_id": "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:95",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:98",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:96",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:15"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:109",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:110",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:37",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:16",
+        "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:125"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 4,
+    "cache_hits": 2,
+    "input_tokens": 3968,
+    "output_tokens": 123,
+    "cached_input_tokens": 3488,
+    "cached_output_tokens": 429,
+    "elapsed_ms": 27440.094511999632
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 4,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "cap_amount",
+        "rule_ids": [
+          "cap_min_2m"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:69",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:70",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:134"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 1032,
+        "output_tokens": 36,
+        "latency_ms": 1605.4834210008266,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Cap On Liability",
+        "field": "has_money_cap",
+        "rule_ids": [
+          "cap_required"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:39",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:99",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:135"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 990,
+        "output_tokens": 29,
+        "latency_ms": 4056.643092997547,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 3,
+        "clause_type": "Cap On Liability",
+        "field": "has_damages_exclusion",
+        "rule_ids": [
+          "excludes_consequential"
+        ],
+        "query": "neither party shall be liable for indirect incidental special consequential damages or lost profits",
+        "new_chunk_ids": [
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:107",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:106",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:91"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 960,
+        "output_tokens": 29,
+        "latency_ms": 7545.58644300414,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 4,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:90",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:29",
+          "3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:33"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 986,
+        "output_tokens": 29,
+        "latency_ms": 1097.6979580009356,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 4,
+    "cached_calls": 0,
+    "uncached_input_tokens": 3968,
+    "uncached_output_tokens": 123
+  }
+}

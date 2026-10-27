@@ -1,0 +1,278 @@
+{
+  "contract": "data/contracts/EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "in no event shall either party be liable for any special, indirect, consequential, punitive or incidental damages of any kind.",
+      "evidence_chunk_id": "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:18",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "in no event shall either party be liable for any special, indirect, consequential, punitive or incidental damages of any kind.",
+      "evidence_chunk_id": "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:18",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "in no event shall either party be liable for any special, indirect, consequential, punitive or incidental damages of any kind.",
+      "evidence_chunk_id": "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:18",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "At Rogers’ option, this Agreement shall renew for a subsequent term of two (2) years on the terms and conditions herein (the “Renewal Term”).",
+      "evidence_chunk_id": "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:8",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "At Rogers’ option, this Agreement shall renew for a subsequent term of two (2) years on the terms and conditions herein (the “Renewal Term”).",
+      "condition_evidence_chunk_id": "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:8"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "At Rogers’ option, this Agreement shall renew for a subsequent term of two (2) years on the terms and conditions herein (the “Renewal Term”).",
+      "evidence_chunk_id": "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:8",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:18",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:20",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:28",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:29",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:15"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:8",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:9",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:23",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:31",
+        "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:15"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 4,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3468,
+    "cached_output_tokens": 314,
+    "elapsed_ms": 15981.037343000935
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 4,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "cap_amount",
+        "rule_ids": [
+          "cap_min_2m"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:26",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:33",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:7"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 2,
+        "clause_type": "Cap On Liability",
+        "field": "has_money_cap",
+        "rule_ids": [
+          "cap_required"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:14",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:27",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:25"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 3,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:33",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:20",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:27"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 4,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:22",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:32",
+          "ccff5be7dd06007d9f33c2b7da5eda90b2bf36113037aa01f033e1f3cab2c8dd:21"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 4,
+    "cached_calls": 0,
+    "uncached_input_tokens": 0,
+    "uncached_output_tokens": 0
+  }
+}

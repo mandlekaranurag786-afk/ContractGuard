@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from pathlib import Path
 from time import perf_counter
-from typing import Protocol
+from typing import Literal, Protocol
 
 from contractguard.chunking import Chunk
 from contractguard.extraction.confidence import compute_confidence
@@ -66,7 +66,10 @@ class ContractChecker:
         rules: list[Rule],
         policy_path: str | Path,
         followup: bool = False,
+        followup_version: Literal["v1", "v2"] = "v1",
     ) -> ContractReport:
+        if followup_version not in {"v1", "v2"}:
+            raise ValueError("Invalid follow-up version")
         if not rules:
             raise ValueError("Rule list must not be empty")
         client = self.followup_client or getattr(self.extractor, "client", None)
@@ -80,11 +83,13 @@ class ContractChecker:
         chunks = chunk_document(self.document_loader(Path(pdf_path)))
         retriever = self.retriever_builder(chunks)
         results, confidences, summaries = {}, {}, []
+        original_chunks = {}
         for clause in clauses:
             retrieved = [
                 r.chunk for r in retriever.search(CLAUSE_QUERIES[clause], k=self.top_k)
             ]
             result = self.extractor.extract(clause, retrieved)
+            original_chunks[clause] = list(retrieved)
             results[clause] = result
             confidence = compute_confidence(
                 None if result.error else result.extraction,
@@ -102,7 +107,7 @@ class ContractChecker:
                 )
             )
         decisions = evaluate_rules(rules, results, confidences, self.policy)
-        followup_report = FollowupReport()
+        followup_report = FollowupReport(version=followup_version)
         followup_cost = {}
         if followup:
             loop = run_followup(
@@ -114,6 +119,8 @@ class ContractChecker:
                 {s.clause_type: set(s.retrieved_chunk_ids) for s in summaries},
                 client,
                 self.policy,
+                version=followup_version,
+                original_chunks=original_chunks,
             )
             decisions, followup_report, followup_cost = (
                 loop.results,

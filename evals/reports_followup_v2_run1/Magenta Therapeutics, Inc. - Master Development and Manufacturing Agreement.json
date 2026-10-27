@@ -1,0 +1,221 @@
+{
+  "contract": "data/contracts/Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***].",
+      "evidence_chunk_id": "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:70",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***].",
+      "evidence_chunk_id": "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:70",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "low_confidence",
+      "reason": "Extraction confidence is low.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "LOW",
+      "evidence_quote": "NEITHER PARTY SHALL BE LIABLE, WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW, FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY RELATED TO THIS AGREEMENT OR ITS PERFORMANCE AND THE MAXIMUM TOTAL LIABILITY OF EITHER PARTY WHETHER BASED ON CONTRACT LAW, TORTS OR ANY OTHER AREA OF LAW SHALL BE LIMITED TO THE AMOUNT [***].",
+      "evidence_chunk_id": "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:70",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status unsupported and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "unsupported",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "This Agreement shall commence on the Effective Date and shall extend for a period of Five (5) years thereafter (“Initial Term”), unless this Agreement is terminated earlier as provided herein or is extended by mutual written agreement of the Parties. This Agreement may be renewed for additional periods of one (1) year (each such additional period, a “Renewal Term”) unless either Party provides notice of nonrenewal upon not less than [***] prior written notice to the other Party.",
+      "evidence_chunk_id": "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:44",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "This Agreement shall commence on the Effective Date and shall extend for a period of Five (5) years thereafter (“Initial Term”), unless this Agreement is terminated earlier as provided herein or is extended by mutual written agreement of the Parties. This Agreement may be renewed for additional periods of one (1) year (each such additional period, a “Renewal Term”) unless either Party provides notice of nonrenewal upon not less than [***] prior written notice to the other Party.",
+      "condition_evidence_chunk_id": "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:44"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "initial_term_months=60 satisfies <= 60.",
+      "field": "initial_term_months",
+      "value": 60,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "This Agreement shall commence on the Effective Date and shall extend for a period of Five (5) years thereafter (“Initial Term”), unless this Agreement is terminated earlier as provided herein or is extended by mutual written agreement of the Parties. This Agreement may be renewed for additional periods of one (1) year (each such additional period, a “Renewal Term”) unless either Party provides notice of nonrenewal upon not less than [***] prior written notice to the other Party.",
+      "evidence_chunk_id": "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:44",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "LOW",
+      "confidence_reasons": [
+        "evidence_not_found"
+      ],
+      "retrieved_chunk_ids": [
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:67",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:70",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:21",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:85",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:17"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:44",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:45",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:67",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:28",
+        "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:58"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 1,
+    "cache_hits": 2,
+    "input_tokens": 2252,
+    "output_tokens": 130,
+    "cached_input_tokens": 3367,
+    "cached_output_tokens": 430,
+    "elapsed_ms": 10190.999725004076
+  },
+  "followup": {
+    "enabled": true,
+    "version": "v2",
+    "status": "completed",
+    "calls_used": 1,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:73",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:11",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:25"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:44",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:45",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:67",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:28",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:58",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:73",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:11",
+          "ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:25"
+        ],
+        "value": true,
+        "quote_excerpt": "This Agreement may be renewed for additional periods of one (1) year (each such additional period, a “Renewal Term”) unless either Party provides notice of nonrenewal upon not less than [***] prior wr",
+        "verified": true,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNTRUSTED",
+        "input_tokens": 2252,
+        "output_tokens": 130,
+        "latency_ms": 4623.458959002164,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 1,
+    "cached_calls": 0,
+    "uncached_input_tokens": 2252,
+    "uncached_output_tokens": 130
+  }
+}

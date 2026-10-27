@@ -1,8 +1,9 @@
 """Bounded, auditable follow-up orchestration using an injected LLM client."""
 
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Literal, Protocol
 
+from contractguard.chunking import Chunk
 from contractguard.extraction.confidence import ConfidenceResult
 from contractguard.extraction.schemas import ExtractionResult
 from contractguard.followup.extract import FieldExtractor
@@ -120,17 +121,24 @@ def run_followup(
     client: LLMClient,
     policy: TrustPolicy = TrustPolicy.KEYWORD,
     *,
+    version: Literal["v1", "v2"] = "v1",
+    original_chunks: dict[str, list[Chunk]] | None = None,
     max_calls: int = 4,
     new_chunks: int = 3,
 ) -> LoopResult:
+    if version not in {"v1", "v2"}:
+        raise ValueError("Invalid follow-up version")
     if max_calls < 0 or new_chunks < 1:
         raise ValueError("Invalid follow-up budget or chunk count")
     budget = BudgetClient(client, max_calls)
     extractor = FieldExtractor(budget)
-    report = FollowupReport(enabled=True, status="completed", max_calls=max_calls)
+    report = FollowupReport(
+        enabled=True, version=version, status="completed", max_calls=max_calls
+    )
     seen = {clause: set(ids) for clause, ids in seen_chunks.items()}
     overlays: dict[str, dict[str, MergeResult]] = {}
     targets: dict[tuple[str, str], list[str]] = {}
+    target_reasons: dict[tuple[str, str], set[str]] = {}
     for item in original:
         if (
             item.decision == Decision.NEEDS_REVIEW
@@ -143,14 +151,26 @@ def run_followup(
             )
             if field:
                 targets.setdefault((item.clause_type, field), []).append(item.rule_id)
+                target_reasons.setdefault((item.clause_type, field), set()).add(
+                    item.reason_code
+                )
 
     for (clause, field), ids in targets.items():
+        include_original = version == "v2" and bool(
+            target_reasons[clause, field]
+            & {"value_unsupported", "condition_unverified"}
+        )
+        if include_original and (
+            original_chunks is None or clause not in original_chunks
+        ):
+            raise ValueError(f"Original chunks required for v2: {clause}")
         step = FollowupStep(
             step=len(report.steps) + 1,
             clause_type=clause,
             field=field,
             rule_ids=ids,
             query=FOLLOWUP_QUERIES.get(field),
+            chunk_policy="original_plus_unseen" if include_original else "unseen_only",
         )
         report.steps.append(step)
         if len(budget.attempts) >= max_calls:
@@ -173,9 +193,12 @@ def run_followup(
                 if len(chunks) == new_chunks:
                     break
         step.new_chunk_ids = [c.chunk_id for c in chunks]
+        if include_original:
+            chunks = [*original_chunks[clause], *chunks]
         if not chunks:
             step.note = "no_new_chunks"
             continue
+        step.chunk_ids = [c.chunk_id for c in chunks]
         start = len(budget.attempts)
         try:
             response = extractor.extract(clause, field, chunks)
@@ -197,6 +220,7 @@ def run_followup(
             )
         if response.error:
             step.note = "extraction_error"
+            step.error = response.error
             continue
         evidence = response.evidence
         step.value, step.quote_excerpt = (
@@ -229,6 +253,11 @@ def run_followup(
             )
 
     report.calls_used = len(budget.attempts)
+    usage = budget.cost()
+    report.live_calls = usage["llm_calls"]
+    report.cached_calls = usage["cache_hits"]
+    report.uncached_input_tokens = usage["input_tokens"]
+    report.uncached_output_tokens = usage["output_tokens"]
     if report.status == "followup_skipped":
         return LoopResult(original, report, budget.cost())
     final = []

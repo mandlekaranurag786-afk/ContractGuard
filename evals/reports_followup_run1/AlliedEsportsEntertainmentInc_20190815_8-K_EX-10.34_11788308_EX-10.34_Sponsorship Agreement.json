@@ -1,0 +1,254 @@
+{
+  "contract": "data/contracts/AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 2,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 3,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "EXCEPTING ONLY CLAIMS MADE PURSUANT TO SECTION 12.1, IN NO EVENT WILL EITHER PARTY BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING ANY LOST PROFITS, LOST REVENUES OR LOST SAVINGS, ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT AND/OR THE PRODUCTS, WHETHER IN CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY HAS BEEN ADVISED, KNOWS OR SHOULD KNOW, OR IS OTHERWISE AWARE OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "evidence_chunk_id": "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:24",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "EXCEPTING ONLY CLAIMS MADE PURSUANT TO SECTION 12.1, IN NO EVENT WILL EITHER PARTY BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING ANY LOST PROFITS, LOST REVENUES OR LOST SAVINGS, ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT AND/OR THE PRODUCTS, WHETHER IN CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY HAS BEEN ADVISED, KNOWS OR SHOULD KNOW, OR IS OTHERWISE AWARE OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "evidence_chunk_id": "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:24",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "EXCEPTING ONLY CLAIMS MADE PURSUANT TO SECTION 12.1, IN NO EVENT WILL EITHER PARTY BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING ANY LOST PROFITS, LOST REVENUES OR LOST SAVINGS, ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT AND/OR THE PRODUCTS, WHETHER IN CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF THE PARTY HAS BEEN ADVISED, KNOWS OR SHOULD KNOW, OR IS OTHERWISE AWARE OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "evidence_chunk_id": "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:24",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "3. Term of this Agreement. This Agreement shall be valid for five (5) years from February 1, 2019 through January 31, 2024 unless this Agreement is terminated earlier pursuant to Section 14 (the “Term”).",
+      "evidence_chunk_id": "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:5",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "3. Term of this Agreement. This Agreement shall be valid for five (5) years from February 1, 2019 through January 31, 2024 unless this Agreement is terminated earlier pursuant to Section 14 (the “Term”).",
+      "condition_evidence_chunk_id": "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:5"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "initial_term_months=60 satisfies <= 60.",
+      "field": "initial_term_months",
+      "value": 60,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "3. Term of this Agreement. This Agreement shall be valid for five (5) years from February 1, 2019 through January 31, 2024 unless this Agreement is terminated earlier pursuant to Section 14 (the “Term”).",
+      "evidence_chunk_id": "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:5",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:23",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:24",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:14",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:5",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:31"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:5",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:31",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:19",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:8",
+        "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:33"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 3,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3688,
+    "cached_output_tokens": 435,
+    "elapsed_ms": 11990.216154998052
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 3,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "cap_amount",
+        "rule_ids": [
+          "cap_min_2m"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:32",
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:42",
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:11"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 2,
+        "clause_type": "Cap On Liability",
+        "field": "has_money_cap",
+        "rule_ids": [
+          "cap_required"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:29",
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:41",
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:15"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 3,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:30",
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:38",
+          "cf48c00dd85b521cb397d45960bbc1b24e7eac0f7bf8ec896ad5c4d185b316a0:39"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 3,
+    "cached_calls": 0,
+    "uncached_input_tokens": 0,
+    "uncached_output_tokens": 0
+  }
+}

@@ -30,7 +30,7 @@ class FieldEvidence(BaseModel):
         return self
 
     def verify(self, chunks: list[Chunk]) -> Self:
-        """Return a copy verified against only the newly retrieved chunks.
+        """Return a copy verified against exactly the chunks sent for extraction.
 
         Composite evidence is insufficient. Citation membership is required even
         when the quote crosses adjacent chunks. Never trust an incoming flag.
@@ -44,6 +44,7 @@ class FieldEvidence(BaseModel):
 class MergeOutcome(StrEnum):
     ACCEPTED_NEW = "ACCEPTED_NEW"
     ACCEPTED_CONFIRMATION = "ACCEPTED_CONFIRMATION"
+    NO_VALUE = "NO_VALUE"
     DISCARDED_UNVERIFIED = "DISCARDED_UNVERIFIED"
     DISCARDED_UNTRUSTED = "DISCARDED_UNTRUSTED"
     CONFLICT = "CONFLICT"
@@ -70,6 +71,8 @@ class FollowupStep(BaseModel):
     rule_ids: list[str]
     query: str | None = None
     new_chunk_ids: list[str] = Field(default_factory=list)
+    chunk_policy: Literal["unseen_only", "original_plus_unseen"] = "unseen_only"
+    chunk_ids: list[str] = Field(default_factory=list)
     value: Scalar = None
     quote_excerpt: str = ""
     verified: bool = False
@@ -80,6 +83,7 @@ class FollowupStep(BaseModel):
     latency_ms: float = 0
     cached: bool = False
     note: str = ""
+    error: str | None = None
 
 
 class ChangedRule(BaseModel):
@@ -93,8 +97,13 @@ class ChangedRule(BaseModel):
 
 class FollowupReport(BaseModel):
     enabled: bool = False
+    version: Literal["v1", "v2"] = "v1"
     status: Literal["disabled", "completed", "followup_skipped"] = "disabled"
     calls_used: int = 0
     max_calls: int = 4
     steps: list[FollowupStep] = Field(default_factory=list)
     changed_rules: list[ChangedRule] = Field(default_factory=list)
+    live_calls: int | None = None
+    cached_calls: int | None = None
+    uncached_input_tokens: int | None = None
+    uncached_output_tokens: int | None = None

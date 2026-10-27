@@ -16,7 +16,7 @@ from contractguard.extraction.prompt import FIELD_DEFINITIONS, REDACTION_RULE
 from contractguard.followup.models import FieldEvidence
 from contractguard.followup.patterns import followup_status
 from contractguard.llm.client import LLMClient, LLMResponse
-from contractguard.llm.errors import LLMError, LLMQuotaError
+from contractguard.llm.errors import LLMError, LLMQuotaError, exception_details
 
 FOLLOWUP_PROMPT_VERSION = "followup_v1"
 
@@ -37,7 +37,7 @@ def _schemas() -> dict[tuple[str, str], type[BaseModel]]:
             name = "Followup" + "".join(part.title() for part in field.split("_"))
             schemas[clause, field] = create_model(
                 name,
-                __config__=ConfigDict(extra="forbid", allow_inf_nan=False),
+                __config__=ConfigDict(allow_inf_nan=False),
                 __module__=__name__,
                 **fields,
             )
@@ -105,13 +105,13 @@ class FieldExtractor:
             except LLMQuotaError:
                 raise
             except LLMError as exc:
-                error = str(exc)
+                error = exception_details(exc)
                 break
             responses.append(response)
             try:
                 parsed = schema.model_validate_json(response.text)
             except (ValidationError, ValueError) as exc:
-                error = str(exc)
+                error = exception_details(exc)
                 continue
             quote = parsed.evidence_quote or ""
             currency = getattr(parsed, "currency", None)

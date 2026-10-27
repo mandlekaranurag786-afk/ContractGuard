@@ -1,0 +1,241 @@
+{
+  "contract": "data/contracts/XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 4,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 1,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "cap_amount=2000000.0 satisfies >= 2000000.",
+      "field": "cap_amount",
+      "value": 2000000.0,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "supported",
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "LIABILITY OF EACH PARTY IN ANY WAY RELATED TO THIS AGREEMENT SHALL NOT EXCEED $2,000,000.00 (EXCLUDING ANY AMOUNTS DUE AND PAYABLE PURSUANT TO SECTION ​8 HEREUNDER).",
+      "evidence_chunk_id": "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_money_cap=True satisfies is_true.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "LIABILITY OF EACH PARTY IN ANY WAY RELATED TO THIS AGREEMENT SHALL NOT EXCEED $2,000,000.00 (EXCLUDING ANY AMOUNTS DUE AND PAYABLE PURSUANT TO SECTION ​8 HEREUNDER).",
+      "evidence_chunk_id": "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "followup_pattern",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "followup",
+      "confidence_level": "HIGH",
+      "evidence_quote": "UNDER NO CIRCUMSTANCE AND UNDER NO LEGAL THEORY (TORT, CONTRACT, OR OTHERWISE), SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL DAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGREEMENT",
+      "evidence_chunk_id": "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44",
+      "field_evidence_source": "followup",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "notice_days=30 satisfies >= 30.",
+      "field": "notice_days",
+      "value": 30,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "2019 (the “Initial Term”). Following the Initial Term, this Agreement shall automatically renew\nfor successive terms of six (6) months (each a “Renewal Term”, and together with the Initial Term, the “Term”) unless written notice is given by\neither Party no later than thirty (30) days in advance of the expiration of the Initial Term or the applicable Renewal Term.",
+      "evidence_chunk_id": "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:2",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "2019 (the “Initial Term”). Following the Initial Term, this Agreement shall automatically renew\nfor successive terms of six (6) months (each a “Renewal Term”, and together with the Initial Term, the “Term”) unless written notice is given by\neither Party no later than thirty (30) days in advance of the expiration of the Initial Term or the applicable Renewal Term.",
+      "condition_evidence_chunk_id": "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:2"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "2019 (the “Initial Term”). Following the Initial Term, this Agreement shall automatically renew\nfor successive terms of six (6) months (each a “Renewal Term”, and together with the Initial Term, the “Term”) unless written notice is given by\neither Party no later than thirty (30) days in advance of the expiration of the Initial Term or the applicable Renewal Term.",
+      "evidence_chunk_id": "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:2",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:43",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:42",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:45",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:39",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:40"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:2",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:1",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:9",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:18",
+        "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:31"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 0,
+    "cache_hits": 4,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 5656,
+    "cached_output_tokens": 599,
+    "elapsed_ms": 3086.952828001813
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 2,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "has_damages_exclusion",
+        "rule_ids": [
+          "excludes_consequential"
+        ],
+        "query": "neither party shall be liable for indirect incidental special consequential damages or lost profits",
+        "new_chunk_ids": [
+          "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:57",
+          "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44",
+          "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:56"
+        ],
+        "value": true,
+        "quote_excerpt": "UNDER NO CIRCUMSTANCE AND UNDER NO LEGAL THEORY (TORT, CONTRACT, OR OTHERWISE), SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, IN",
+        "verified": true,
+        "status": "followup_pattern",
+        "merge_outcome": "ACCEPTED_NEW",
+        "input_tokens": 974,
+        "output_tokens": 157,
+        "latency_ms": 3780.14250400156,
+        "cached": true,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:56",
+          "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:57",
+          "f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:47"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 1019,
+        "output_tokens": 29,
+        "latency_ms": 2820.867716000066,
+        "cached": true,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [
+      {
+        "rule_id": "excludes_consequential",
+        "before_decision": "NEEDS_REVIEW",
+        "before_reason_code": "value_absence_claim",
+        "after_decision": "PASS",
+        "after_reason_code": "compared",
+        "evidence_strength": "followup"
+      }
+    ],
+    "live_calls": 0,
+    "cached_calls": 2,
+    "uncached_input_tokens": 0,
+    "uncached_output_tokens": 0
+  }
+}

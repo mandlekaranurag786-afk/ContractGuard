@@ -1,0 +1,280 @@
+{
+  "contract": "data/contracts/RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 4,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "AFFILIATES, ANY SUCCESSORS IN INTEREST OR ANY BENEFICIARY OR ASSIGNEE OF THIS AGREEMENT FOR ANY CONSEQUENTIAL, MULTIPLE, INCIDENTAL, INDIRECT, SPECIAL, EXEMPLARY OR PUNITIVE DAMAGES, OR LOSS OF PROFITS OR REVENUES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR ANY BREACH HEREOF",
+      "evidence_chunk_id": "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "AFFILIATES, ANY SUCCESSORS IN INTEREST OR ANY BENEFICIARY OR ASSIGNEE OF THIS AGREEMENT FOR ANY CONSEQUENTIAL, MULTIPLE, INCIDENTAL, INDIRECT, SPECIAL, EXEMPLARY OR PUNITIVE DAMAGES, OR LOSS OF PROFITS OR REVENUES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR ANY BREACH HEREOF",
+      "evidence_chunk_id": "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "AFFILIATES, ANY SUCCESSORS IN INTEREST OR ANY BENEFICIARY OR ASSIGNEE OF THIS AGREEMENT FOR ANY CONSEQUENTIAL, MULTIPLE, INCIDENTAL, INDIRECT, SPECIAL, EXEMPLARY OR PUNITIVE DAMAGES, OR LOSS OF PROFITS OR REVENUES ARISING OUT OF OR RELATING TO THIS AGREEMENT OR ANY BREACH HEREOF",
+      "evidence_chunk_id": "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status unsupported and is not trusted.",
+      "field": "notice_days",
+      "value": 30,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "unsupported",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "2.1 Term. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party (such fifteen (15) Contract Year period, as may be further extended as provided herein is referr",
+      "evidence_chunk_id": "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:13",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "2.1 Term. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party (such fifteen (15) Contract Year period, as may be further extended as provided herein is referr",
+      "condition_evidence_chunk_id": "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:13"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "initial_term_months",
+      "value": 180,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "2.1 Term. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party (such fifteen (15) Contract Year period, as may be further extended as provided herein is referr",
+      "evidence_chunk_id": "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:13",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:84",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:35",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:101",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:23",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:99"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "initial_term_months_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:13",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:12",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:3",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:37",
+        "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:10"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 4,
+    "cache_hits": 2,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 3494,
+    "cached_output_tokens": 421,
+    "elapsed_ms": 18795.69812399859
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 4,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "cap_amount",
+        "rule_ids": [
+          "cap_min_2m"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:21",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:49",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:47"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 2,
+        "clause_type": "Cap On Liability",
+        "field": "has_money_cap",
+        "rule_ids": [
+          "cap_required"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:112",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:65",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:36"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 3,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:65",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:64",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:30"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      },
+      {
+        "step": 4,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:6",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:4",
+          "9ae3b024ee3a9d07bdd4bfc07df6a0da1e2aeddf735dbf8a0251543268d4052c:20"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": null,
+        "merge_outcome": null,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "latency_ms": 0.0,
+        "cached": false,
+        "note": "extraction_error"
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 4,
+    "cached_calls": 0,
+    "uncached_input_tokens": 0,
+    "uncached_output_tokens": 0
+  }
+}

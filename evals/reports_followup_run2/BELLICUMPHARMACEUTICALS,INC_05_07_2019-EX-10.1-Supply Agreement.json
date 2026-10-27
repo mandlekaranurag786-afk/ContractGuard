@@ -1,0 +1,232 @@
+{
+  "contract": "data/contracts/BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "FAIL",
+  "overall_reason": "At least one evaluated rule failed.",
+  "counts": {
+    "PASS": 1,
+    "FAIL": 1,
+    "NEEDS_REVIEW": 3,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "cap_is_formula",
+      "reason": "The cap is a formula (the aggregate amount of the product prices paid by Bellicum for the Miltenyi Product(s) during the twelve (12) month period immediately preceding the event giving rise to such liability), not a fixed amount, so it cannot be compared with 2000000 USD.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "IN NO ONE EVENT SHALL EITHER PARTY’S AGGREGATE LIABILITY FOR DAMAGES OR LOSSES UNDER THIS AGREEMENT EXCEED THE AGGREGATE AMOUNT OF THE PRODUCT PRICES PAID BY BELLICUM FOR THE MILTENYI PRODUCT(S) DURING THE TWELVE (12) MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO SUCH LIABILITY; AND FURTHER PROVIDED THAT SUCH AGGREGATE LIABILITY DURING SUCH PERIOD ALSO SHALL NOT EXCEED THE AMOUNT OF SUCH PARTY’S INSURANCE COVERAGE FOR SUCH AGGREGATE LIABILITY.",
+      "evidence_chunk_id": "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:172",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_money_cap=True satisfies is_true.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "IN NO ONE EVENT SHALL EITHER PARTY’S AGGREGATE LIABILITY FOR DAMAGES OR LOSSES UNDER THIS AGREEMENT EXCEED THE AGGREGATE AMOUNT OF THE PRODUCT PRICES PAID BY BELLICUM FOR THE MILTENYI PRODUCT(S) DURING THE TWELVE (12) MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO SUCH LIABILITY; AND FURTHER PROVIDED THAT SUCH AGGREGATE LIABILITY DURING SUCH PERIOD ALSO SHALL NOT EXCEED THE AMOUNT OF SUCH PARTY’S INSURANCE COVERAGE FOR SUCH AGGREGATE LIABILITY.",
+      "evidence_chunk_id": "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:172",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "IN NO ONE EVENT SHALL EITHER PARTY’S AGGREGATE LIABILITY FOR DAMAGES OR LOSSES UNDER THIS AGREEMENT EXCEED THE AGGREGATE AMOUNT OF THE PRODUCT PRICES PAID BY BELLICUM FOR THE MILTENYI PRODUCT(S) DURING THE TWELVE (12) MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO SUCH LIABILITY; AND FURTHER PROVIDED THAT SUCH AGGREGATE LIABILITY DURING SUCH PERIOD ALSO SHALL NOT EXCEED THE AMOUNT OF SUCH PARTY’S INSURANCE COVERAGE FOR SUCH AGGREGATE LIABILITY.",
+      "evidence_chunk_id": "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:172",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "The Agreement shall have an initial term of ten (10) years commencing from the Effective Date and ending on the tenth (10th) anniversary thereof (the “Initial Term”), unless earlier terminated by either Party in accordance with the provisions of Section 15.2 or Section 15.3. Thereafter, Bellicum shall have consecutive separate options to extend the Term for successive renewal terms of five (5) years each (each, a “Renewal Term”",
+      "evidence_chunk_id": "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:191",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "The Agreement shall have an initial term of ten (10) years commencing from the Effective Date and ending on the tenth (10th) anniversary thereof (the “Initial Term”), unless earlier terminated by either Party in accordance with the provisions of Section 15.2 or Section 15.3. Thereafter, Bellicum shall have consecutive separate options to extend the Term for successive renewal terms of five (5) years each (each, a “Renewal Term”",
+      "condition_evidence_chunk_id": "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:191"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "FAIL",
+      "reason_code": "compared",
+      "reason": "initial_term_months=120 does not satisfy <= 60.",
+      "field": "initial_term_months",
+      "value": 120,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "The Agreement shall have an initial term of ten (10) years commencing from the Effective Date and ending on the tenth (10th) anniversary thereof (the “Initial Term”), unless earlier terminated by either Party in accordance with the provisions of Section 15.2 or Section 15.3. Thereafter, Bellicum shall have consecutive separate options to extend the Term for successive renewal terms of five (5) years each (each, a “Renewal Term”",
+      "evidence_chunk_id": "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:191",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:172",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:173",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:178",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:179",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:171"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:191",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:20",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:192",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:18",
+        "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:215"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 2,
+    "cache_hits": 2,
+    "input_tokens": 1894,
+    "output_tokens": 58,
+    "cached_input_tokens": 3543,
+    "cached_output_tokens": 519,
+    "elapsed_ms": 19457.362130997353
+  },
+  "followup": {
+    "enabled": true,
+    "status": "completed",
+    "calls_used": 2,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "has_damages_exclusion",
+        "rule_ids": [
+          "excludes_consequential"
+        ],
+        "query": "neither party shall be liable for indirect incidental special consequential damages or lost profits",
+        "new_chunk_ids": [
+          "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:206",
+          "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:213",
+          "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:190"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 941,
+        "output_tokens": 29,
+        "latency_ms": 3370.4692510000314,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:204",
+          "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:198",
+          "021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:216"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNVERIFIED",
+        "input_tokens": 953,
+        "output_tokens": 29,
+        "latency_ms": 4593.209520004166,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 2,
+    "cached_calls": 0,
+    "uncached_input_tokens": 1894,
+    "uncached_output_tokens": 58
+  }
+}

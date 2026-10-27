@@ -192,7 +192,11 @@ def test_no_new_chunks_or_query():
     "update,outcome",
     [
         ({"evidence_chunk_id": "unseen:0"}, "DISCARDED_UNVERIFIED"),
-        ({"value": False}, "DISCARDED_UNTRUSTED"),
+        ({"value": False}, "NO_VALUE"),
+        (
+            {"value": None, "evidence_quote": None, "evidence_chunk_id": None},
+            "NO_VALUE",
+        ),
     ],
 )
 def test_discarded(update, outcome):
@@ -253,6 +257,7 @@ def test_error_counts_call():
     result, original = run(Client([LLMUnavailableError("failed")]))
     assert result.report.calls_used == 1 and result.results == original
     assert result.report.steps[0].note == "extraction_error"
+    assert "LLMUnavailableError: failed" in result.report.steps[0].error
 
 
 def test_guard_blocks_fake_overlay(monkeypatch):
@@ -318,7 +323,8 @@ def fake_checker():
     return service, client, setup()[0]
 
 
-def test_checker_and_cli_fake(tmp_path, monkeypatch, capsys):
+@pytest.mark.parametrize("version", ["v1", "v2"])
+def test_checker_and_cli_fake(tmp_path, monkeypatch, capsys, version):
     from contractguard import check
 
     service, client, rules = fake_checker()
@@ -336,6 +342,8 @@ def test_checker_and_cli_fake(tmp_path, monkeypatch, capsys):
                 "--policy",
                 str(policy),
                 "--followup",
+                "--followup-version",
+                version,
                 "--json-out",
                 str(out),
             ]
@@ -347,6 +355,7 @@ def test_checker_and_cli_fake(tmp_path, monkeypatch, capsys):
     assert "Follow-up: completed | calls 1/4" in printed
     assert "followup" in printed and QUOTE in printed
     report = json.loads(out.read_text())
+    assert report["followup"]["version"] == version
     assert report["cost"]["input_tokens"] == 20
     assert report["cost"]["llm_calls"] == 2
     assert report["followup"]["changed_rules"][0]["after_decision"] == "PASS"
@@ -419,3 +428,112 @@ def test_checker_quota_rolls_back_and_retains_cost():
     assert report.followup.status == "followup_skipped"
     assert report.cost.llm_calls == 2 and report.followup.calls_used == 1
     assert not report.followup.changed_rules
+
+
+@pytest.mark.parametrize("version", ["v1", "v2"])
+@pytest.mark.parametrize(
+    "reason", ["value_absence_claim", "value_unsupported", "condition_unverified"]
+)
+@pytest.mark.parametrize("has_unseen", [True, False])
+def test_versioned_chunk_policy_and_verification(version, reason, has_unseen):
+    rules, results, confidences = setup()
+    clause = "Cap On Liability"
+    original = evaluate_rules(rules, results, confidences, TrustPolicy.KEYWORD)
+    original[0] = original[0].model_copy(update={
+        "reason_code": reason, "condition_field": "has_damages_exclusion",
+    })
+    originals = [chunk(8), chunk(0)]
+    retrieved = [chunk(0), chunk(8)]
+    if has_unseen:
+        retrieved += [chunk(i) for i in range(1, 6)]
+    client = Client([dict(value=True, evidence_quote=QUOTE, evidence_chunk_id="doc:8")])
+    result = run_followup(
+        rules, results, confidences, original, Retriever(retrieved),
+        {clause: {"doc:8", "doc:0"}}, client,
+        version=version, original_chunks={clause: originals},
+    )
+    include_original = version == "v2" and reason != "value_absence_claim"
+    sent = (["doc:8", "doc:0"] if include_original else []) + (
+        ["doc:1", "doc:2", "doc:3"] if has_unseen else []
+    )
+    step = result.report.steps[0]
+    assert result.report.version == version
+    assert step.chunk_ids == sent
+    assert step.new_chunk_ids == (["doc:1", "doc:2", "doc:3"] if has_unseen else [])
+    assert step.chunk_policy == (
+        "original_plus_unseen" if include_original else "unseen_only"
+    )
+    assert len(client.calls) == result.report.calls_used == bool(sent)
+    if sent:
+        from contractguard.followup.extract import build_field_prompt
+
+        by_id = {c.chunk_id: c for c in [*originals, *retrieved]}
+        assert client.calls[0] == build_field_prompt(
+            clause, "has_damages_exclusion", [by_id[i] for i in sent]
+        )
+        assert step.verified is include_original
+        assert step.merge_outcome == (
+            "ACCEPTED_NEW" if include_original else "DISCARDED_UNVERIFIED"
+        )
+    else:
+        assert step.note == "no_new_chunks"
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_v2_combines_reasons_for_same_target(reverse):
+    rules, results, confidences = setup(("has_damages_exclusion",) * 2)
+    clause = "Cap On Liability"
+    original = evaluate_rules(rules, results, confidences, TrustPolicy.KEYWORD)
+    reasons = ["value_absence_claim", "condition_unverified"]
+    if reverse:
+        reasons.reverse()
+    for item, reason in zip(original, reasons, strict=True):
+        item.reason_code = reason
+        item.condition_field = "has_damages_exclusion"
+    client = Client()
+    result = run_followup(
+        rules, results, confidences, original, Retriever(), {clause: {"doc:0"}},
+        client, version="v2", original_chunks={clause: [chunk(0)]},
+    )
+    assert len(client.calls) == 1
+    assert result.report.steps[0].rule_ids == ["0", "1"]
+    assert result.report.steps[0].chunk_ids == ["doc:0", "doc:1", "doc:2", "doc:3"]
+
+
+def test_v2_original_only_retries_still_obey_four_attempt_budget():
+    fields = ("has_damages_exclusion", "has_money_cap", "cap_amount")
+    rules, results, confidences = setup(fields)
+    clause = "Cap On Liability"
+    original = evaluate_rules(rules, results, confidences, TrustPolicy.KEYWORD)
+    for item in original:
+        item.reason_code = "value_unsupported"
+    client = Client(["invalid"] * 10)
+    result = run_followup(
+        rules, results, confidences, original, Retriever([chunk(0)]),
+        {clause: {"doc:0"}}, client, version="v2",
+        original_chunks={clause: [chunk(0)]},
+    )
+    assert result.report.calls_used == len(client.calls) == 4
+    assert result.report.steps[-1].note == "budget_exhausted"
+
+
+def test_checker_v2_passes_original_chunks_in_main_order():
+    service, client, rules = fake_checker()
+    client.outcomes[0]["has_damages_exclusion"] = True
+    client.outcomes[1]["evidence_chunk_id"] = "doc:8"
+    cap_quote = client.outcomes[0]["evidence_quote"]
+
+    class OrderedRetriever(Retriever):
+        def search(self, query, k):
+            if query not in FOLLOWUP_QUERIES.values():
+                return [SearchResult(chunk=c, score=1) for c in (
+                    chunk(8), chunk(0, cap_quote),
+                )]
+            return []
+
+    service.retriever_builder = lambda _: OrderedRetriever()
+    report = service.check("fake.pdf", rules, "policy.json", True, "v2")
+    assert report.followup.version == "v2"
+    assert report.followup.steps[0].chunk_ids == ["doc:8", "doc:0"]
+    assert report.followup.steps[0].verified
+    assert report.overall_status == "PASS"

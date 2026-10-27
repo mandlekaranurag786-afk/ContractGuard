@@ -116,6 +116,13 @@ def evaluate_rule(
             field_evidence_source=source(rule.field),
             condition_evidence_source=source(condition.field) if condition else None,
             condition_evidence_quote=quote(condition.field) if condition else None,
+            condition_evidence_chunk_id=(
+                accepted[condition.field].evidence_chunk_id
+                if condition and condition.field in accepted
+                else getattr(extraction, "evidence_chunk_id", None)
+                if condition
+                else None
+            ),
         )
 
     review = Decision.NEEDS_REVIEW

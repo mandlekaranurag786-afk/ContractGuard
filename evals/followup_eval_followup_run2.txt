@@ -1,0 +1,84 @@
+Before: evals/reports_v2
+After: evals/reports_followup_run2
+Labels: evals/extraction_labels_v2.csv
+Policy: policies/eval_policy.json
+
+BEFORE
+Scored rule-rows: 101/150
+Decision counts (scored): PASS=40, FAIL=2, NEEDS_REVIEW=59, NOT_APPLICABLE=0
+Decision counts (all): PASS=50, FAIL=4, NEEDS_REVIEW=96, NOT_APPLICABLE=0
+UNSAFE: 0
+Correct (scored): 51
+Review (scored): 59
+Review (all 150 rows): 96
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+
+AFTER
+Scored rule-rows: 101/150
+Decision counts (scored): PASS=42, FAIL=2, NEEDS_REVIEW=57, NOT_APPLICABLE=0
+Decision counts (all): PASS=52, FAIL=4, NEEDS_REVIEW=94, NOT_APPLICABLE=0
+UNSAFE: 0
+Correct (scored): 53
+Review (scored): 57
+Review (all 150 rows): 94
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 13 | 0 | 17
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+
+CHANGED DECISIONS: 2
+
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: 8.3 Neither Party shall be liable to the other Party in contract, tort or otherwise, whatever the cause, for any loss of profit, business or goodwill or any indirect, incidental or consequential costs, damages or expenses of any kind, except for such loss attributable to breach of confidentiality.
+Chunk: 85d8a6e9f207cff06645154b288e03b5c60c7fea732ef90c80bd717cddc53810:18
+
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | excludes_consequential | NEEDS_REVIEW (value_absence_claim) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: UNDER NO CIRCUMSTANCE AND UNDER NO LEGAL THEORY (TORT, CONTRACT, OR OTHERWISE), SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL DAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGREEMENT
+Chunk: f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44
+
+TRACE: BEFORE
+Steps by note: merged=0, no_new_chunks=0, no_query=0, budget_exhausted=0, extraction_error=0, guard_blocked=0, quota_exhausted=0
+Merge outcomes by field: field | ACCEPTED_NEW | ACCEPTED_CONFIRMATION | DISCARDED_UNVERIFIED | DISCARDED_UNTRUSTED | CONFLICT
+(no merges)
+Errors by message:
+(none recorded)
+Follow-up calls per contract: total=0, median=0, max=0
+Follow-up live calls: 0
+Follow-up cached calls: 0
+Follow-up uncached input/output tokens: 0/0
+All-pipeline uncached input/output tokens: 0/0
+
+TRACE: AFTER
+Steps by note: merged=60, no_new_chunks=0, no_query=0, budget_exhausted=0, extraction_error=0, guard_blocked=0, quota_exhausted=0
+Merge outcomes by field: field | ACCEPTED_NEW | ACCEPTED_CONFIRMATION | DISCARDED_UNVERIFIED | DISCARDED_UNTRUSTED | CONFLICT
+auto_renews | 0 | 0 | 12 | 0 | 0
+cap_amount | 0 | 0 | 10 | 0 | 0
+has_damages_exclusion | 1 | 1 | 9 | 1 | 0
+has_money_cap | 0 | 0 | 9 | 0 | 0
+initial_term_months | 0 | 0 | 13 | 0 | 0
+notice_days | 0 | 0 | 4 | 0 | 0
+Errors by message:
+(none recorded)
+Follow-up calls per contract: total=60, median=2, max=4
+Follow-up live calls: 58
+Follow-up cached calls: 2
+Follow-up uncached input/output tokens: 57628/1964
+All-pipeline uncached input/output tokens: 57628/1964
+
+TIMING: elapsed_ms per contract (p95 uses nearest rank)
+run | median | p95
+before | 5823.51 | 27023.01
+after | 10429.31 | 28661.60
+
+PRE-REGISTERED ACCEPTANCE
+UNSAFE on scored rows: 0 (required: 0)
+Scored review reduction: 2 (required: at least 10)
+Result: REJECT
+Every changed decision must be checked by hand before the decision is final.

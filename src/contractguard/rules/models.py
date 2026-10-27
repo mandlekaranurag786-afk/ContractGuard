@@ -98,6 +98,7 @@ class RuleResult(BaseModel):
     field_evidence_source: Literal["extraction", "followup"] = "extraction"
     condition_evidence_source: Literal["extraction", "followup"] | None = None
     condition_evidence_quote: str | None = None
+    condition_evidence_chunk_id: str | None = None
 
 
 def load_rules(path: str | Path) -> list[Rule]:

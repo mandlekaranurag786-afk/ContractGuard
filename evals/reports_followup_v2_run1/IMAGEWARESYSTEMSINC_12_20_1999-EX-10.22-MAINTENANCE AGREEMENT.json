@@ -1,0 +1,266 @@
+{
+  "contract": "data/contracts/IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 3,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 2,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "cap_is_formula",
+      "reason": "The cap is a formula (the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement), not a fixed amount, so it cannot be compared with 2000000 USD.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "MORPHO agrees that XIMAGE's total liability to MORPHO for any damages suffered in connection with, or arising out of, this Agreement or MORPHO's use of any documentation, product or service provided (or to be provided) hereunder, regardless of whether any such liability is based upon contract, tort or other basis, shall be limited to an amount not to exceed the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement.",
+      "evidence_chunk_id": "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_money_cap=True satisfies is_true.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "MORPHO agrees that XIMAGE's total liability to MORPHO for any damages suffered in connection with, or arising out of, this Agreement or MORPHO's use of any documentation, product or service provided (or to be provided) hereunder, regardless of whether any such liability is based upon contract, tort or other basis, shall be limited to an amount not to exceed the basic Monthly Maintenance Charges, for a sixty (60) day term under this Agreement.",
+      "evidence_chunk_id": "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "followup_pattern",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "followup",
+      "confidence_level": "HIGH",
+      "evidence_quote": "IN NO EVENT SHALL, XIMAGE BE LIABLE TO MORPHO FOR ANY INCIDENTAL, CONSEQUENTIAL, SPECIAL OR INDIRECT DAMAGES",
+      "evidence_chunk_id": "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+      "field_evidence_source": "followup",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "notice_days=60 satisfies >= 30.",
+      "field": "notice_days",
+      "value": 60,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "This Agreement shall automatically renew for consecutive one (1) year terms at XIMAGE's then prevailing rates at the end of each one (1) year term unless either party gives at least sixty (60) days prior written notice of the non-renewal of this Agreement.",
+      "evidence_chunk_id": "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:5",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "This Agreement shall automatically renew for consecutive one (1) year terms at XIMAGE's then prevailing rates at the end of each one (1) year term unless either party gives at least sixty (60) days prior written notice of the non-renewal of this Agreement.",
+      "condition_evidence_chunk_id": "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:5"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "initial_term_months",
+      "value": 12,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "This Agreement shall automatically renew for consecutive one (1) year terms at XIMAGE's then prevailing rates at the end of each one (1) year term unless either party gives at least sixty (60) days prior written notice of the non-renewal of this Agreement.",
+      "evidence_chunk_id": "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:5",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:18",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:10",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:1",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:12"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "initial_term_months_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:5",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:22",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:4",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+        "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:23"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 2,
+    "cache_hits": 2,
+    "input_tokens": 4629,
+    "output_tokens": 217,
+    "cached_input_tokens": 3394,
+    "cached_output_tokens": 443,
+    "elapsed_ms": 12146.84672200383
+  },
+  "followup": {
+    "enabled": true,
+    "version": "v2",
+    "status": "completed",
+    "calls_used": 2,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "has_damages_exclusion",
+        "rule_ids": [
+          "excludes_consequential"
+        ],
+        "query": "neither party shall be liable for indirect incidental special consequential damages or lost profits",
+        "new_chunk_ids": [
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:21",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:23",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:16"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:18",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:10",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:1",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:12",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:21",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:23",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:16"
+        ],
+        "value": true,
+        "quote_excerpt": "IN NO EVENT SHALL, XIMAGE BE LIABLE TO MORPHO FOR ANY INCIDENTAL, CONSEQUENTIAL, SPECIAL OR INDIRECT DAMAGES",
+        "verified": true,
+        "status": "followup_pattern",
+        "merge_outcome": "ACCEPTED_CONFIRMATION",
+        "input_tokens": 2264,
+        "output_tokens": 113,
+        "latency_ms": 1990.4463650018442,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:9",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:20",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:21"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:5",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:22",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:4",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:23",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:9",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:20",
+          "daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:21"
+        ],
+        "value": 12,
+        "quote_excerpt": "This Agreement shall automatically renew for consecutive one (1) year terms",
+        "verified": true,
+        "status": "followup_untrusted",
+        "merge_outcome": "DISCARDED_UNTRUSTED",
+        "input_tokens": 2365,
+        "output_tokens": 104,
+        "latency_ms": 3932.8817689965945,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [
+      {
+        "rule_id": "excludes_consequential",
+        "before_decision": "NEEDS_REVIEW",
+        "before_reason_code": "value_unsupported",
+        "after_decision": "PASS",
+        "after_reason_code": "compared",
+        "evidence_strength": "followup"
+      }
+    ],
+    "live_calls": 2,
+    "cached_calls": 0,
+    "uncached_input_tokens": 4629,
+    "uncached_output_tokens": 217
+  }
+}

@@ -11,6 +11,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 from time import perf_counter
+from typing import Literal
 
 # Set before importing the embedding library: this script never downloads models.
 os.environ["HF_HUB_OFFLINE"] = "1"
@@ -22,6 +23,7 @@ from contractguard.checker import ContractChecker
 from contractguard.extraction.extractor import Extractor
 from contractguard.extraction.prompt import PRODUCT_PROMPT_VERSION
 from contractguard.llm.cache import DEFAULT_CACHE_DIR, CachedLLMClient
+from contractguard.llm.errors import LLMQuotaError
 from contractguard.report import ContractReport, OverallStatus
 from contractguard.retrieval.vector import MODEL_NAME, _load_model
 from contractguard.rules.models import Decision, Rule, TrustPolicy, load_rules
@@ -42,6 +44,32 @@ def selected_contracts() -> list[Path]:
     ]
 
 
+def build_checker(
+    *,
+    live_followup: bool = False,
+    followup_cache_dir: Path = DEFAULT_CACHE_DIR,
+    main_cache_dir: Path = DEFAULT_CACHE_DIR,
+) -> ContractChecker:
+    """Main extraction can never reach a live client, even in live-followup mode."""
+    main = CacheOnlyClient()
+    followup = CacheOnlyClient()
+    if live_followup:
+        from contractguard.llm.gemini import GeminiClient
+
+        followup = GeminiClient()
+    return ContractChecker(
+        Extractor(
+            CachedLLMClient(main, model=main.model, cache_dir=main_cache_dir),
+            prompt_version=PRODUCT_PROMPT_VERSION,
+        ),
+        policy=TrustPolicy.KEYWORD,
+        top_k=TOP_K,
+        followup_client=CachedLLMClient(
+            followup, model=followup.model, cache_dir=followup_cache_dir
+        ),
+    )
+
+
 def run_batch(
     checker: ContractChecker,
     contracts: list[Path],
@@ -50,6 +78,7 @@ def run_batch(
     report_dir: Path,
     *,
     followup: bool = False,
+    followup_version: Literal["v1", "v2"] = "v1",
     cache_only: bool = True,
 ) -> list[ContractReport]:
     """Stop immediately on any error; never overwrite an existing report."""
@@ -63,16 +92,36 @@ def run_batch(
     reports = []
     for i, (contract, output) in enumerate(zip(contracts, outputs, strict=True), 1):
         print(f"[{i}/{len(contracts)}] {contract.name}", flush=True)
-        report = (
-            checker.check(contract, rules, policy_path, followup=True)
-            if followup
-            else checker.check(contract, rules, policy_path)
-        )
+        try:
+            report = (
+                checker.check(
+                    contract, rules, policy_path, followup=True,
+                    followup_version=followup_version,
+                )
+                if followup
+                else checker.check(contract, rules, policy_path)
+            )
+            if report.followup.status == "followup_skipped":
+                raise LLMQuotaError("Follow-up quota exhausted")
+        except LLMQuotaError:
+            print(
+                f"Quota exhausted at {contract.name}; "
+                f"completed contracts: {len(reports)}/{len(contracts)}. "
+                "Finished reports retained.",
+                flush=True,
+            )
+            raise
         if cache_only and report.cost.llm_calls:
             raise RuntimeError("Cache-only batch unexpectedly recorded LLM calls")
         with output.open("x", encoding="utf-8") as handle:
             handle.write(report.model_dump_json(indent=2) + "\n")
         reports.append(report)
+        print(
+            f"{contract.name} | follow-up calls={report.followup.calls_used} | "
+            f"cached={report.followup.cached_calls or 0} | "
+            f"live={report.followup.live_calls or 0}",
+            flush=True,
+        )
     return reports
 
 
@@ -89,7 +138,8 @@ def summarize(
     p95 = timings[math.ceil(0.95 * len(timings)) - 1] if timings else 0
     lines = [
         f"Policy: {POLICY} | KEYWORD | prompt={PRODUCT_PROMPT_VERSION}",
-        f"Cache-only: {'ON' if cache_only else 'OFF'} | cache={DEFAULT_CACHE_DIR}",
+        f"Cache-only: ON (main extraction) | cache={DEFAULT_CACHE_DIR}",
+        f"Follow-up cache-only: {'ON' if cache_only else 'OFF'}",
         "Embedding model: loaded once; shared by pipeline via _load_model lru_cache",
         f"Model load time (separate): {model_load_ms:.2f} ms",
         "contract | overall_status | PASS | FAIL | NEEDS_REVIEW | "
@@ -173,13 +223,18 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--cache-only",
-        action=argparse.BooleanOptionalAction,
+        action="store_true",
         default=True,
-        help="Default ON; --no-cache-only explicitly permits live generation",
+        help="Main extraction is always cache-only",
     )
     parser.add_argument("--followup", action="store_true")
+    parser.add_argument("--followup-version", choices=("v1", "v2"), default="v1")
+    parser.add_argument("--live-followup", action="store_true")
+    parser.add_argument("--followup-cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     parser.add_argument("--tag")
     args = parser.parse_args(argv)
+    if args.live_followup and not args.followup:
+        parser.error("--live-followup requires --followup")
     if args.tag and (not args.tag.replace("_", "").replace("-", "").isalnum()):
         parser.error("tag must contain letters, numbers, underscores or hyphens")
     summary = (
@@ -193,33 +248,27 @@ def main(argv: list[str] | None = None) -> int:
         if not contract.is_file():
             raise FileNotFoundError(contract)
     rules = load_rules(POLICY)
-    inner = CacheOnlyClient()
-    if not args.cache_only:
-        from contractguard.llm.gemini import GeminiClient
-
-        inner = GeminiClient()
-    checker = ContractChecker(
-        Extractor(
-            CachedLLMClient(inner, model=inner.model, cache_dir=DEFAULT_CACHE_DIR),
-            prompt_version=PRODUCT_PROMPT_VERSION,
-        ),
-        policy=TrustPolicy.KEYWORD,
-        top_k=TOP_K,
+    checker = build_checker(
+        live_followup=args.live_followup, followup_cache_dir=args.followup_cache_dir
     )
     start = perf_counter()
     _load_model(MODEL_NAME)
     load_ms = (perf_counter() - start) * 1000
-    reports = run_batch(
-        checker,
-        contracts,
-        rules,
-        POLICY,
-        reports_dir,
-        followup=args.followup,
-        cache_only=args.cache_only,
-    )
+    try:
+        reports = run_batch(
+            checker,
+            contracts,
+            rules,
+            POLICY,
+            reports_dir,
+            followup=args.followup,
+            followup_version=args.followup_version,
+            cache_only=not args.live_followup,
+        )
+    except LLMQuotaError:
+        return 1
     text = (
-        summarize(reports, load_ms, args.cache_only)
+        summarize(reports, load_ms, not args.live_followup)
         + "\n\n"
         + compare_offline(reports, OFFLINE_RESULTS)
     )

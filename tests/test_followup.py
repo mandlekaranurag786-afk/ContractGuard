@@ -152,8 +152,10 @@ def evidence(**updates):
     "old,status,updates,outcome",
     [
         (30, "unsupported", {"verified": False}, "DISCARDED_UNVERIFIED"),
-        (30, "unsupported", {"value": None}, "DISCARDED_UNTRUSTED"),
-        (30, "unsupported", {"value": False}, "DISCARDED_UNTRUSTED"),
+        (30, "unsupported", {"value": None}, "NO_VALUE"),
+        (30, "unsupported", {"value": False}, "NO_VALUE"),
+        (30, "unsupported", {"value": None, "verified": False}, "NO_VALUE"),
+        (30, "unsupported", {"value": False, "verified": False}, "NO_VALUE"),
         (30, "unsupported", {"status": "followup_untrusted"}, "DISCARDED_UNTRUSTED"),
         (None, "absence_claim", {}, "ACCEPTED_NEW"),
         (
@@ -179,6 +181,7 @@ def test_merge_order_and_preservation(old, status, updates, outcome):
     result = merge(old, status, evidence(**updates))
     assert result.outcome == outcome
     if result.outcome in {
+        MergeOutcome.NO_VALUE,
         MergeOutcome.CONFLICT,
         MergeOutcome.DISCARDED_UNTRUSTED,
         MergeOutcome.DISCARDED_UNVERIFIED,

@@ -1,0 +1,67 @@
+Before: evals/reports_v2
+After: evals/reports_loop_off_check
+Labels: evals/extraction_labels_v2.csv
+Policy: policies/eval_policy.json
+
+BEFORE
+Scored rule-rows: 101/150
+Decision counts (scored): PASS=40, FAIL=2, NEEDS_REVIEW=59, NOT_APPLICABLE=0
+Decision counts (all): PASS=50, FAIL=4, NEEDS_REVIEW=96, NOT_APPLICABLE=0
+UNSAFE: 0
+Correct (scored): 51
+Review (scored): 59
+Review (all 150 rows): 96
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+
+AFTER
+Scored rule-rows: 101/150
+Decision counts (scored): PASS=40, FAIL=2, NEEDS_REVIEW=59, NOT_APPLICABLE=0
+Decision counts (all): PASS=50, FAIL=4, NEEDS_REVIEW=96, NOT_APPLICABLE=0
+UNSAFE: 0
+Correct (scored): 51
+Review (scored): 59
+Review (all 150 rows): 96
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+
+CHANGED DECISIONS: 0
+
+TRACE: BEFORE
+Steps by note: merged=0, no_new_chunks=0, no_query=0, budget_exhausted=0, extraction_error=0, guard_blocked=0, quota_exhausted=0
+Merge outcomes by field: field | ACCEPTED_NEW | ACCEPTED_CONFIRMATION | DISCARDED_UNVERIFIED | DISCARDED_UNTRUSTED | CONFLICT
+(no merges)
+Follow-up calls per contract: total=0, median=0, max=0
+Follow-up live calls: 0
+Follow-up cached calls: 0
+Follow-up uncached input/output tokens: 0/0
+All-pipeline uncached input/output tokens: 0/0
+
+TRACE: AFTER
+Steps by note: merged=0, no_new_chunks=0, no_query=0, budget_exhausted=0, extraction_error=0, guard_blocked=0, quota_exhausted=0
+Merge outcomes by field: field | ACCEPTED_NEW | ACCEPTED_CONFIRMATION | DISCARDED_UNVERIFIED | DISCARDED_UNTRUSTED | CONFLICT
+(no merges)
+Follow-up calls per contract: total=0, median=0, max=0
+Follow-up live calls: 0
+Follow-up cached calls: 0
+Follow-up uncached input/output tokens: 0/0
+All-pipeline uncached input/output tokens: 0/0
+
+TIMING: elapsed_ms per contract (p95 uses nearest rank)
+run | median | p95
+before | 5823.51 | 27023.01
+after | 4455.50 | 22380.63
+
+PRE-REGISTERED ACCEPTANCE
+UNSAFE on scored rows: 0 (required: 0)
+Scored review reduction: 0 (required: at least 10)
+Result: REJECT
+Every changed decision must be checked by hand before the decision is final.

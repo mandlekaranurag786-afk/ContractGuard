@@ -1,0 +1,116 @@
+Before: evals/reports_v2
+After: evals/reports_followup_v2_run1
+Labels: evals/extraction_labels_v2.csv
+Policy: policies/eval_policy.json
+
+BEFORE
+Scored rule-rows: 101/150
+Decision counts (scored): PASS=40, FAIL=2, NEEDS_REVIEW=59, NOT_APPLICABLE=0
+Decision counts (all): PASS=50, FAIL=4, NEEDS_REVIEW=96, NOT_APPLICABLE=0
+UNSAFE: 0
+Correct (scored): 51
+Review (scored): 59
+Review (all 150 rows): 96
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 11 | 0 | 19
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+
+AFTER
+Scored rule-rows: 101/150
+Decision counts (scored): PASS=49, FAIL=2, NEEDS_REVIEW=50, NOT_APPLICABLE=0
+Decision counts (all): PASS=59, FAIL=4, NEEDS_REVIEW=87, NOT_APPLICABLE=0
+UNSAFE: 0
+Correct (scored): 60
+Review (scored): 50
+Review (all 150 rows): 87
+rule | scored | correct | unsafe | review
+cap_min_2m | 7 | 6 | 0 | 5
+cap_required | 30 | 14 | 0 | 16
+excludes_consequential | 30 | 20 | 0 | 10
+renewal_notice_min_30 | 28 | 17 | 0 | 16
+initial_term_max_60 | 6 | 3 | 0 | 3
+
+CHANGED DECISIONS: 9
+
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: IN NO EVENT SHALL A PARTY BE LIABLE FOR ANY PUNITIVE, EXEMPLARY, INDIRECT, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR EXPENSES
+Chunk: 021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:171
+
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: i-on will not be liable under any circumstances for any lost profits or other consequential damages, even if i-on has been advised as to the possibility of such damages.
+Chunk: 89d9d3d6f25d254b1a2ef8c82dd9627c34db76a1206311fa74523378d70835a9:12
+
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: 9.1 No Consequential or Indirect Damages. NEITHER PARTY SHALL BE LIABLE UNDER OR IN CONNECTION WITH THIS AGREEMENT FOR INDIRECT, INCIDENTAL, CONSEQUENTIAL, LIQUIDATED, SPECIAL OR EXEMPLARY DAMAGES OR PENALTIES
+Chunk: e47c0a306605c8fe15d018a7adfbda09dd19d7995bd0e9693df363ee9a75d4dd:28
+
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: IN NO EVENT SHALL, XIMAGE BE LIABLE TO MORPHO FOR ANY INCIDENTAL, CONSEQUENTIAL, SPECIAL OR INDIRECT DAMAGES
+Chunk: daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19
+
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: 10.2 IN NO EVENT WILL EITHER PARTY BE LIABLE FOR ANY CONSEQUENTIAL, INDIRECT, EXEMPLARY, SPECIAL, OR INCIDENTAL DAMAGES ARISING FROM OR RELATING TO THIS AGREEMENT.
+Chunk: 85d8a6e9f207cff06645154b288e03b5c60c7fea732ef90c80bd717cddc53810:21
+
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: 12.1 IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR ANY INCIDENTAL, CONSEQUENTIAL, INDIRECT,
+SPECIAL, OR PUNITIVE DAMAGES (INCLUDING, BUT NOT LIMITED TO, LOST PROFITS, BUSINESS INTERRUPTION, LOSS OF BUSINESS
+INFORMATION OR OTHER PECUNIARY LOSS) REGARDLESS OF WHETHER SUCH LIABILITY IS BASED ON BREACH OF CONTRACT, TORT
+(INCLUDING NEGLIGENCE), STRICT LIABILITY, BREACH OF WARRANTIES, FAILURE OF ESSENTIAL PURPOSE OR OTHERWISE AND EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+Chunk: e0e2e96e105138d030e44a2d0d94072264bb166a54ac1f7272fd6cff952bf578:27
+
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: VOTOCAST SHALL HAVE NO LIABILITY WITH RESPECT TO VOTOCAST'S OBLIGATIONS UNDER THIS AGREEMENT OR OTHERWISE FOR ANY CONSEQUENTIAL, EXEMPLARY, SPECIAL. INCIDENTAL, OR PUNITIVE DAMAGES OF ANY KIND
+Chunk: 28fcfe953491d7f677b7518e40d934773047e636a9b09fde364e9bc3c0e5bd6f:25
+
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | excludes_consequential | NEEDS_REVIEW (value_unsupported) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: 7.2 Consequential Damages. UNDER NO CIRCUMSTANCES, INCLUDING NEGLIGENCE, SHALL XACCT BE LIABLE FOR ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOST PROFITS, LOSS OF DATA, OR COSTS OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, ARISING IN ANY WAY OUT OF
+Chunk: 4efb5d7e762f53cba7bf984cb496992cc20272c7b99ddca5a00ce3b91687eb21:11
+
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | excludes_consequential | NEEDS_REVIEW (value_absence_claim) -> PASS (compared) | field=has_damages_exclusion | value=True | strength=followup | truth=PASS | unsafe=no
+Quote: UNDER NO CIRCUMSTANCE AND UNDER NO LEGAL THEORY (TORT, CONTRACT, OR OTHERWISE), SHALL EITHER PARTY BE LIABLE TO THE OTHER PARTY FOR ANY LOST PROFITS, LOSS OF OPPORTUNITY OR OTHER SPECIAL, PUNITIVE, INDIRECT, OR CONSEQUENTIAL DAMAGES SUFFERED BY THE OTHER PARTY ARISING IN CONNECTION WITH THIS AGREEMENT
+Chunk: f58e78e987e71bdb8c3756fa5d0980b04a667bb47ba016c4e5c435e3cd88745d:44
+
+TRACE: BEFORE
+Steps by note: merged=0, no_new_chunks=0, no_query=0, budget_exhausted=0, extraction_error=0, guard_blocked=0, quota_exhausted=0
+Merge outcomes by field: field | ACCEPTED_NEW | ACCEPTED_CONFIRMATION | NO_VALUE | DISCARDED_UNVERIFIED | DISCARDED_UNTRUSTED | CONFLICT
+(no merges)
+Errors by message:
+(none recorded)
+Follow-up calls per contract: total=0, median=0, max=0
+Follow-up live calls: 0
+Follow-up cached calls: 0
+Follow-up uncached input/output tokens: 0/0
+All-pipeline uncached input/output tokens: 0/0
+
+TRACE: AFTER
+Steps by note: merged=60, no_new_chunks=0, no_query=0, budget_exhausted=0, extraction_error=0, guard_blocked=0, quota_exhausted=0
+Merge outcomes by field: field | ACCEPTED_NEW | ACCEPTED_CONFIRMATION | NO_VALUE | DISCARDED_UNVERIFIED | DISCARDED_UNTRUSTED | CONFLICT
+auto_renews | 0 | 0 | 9 | 0 | 3 | 0
+cap_amount | 0 | 0 | 9 | 0 | 1 | 0
+has_damages_exclusion | 1 | 8 | 3 | 0 | 0 | 0
+has_money_cap | 0 | 0 | 6 | 0 | 3 | 0
+initial_term_months | 0 | 0 | 11 | 0 | 2 | 0
+notice_days | 0 | 0 | 3 | 1 | 0 | 0
+Errors by message:
+(none recorded)
+Follow-up calls per contract: total=60, median=2, max=4
+Follow-up live calls: 28
+Follow-up cached calls: 32
+Follow-up uncached input/output tokens: 67195/3396
+All-pipeline uncached input/output tokens: 67195/3396
+
+TIMING: elapsed_ms per contract (p95 uses nearest rank)
+run | median | p95
+before | 5823.51 | 27023.01
+after | 9928.58 | 34354.56
+
+PRE-REGISTERED ACCEPTANCE
+UNSAFE on scored rows: 0 (required: 0)
+Scored review reduction: 9 (required: at least 10)
+Result: REJECT
+Every changed decision must be checked by hand before the decision is final.

@@ -1,0 +1,260 @@
+{
+  "contract": "data/contracts/PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 5,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party",
+      "evidence_chunk_id": "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party",
+      "condition_evidence_chunk_id": "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_unsupported",
+      "reason": "A value was found but the quote does not prove it.",
+      "field": "initial_term_months",
+      "value": 180,
+      "field_status": "unsupported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "MEDIUM",
+      "evidence_quote": "This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days’ prior written notice of termination to the other Party",
+      "evidence_chunk_id": "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "NOT_FOUND",
+      "confidence_reasons": [
+        "absence_not_trusted",
+        "evidence_not_found"
+      ],
+      "retrieved_chunk_ids": [
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:45",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:44",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:0",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:28",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:18"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "MEDIUM",
+      "confidence_reasons": [
+        "initial_term_months_not_supported_by_quote"
+      ],
+      "retrieved_chunk_ids": [
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:12",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:51",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:3",
+        "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:17"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 2,
+    "cache_hits": 2,
+    "input_tokens": 4821,
+    "output_tokens": 189,
+    "cached_input_tokens": 3592,
+    "cached_output_tokens": 278,
+    "elapsed_ms": 19477.997128000425
+  },
+  "followup": {
+    "enabled": true,
+    "version": "v2",
+    "status": "completed",
+    "calls_used": 2,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:37",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:52",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:22"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:12",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:51",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:3",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:17",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:37",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:52",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:22"
+        ],
+        "value": false,
+        "quote_excerpt": "Termination. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect ",
+        "verified": true,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 2327,
+        "output_tokens": 160,
+        "latency_ms": 7935.151699995913,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:57",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:6",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:5"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:12",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:51",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:3",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:17",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:57",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:6",
+          "2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:5"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 2494,
+        "output_tokens": 29,
+        "latency_ms": 7322.824320996006,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 2,
+    "cached_calls": 0,
+    "uncached_input_tokens": 4821,
+    "uncached_output_tokens": 189
+  }
+}
