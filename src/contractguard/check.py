@@ -17,6 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("pdf", type=Path)
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--json-out", type=Path)
+    parser.add_argument("--followup", action="store_true")
     args = parser.parse_args(argv)
     try:
         rules = load_rules(args.policy)
@@ -25,7 +26,12 @@ def main(argv: list[str] | None = None) -> int:
             CachedLLMClient(client, model=client.model, cache_dir=DEFAULT_CACHE_DIR),
             prompt_version=PRODUCT_PROMPT_VERSION,
         )
-        report = ContractChecker(extractor).check(args.pdf, rules, args.policy)
+        checker = ContractChecker(extractor)
+        report = (
+            checker.check(args.pdf, rules, args.policy, followup=True)
+            if args.followup
+            else checker.check(args.pdf, rules, args.policy)
+        )
     except (LLMQuotaError, ValueError, OSError) as exc:
         parser.exit(1, f"Check failed: {exc}\n")
     print(f"{report.overall_status}: {report.overall_reason}")
@@ -41,6 +47,17 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(f"  Quote: {(result.evidence_quote or '')[:160]}")
     print(f"Cost: {report.cost.model_dump_json()}")
+    if report.followup.enabled:
+        print(
+            f"Follow-up: {report.followup.status} | calls "
+            f"{report.followup.calls_used}/{report.followup.max_calls}"
+        )
+        for change in report.followup.changed_rules:
+            print(
+                f"  {change.rule_id}: {change.before_decision} "
+                f"({change.before_reason_code}) -> {change.after_decision} "
+                f"({change.after_reason_code}) | {change.evidence_strength}"
+            )
     if args.json_out:
         args.json_out.write_text(
             report.model_dump_json(indent=2) + "\n", encoding="utf-8"

@@ -2,6 +2,7 @@
 
 from contractguard.extraction.confidence import ConfidenceResult
 from contractguard.extraction.schemas import ExtractionResult
+from contractguard.followup.models import MergeOutcome, MergeResult
 from contractguard.rules.models import Decision, Rule, RuleResult, TrustPolicy
 
 
@@ -10,10 +11,39 @@ def evaluate_rule(
     result: ExtractionResult,
     confidence: ConfidenceResult,
     policy: TrustPolicy,
+    overlay: dict[str, MergeResult] | None = None,
 ) -> RuleResult:
     if rule.clause_type != result.clause_type:
         raise ValueError("Rule and extraction clause types do not match")
     extraction = result.extraction
+    accepted = {
+        key: item
+        for key, item in (overlay or {}).items()
+        if item.outcome
+        in {MergeOutcome.ACCEPTED_NEW, MergeOutcome.ACCEPTED_CONFIRMATION}
+    }
+    for key, item in (overlay or {}).items():
+        if key != item.field:
+            raise ValueError("Overlay key must match its field")
+
+    def trusted(field, status):
+        if field in accepted:
+            return policy != TrustPolicy.STRICT and status in {
+                "supported",
+                "followup_pattern",
+            }
+        return status in policy.statuses
+
+    def source(field):
+        return "followup" if field in accepted else "extraction"
+
+    def quote(field):
+        return (
+            accepted[field].evidence_quote
+            if field in accepted
+            else getattr(extraction, "evidence_quote", None)
+        )
+
     value = getattr(extraction, rule.field, None)
     status = confidence.field_status.get(rule.field, "unsupported")
     condition = rule.when
@@ -29,6 +59,19 @@ def evaluate_rule(
         else None
     )
     used: list[str] = []
+    if rule.field in accepted:
+        value = accepted[rule.field].final_value
+        status = accepted[rule.field].final_status
+    if condition and condition.field in accepted:
+        condition_value = accepted[condition.field].final_value
+        condition_status = accepted[condition.field].final_status
+    currency = getattr(extraction, "currency", None)
+    if rule.currency and "currency" in accepted:
+        currency = accepted["currency"].final_value
+        currency_status = accepted["currency"].final_status
+
+    def use(field, status):
+        used.append("followup" if field in accepted else status)
 
     def finish(decision: Decision, code: str, reason: str) -> RuleResult:
         strength = None
@@ -39,12 +82,14 @@ def evaluate_rule(
                     "supported",
                     "keyword_signal",
                     "explicit_negative",
+                    "followup",
                 ).index(s),
             )
             strength = {
                 "supported": "proof",
                 "keyword_signal": "weak_signal",
                 "explicit_negative": "explicit_negative",
+                "followup": "followup",
             }[weakest]
         return RuleResult(
             rule_id=rule.id,
@@ -62,8 +107,15 @@ def evaluate_rule(
             currency_status=currency_status,
             evidence_strength=strength,
             confidence_level=confidence.level,
-            evidence_quote=getattr(extraction, "evidence_quote", None),
-            evidence_chunk_id=getattr(extraction, "evidence_chunk_id", None),
+            evidence_quote=quote(rule.field),
+            evidence_chunk_id=(
+                accepted[rule.field].evidence_chunk_id
+                if rule.field in accepted
+                else getattr(extraction, "evidence_chunk_id", None)
+            ),
+            field_evidence_source=source(rule.field),
+            condition_evidence_source=source(condition.field) if condition else None,
+            condition_evidence_quote=quote(condition.field) if condition else None,
         )
 
     review = Decision.NEEDS_REVIEW
@@ -73,22 +125,36 @@ def evaluate_rule(
         return finish(review, "clause_not_found", "The clause was not found.")
     if confidence.level == "LOW":
         return finish(review, "low_confidence", "Extraction confidence is low.")
+    relevant = {rule.field}
     if condition:
-        if condition_status not in policy.statuses:
+        relevant.add(condition.field)
+    if rule.currency:
+        relevant.add("currency")
+    for field in sorted(relevant):
+        item = (overlay or {}).get(field)
+        if item and item.outcome == MergeOutcome.CONFLICT:
+            return finish(
+                review,
+                "followup_conflict",
+                f"Follow-up conflict for {field}: old value {item.old_value!r}, "
+                f"new value {item.new_value!r}.",
+            )
+    if condition:
+        if not trusted(condition.field, condition_status):
             return finish(
                 review,
                 "condition_unverified",
                 f"The condition field {condition.field} has status {condition_status} "
                 "and is not trusted.",
             )
-        used.append(condition_status)
+        use(condition.field, condition_status)
         if condition_value != condition.equals:
             return finish(
                 Decision.NOT_APPLICABLE,
                 "condition_not_met",
                 "The trusted condition does not match the required value.",
             )
-    if status not in policy.statuses:
+    if not trusted(rule.field, status):
         formula = getattr(extraction, "cap_formula", None)
         if rule.field == "cap_amount" and value is None and formula is not None:
             target = f"{rule.threshold} {rule.currency or ''}".strip()
@@ -108,15 +174,16 @@ def evaluate_rule(
         if rule.field == "cap_amount" and value is not None and formula is not None:
             reason += f" The extraction also found a formula: {formula}."
         return finish(review, f"value_{status}", reason)
-    used.append(status)
+    use(rule.field, status)
     if rule.currency is not None:
-        if currency_status not in policy.statuses:
+        if not trusted("currency", currency_status):
             return finish(review, "currency_unverified", "The currency is not trusted.")
-        currency = getattr(extraction, "currency", None)
         if currency is None or currency.casefold() != rule.currency.casefold():
             return finish(
                 review, "currency_mismatch", "The currency does not match the rule."
             )
+        if "currency" in accepted:
+            use("currency", currency_status)
     if rule.operator in (">=", "<=") and value is None:
         return finish(
             review,

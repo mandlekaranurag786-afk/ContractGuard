@@ -2,8 +2,9 @@
 
 from enum import StrEnum
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
+from contractguard.followup.models import FollowupReport
 from contractguard.rules.models import Decision, RuleResult, TrustPolicy
 
 
@@ -73,3 +74,4 @@ class ContractReport(BaseModel):
     rule_results: list[RuleResult]
     clauses: list[ClauseSummary]
     cost: Cost
+    followup: FollowupReport = Field(default_factory=FollowupReport)

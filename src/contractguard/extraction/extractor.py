@@ -41,6 +41,11 @@ class Extractor:
         self._prompt_version = prompt_version
 
     @property
+    def client(self) -> LLMClient:
+        """Client shared with optional, separately prompted field follow-ups."""
+        return self._client
+
+    @property
     def prompt_version(self) -> str:
         return self._prompt_version
 

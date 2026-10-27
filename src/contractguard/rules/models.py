@@ -89,10 +89,15 @@ class RuleResult(BaseModel):
     condition_value: Scalar
     condition_status: str | None
     currency_status: str | None
-    evidence_strength: Literal["proof", "weak_signal", "explicit_negative"] | None
+    evidence_strength: (
+        Literal["proof", "weak_signal", "explicit_negative", "followup"] | None
+    )
     confidence_level: str
     evidence_quote: str | None
     evidence_chunk_id: str | None
+    field_evidence_source: Literal["extraction", "followup"] = "extraction"
+    condition_evidence_source: Literal["extraction", "followup"] | None = None
+    condition_evidence_quote: str | None = None
 
 
 def load_rules(path: str | Path) -> list[Rule]:

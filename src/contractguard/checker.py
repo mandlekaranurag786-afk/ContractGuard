@@ -9,7 +9,10 @@ from contractguard.chunking import Chunk
 from contractguard.extraction.confidence import compute_confidence
 from contractguard.extraction.prompt import PRODUCT_PROMPT_VERSION
 from contractguard.extraction.schemas import ExtractionResult
+from contractguard.followup.loop import run_followup
+from contractguard.followup.models import FollowupReport
 from contractguard.ingestion import ParsedDocument
+from contractguard.llm.client import LLMClient
 from contractguard.pipeline import (
     CLAUSE_QUERIES,
     build_retriever,
@@ -42,6 +45,7 @@ class ContractChecker:
         *,
         document_loader: Callable[[Path], ParsedDocument] = load_document,
         retriever_builder: Callable[[list[Chunk]], Retriever] = build_retriever,
+        followup_client: LLMClient | None = None,
     ) -> None:
         if top_k < 1:
             raise ValueError("top_k must be positive")
@@ -54,15 +58,20 @@ class ContractChecker:
         self.top_k = top_k
         self.document_loader = document_loader
         self.retriever_builder = retriever_builder
+        self.followup_client = followup_client
 
     def check(
         self,
         pdf_path: str | Path,
         rules: list[Rule],
         policy_path: str | Path,
+        followup: bool = False,
     ) -> ContractReport:
         if not rules:
             raise ValueError("Rule list must not be empty")
+        client = self.followup_client or getattr(self.extractor, "client", None)
+        if followup and client is None:
+            raise ValueError("Follow-up requires an injected LLM client")
         clauses = list(dict.fromkeys(rule.clause_type for rule in rules))
         for clause in clauses:
             if clause not in CLAUSE_QUERIES:
@@ -93,9 +102,27 @@ class ContractChecker:
                 )
             )
         decisions = evaluate_rules(rules, results, confidences, self.policy)
+        followup_report = FollowupReport()
+        followup_cost = {}
+        if followup:
+            loop = run_followup(
+                rules,
+                results,
+                confidences,
+                decisions,
+                retriever,
+                {s.clause_type: set(s.retrieved_chunk_ids) for s in summaries},
+                client,
+                self.policy,
+            )
+            decisions, followup_report, followup_cost = (
+                loop.results,
+                loop.report,
+                loop.cost,
+            )
         status = overall_status(decisions)
         models = list(dict.fromkeys(r.model for r in results.values() if r.model))
-        return ContractReport(
+        report = ContractReport(
             contract=str(pdf_path),
             policy_path=str(policy_path),
             trust_policy=self.policy,
@@ -106,6 +133,7 @@ class ContractChecker:
             counts={d: sum(r.decision == d for r in decisions) for d in Decision},
             rule_results=decisions,
             clauses=summaries,
+            followup=followup_report,
             cost=Cost(
                 llm_calls=sum(r.attempts for r in results.values() if not r.cached),
                 cache_hits=sum(r.attempts for r in results.values() if r.cached),
@@ -124,3 +152,6 @@ class ContractChecker:
                 elapsed_ms=(perf_counter() - started) * 1000,
             ),
         )
+        for field, value in followup_cost.items():
+            setattr(report.cost, field, getattr(report.cost, field) + value)
+        return report

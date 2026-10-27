@@ -1,4 +1,4 @@
-"""Run the product checker on the extraction-eval contracts, strictly offline."""
+"""Run the product checker on the extraction-eval contracts; cache-only by default."""
 
 from __future__ import annotations
 
@@ -48,6 +48,9 @@ def run_batch(
     rules: list[Rule],
     policy_path: Path,
     report_dir: Path,
+    *,
+    followup: bool = False,
+    cache_only: bool = True,
 ) -> list[ContractReport]:
     """Stop immediately on any error; never overwrite an existing report."""
     outputs = [report_dir / f"{p.stem}.json" for p in contracts]
@@ -60,8 +63,12 @@ def run_batch(
     reports = []
     for i, (contract, output) in enumerate(zip(contracts, outputs, strict=True), 1):
         print(f"[{i}/{len(contracts)}] {contract.name}", flush=True)
-        report = checker.check(contract, rules, policy_path)
-        if report.cost.llm_calls:
+        report = (
+            checker.check(contract, rules, policy_path, followup=True)
+            if followup
+            else checker.check(contract, rules, policy_path)
+        )
+        if cache_only and report.cost.llm_calls:
             raise RuntimeError("Cache-only batch unexpectedly recorded LLM calls")
         with output.open("x", encoding="utf-8") as handle:
             handle.write(report.model_dump_json(indent=2) + "\n")
@@ -69,7 +76,9 @@ def run_batch(
     return reports
 
 
-def summarize(reports: list[ContractReport], model_load_ms: float) -> str:
+def summarize(
+    reports: list[ContractReport], model_load_ms: float, cache_only: bool = True
+) -> str:
     decisions = Counter(r.decision for p in reports for r in p.rule_results)
     statuses = Counter(p.overall_status for p in reports)
     reasons = Counter(r.reason_code for p in reports for r in p.rule_results)
@@ -80,7 +89,7 @@ def summarize(reports: list[ContractReport], model_load_ms: float) -> str:
     p95 = timings[math.ceil(0.95 * len(timings)) - 1] if timings else 0
     lines = [
         f"Policy: {POLICY} | KEYWORD | prompt={PRODUCT_PROMPT_VERSION}",
-        f"Cache-only: ON | cache={DEFAULT_CACHE_DIR}",
+        f"Cache-only: {'ON' if cache_only else 'OFF'} | cache={DEFAULT_CACHE_DIR}",
         "Embedding model: loaded once; shared by pipeline via _load_model lru_cache",
         f"Model load time (separate): {model_load_ms:.2f} ms",
         "contract | overall_status | PASS | FAIL | NEEDS_REVIEW | "
@@ -164,19 +173,31 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--cache-only",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
         default=True,
-        help="Always enabled; there is no live API mode",
+        help="Default ON; --no-cache-only explicitly permits live generation",
     )
-    parser.parse_args(argv)
-    if SUMMARY.exists():
-        raise FileExistsError(SUMMARY)
+    parser.add_argument("--followup", action="store_true")
+    parser.add_argument("--tag")
+    args = parser.parse_args(argv)
+    if args.tag and (not args.tag.replace("_", "").replace("-", "").isalnum()):
+        parser.error("tag must contain letters, numbers, underscores or hyphens")
+    summary = (
+        Path(f"evals/checker_batch_summary_{args.tag}.txt") if args.tag else SUMMARY
+    )
+    reports_dir = Path(f"evals/reports_{args.tag}") if args.tag else REPORTS
+    if summary.exists():
+        raise FileExistsError(summary)
     contracts = selected_contracts()
     for contract in contracts:
         if not contract.is_file():
             raise FileNotFoundError(contract)
     rules = load_rules(POLICY)
     inner = CacheOnlyClient()
+    if not args.cache_only:
+        from contractguard.llm.gemini import GeminiClient
+
+        inner = GeminiClient()
     checker = ContractChecker(
         Extractor(
             CachedLLMClient(inner, model=inner.model, cache_dir=DEFAULT_CACHE_DIR),
@@ -188,11 +209,21 @@ def main(argv: list[str] | None = None) -> int:
     start = perf_counter()
     _load_model(MODEL_NAME)
     load_ms = (perf_counter() - start) * 1000
-    reports = run_batch(checker, contracts, rules, POLICY, REPORTS)
-    text = (
-        summarize(reports, load_ms) + "\n\n" + compare_offline(reports, OFFLINE_RESULTS)
+    reports = run_batch(
+        checker,
+        contracts,
+        rules,
+        POLICY,
+        reports_dir,
+        followup=args.followup,
+        cache_only=args.cache_only,
     )
-    with SUMMARY.open("x", encoding="utf-8") as handle:
+    text = (
+        summarize(reports, load_ms, args.cache_only)
+        + "\n\n"
+        + compare_offline(reports, OFFLINE_RESULTS)
+    )
+    with summary.open("x", encoding="utf-8") as handle:
         handle.write(text + "\n")
     print(text)
     return 0
