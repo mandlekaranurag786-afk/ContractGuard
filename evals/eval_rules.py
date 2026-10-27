@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import sys
@@ -202,10 +203,18 @@ def summarize(run: str, policy: TrustPolicy, records: list[dict], rules: list[Ru
     return "\n".join(lines), totals
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--tag", default="v3")
+    tag = parser.parse_args(argv).tag
+    if not tag or any(
+        c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
+        for c in tag
+    ):
+        parser.error("tag must contain only letters, numbers, underscores or hyphens")
     output = ROOT / "evals"
-    paths = [output / "rules_eval_v3.txt"] + [
-        output / f"rule_results_{run}_{policy.value.lower()}_v3.csv"
+    paths = [output / f"rules_eval_{tag}.txt"] + [
+        output / f"rule_results_{run}_{policy.value.lower()}_{tag}.csv"
         for run in RUNS
         for policy in TrustPolicy
     ]
@@ -233,7 +242,7 @@ def main() -> None:
             records = evaluate(rows, labels, rules, policy)
             report, metrics[run][policy] = summarize(run, policy, records, rules)
             sections.append(report)
-            outputs[output / f"rule_results_{run}_{policy.value.lower()}_v3.csv"] = (
+            outputs[output / f"rule_results_{run}_{policy.value.lower()}_{tag}.csv"] = (
                 records
             )
     chosen, selection = select_policy(metrics)
