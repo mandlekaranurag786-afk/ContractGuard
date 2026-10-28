@@ -1,0 +1,53 @@
+LangGraph: 1.2.18
+Version: v2; main and follow-up clients: cache-only (miss raises).
+contract | rule rows | steps | calls | differences | loop ms | graph ms
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | 5 | 3 | 3 | 0 | 49.458 | 60.068
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | 5 | 3 | 3 | 0 | 46.236 | 68.093
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | 5 | 2 | 2 | 0 | 30.385 | 39.704
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | 5 | 2 | 2 | 0 | 45.870 | 55.591
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | 5 | 0 | 0 | 0 | 0.187 | 7.553
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | 5 | 2 | 2 | 0 | 41.234 | 53.548
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | 5 | 1 | 1 | 0 | 25.959 | 33.947
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | 5 | 4 | 4 | 0 | 79.272 | 109.654
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | 5 | 2 | 2 | 0 | 41.798 | 54.115
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | 5 | 1 | 1 | 0 | 31.682 | 40.121
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | 5 | 2 | 2 | 0 | 43.973 | 54.789
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | 5 | 2 | 2 | 0 | 45.580 | 59.975
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | 5 | 1 | 1 | 0 | 21.818 | 30.730
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | 5 | 4 | 4 | 0 | 80.883 | 97.996
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | 5 | 0 | 0 | 0 | 0.126 | 8.273
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | 5 | 1 | 1 | 0 | 24.084 | 33.405
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | 5 | 1 | 1 | 0 | 21.744 | 30.441
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | 5 | 3 | 3 | 0 | 66.573 | 94.978
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | 5 | 4 | 4 | 0 | 85.871 | 97.750
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | 5 | 4 | 4 | 0 | 129.924 | 155.381
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | 5 | 4 | 4 | 0 | 89.059 | 98.857
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | 5 | 2 | 2 | 0 | 43.427 | 56.695
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | 5 | 2 | 2 | 0 | 103.125 | 94.874
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | 5 | 4 | 4 | 0 | 183.148 | 170.374
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | 5 | 0 | 0 | 0 | 0.202 | 7.867
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | 5 | 1 | 1 | 0 | 33.764 | 44.201
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | 5 | 1 | 1 | 0 | 27.413 | 35.860
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | 5 | 1 | 1 | 0 | 23.363 | 37.195
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | 5 | 1 | 1 | 0 | 31.293 | 40.833
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | 5 | 2 | 2 | 0 | 44.395 | 58.356
+Contracts compared: 30
+Rule rows compared: 150
+Trace steps compared: 60
+Comparison: complete results, reports (ordered steps, outcomes, changes, status, calls, metadata), and cost.
+Differences: 0
+Equivalence: PASS
+Live LLM calls: main=0, loop=0, graph=0
+Cache hits: main=60, loop=60, graph=60
+loop nonblank/noncomment controller lines: 214; whole module: 280
+loop controller time ms: median=42.613, p95=129.924
+graph nonblank/noncomment controller lines: 258; whole module: 288
+graph controller time ms: median=54.452, p95=155.381
+Line count: entry function and top-level private helpers, including docstrings; loop includes _currency_merge. Shared tool classes excluded.
+Timing: one run/controller/contract, alternating order; includes query retrieval, cache reads, validation, and graph build/compile/invoke. Excludes main extraction and document/index preparation; p95 nearest rank.
+Original loop scenario test cases: 37
+Experiment test cases: loop-primary=41, graph-primary=41 (each compares both implementations)
+recursion_limit = 4 * len(original) + 8: four nodes per unique target plus selection, final routing, termination and headroom.
+Exclusive langgraph-exp locked packages: 19
+Method: all-platform lock dependency reachability, including version forks and activated extras, minus production and all other groups; counts (name, version), not current-platform installed distributions.
+httpcore2==2.16.0, httpx2==2.16.0, httpx2-jsfetch==1.0, jsonpatch==1.38, jsonpointer==3.6, langchain-core==1.7.0, langchain-protocol==0.0.20, langgraph==1.2.18, langgraph-checkpoint==4.3.1, langgraph-prebuilt==1.1.1, langgraph-sdk==0.4.10, langsmith==0.14.14, orjson==3.13.0, ormsgpack==1.13.0, requests-toolbelt==1.0.0, truststore==0.10.5, uuid-utils==0.19.0, xxhash==4.0.2, zstandard==0.25.0

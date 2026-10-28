@@ -21,6 +21,9 @@ dev = [
     "pytest>=8.0",
     "ruff>=0.6",
 ]
+langgraph-exp = [
+    "langgraph>=1.2.18",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/contractguard"]
