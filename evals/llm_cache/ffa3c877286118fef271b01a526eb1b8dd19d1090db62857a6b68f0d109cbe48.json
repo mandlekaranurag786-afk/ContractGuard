@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"IN NO EVENT SHALL A PARTY BE LIABLE FOR ANY PUNITIVE, EXEMPLARY, INDIRECT, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR EXPENSES\",\n  \"evidence_chunk_id\": \"021e17a484f3bd2d6025c3c8f072bfb7bcd2759da361231c661f2eab52af6aa0:171\"\n}",
+  "input_tokens": 2340,
+  "output_tokens": 118,
+  "latency_ms": 6777.330813005392,
+  "created_at": "2026-10-27T12:19:09.332338+00:00"
+}

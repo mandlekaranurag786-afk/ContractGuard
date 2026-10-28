@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"This Agreement may be renewed for additional periods of one (1) year (each such additional period, a \u201cRenewal Term\u201d) unless either Party provides notice of nonrenewal upon not less than [***] prior written notice to the other Party.\",\n  \"evidence_chunk_id\": \"ed2310df56a88bab8c743ec2df99abac8acf1120c51a82f9127eb8fe79fdba8a:44\"\n}",
+  "input_tokens": 2252,
+  "output_tokens": 130,
+  "latency_ms": 4623.458959002164,
+  "created_at": "2026-10-27T12:21:38.310549+00:00"
+}

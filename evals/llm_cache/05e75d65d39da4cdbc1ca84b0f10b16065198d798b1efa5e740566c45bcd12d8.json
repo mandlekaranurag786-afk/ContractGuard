@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"8.3 Neither Party shall be liable to the other Party in contract, tort or otherwise, whatever the cause, for any loss of profit, business or goodwill or any indirect, incidental or consequential costs, damages or expenses of any kind, except for such loss attributable to breach of confidentiality.\",\n  \"evidence_chunk_id\": \"85d8a6e9f207cff06645154b288e03b5c60c7fea732ef90c80bd717cddc53810:18\"\n}",
+  "input_tokens": 933,
+  "output_tokens": 148,
+  "latency_ms": 6232.386268005939,
+  "created_at": "2026-10-27T11:59:09.022074+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"IN NO EVENT SHALL, XIMAGE BE LIABLE TO MORPHO FOR ANY INCIDENTAL, CONSEQUENTIAL, SPECIAL OR INDIRECT DAMAGES\",\n  \"evidence_chunk_id\": \"daf1af3c0df2d727ca18d50d18922119f24af641c671a9f7fc407b71c4396c27:19\"\n}",
+  "input_tokens": 2264,
+  "output_tokens": 113,
+  "latency_ms": 1990.4463650018442,
+  "created_at": "2026-10-27T12:20:20.579439+00:00"
+}

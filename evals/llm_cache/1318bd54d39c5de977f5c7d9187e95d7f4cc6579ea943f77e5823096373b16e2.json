@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": false,\n  \"evidence_quote\": \"Termination. This Agreement shall commence on the Effective Date and continue in full force and effect until the end of the fifteenth (15th) Contract Year, and shall continue in full force and effect thereafter until terminated by either Party by providing thirty (30) calendar days\u2019 prior written notice of termination to the other Party\",\n  \"evidence_chunk_id\": \"2a5f3c4f00225f134976c2ca5a5a1923bb02a679a772a942792c45c77f978047:58\"\n}",
+  "input_tokens": 2327,
+  "output_tokens": 160,
+  "latency_ms": 7935.151699995913,
+  "created_at": "2026-10-27T12:22:24.898417+00:00"
+}

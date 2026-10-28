@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": 500000,\n  \"evidence_quote\": \"DEVELOPER'S MAXIMUM LIABILITY HEREUNDER IS EXPRESSLY LIMITED TO THE LESSER OF: THE AMOUNT PAID UNDER THIS AGREEMENT BY DISTRIBUTOR TO DEVELOPER WITHIN THE SIX (6) MONTH PERIOD IMMEDIATELY PRECEDING THE CAUSE GIVING RISE TO THE CLAIM\u037e OR FIVE HUNDRED THOUSAND DOLLARS ($5OO,000).\",\n  \"evidence_chunk_id\": \"5588f3c98f929d0e8399d33fe66cef2526cefd657aaa5c9dc2b4fd97a3a3e2c4:28\",\n  \"currency\": \"USD\"\n}",
+  "input_tokens": 2362,
+  "output_tokens": 177,
+  "latency_ms": 7084.562787000323,
+  "created_at": "2026-10-27T12:20:10.252406+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"10.8 PPI Liability Limitation. Any and all liability of PPI to EKR howsoever arising in respect of this Agreement, the Transition Services and Inventory Agreement or the Supply Agreement and their performance, in contract tort or otherwise, shall be limited (except for death or personal injury caused by the negligence of PPI or its employees while acting in the course of their employment) to [**] US Dollars ($[**]);\",\n  \"evidence_chunk_id\": \"3c53c1c8fc68484fdb8f91729b7d228e81eb6d205b3c6431353d16c0b0ca88f4:97\"\n}",
+  "input_tokens": 2354,
+  "output_tokens": 177,
+  "latency_ms": 3189.4498170004226,
+  "created_at": "2026-10-27T12:21:56.538392+00:00"
+}

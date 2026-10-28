@@ -41,3 +41,5 @@ build/
 
 # Logs
 *.logmanual_check/
+manual_check/
+evals/*.log

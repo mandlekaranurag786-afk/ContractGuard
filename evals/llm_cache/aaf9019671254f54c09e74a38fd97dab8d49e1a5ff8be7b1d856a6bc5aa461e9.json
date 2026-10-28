@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"VOTOCAST SHALL HAVE NO LIABILITY WITH RESPECT TO VOTOCAST'S OBLIGATIONS UNDER THIS AGREEMENT OR OTHERWISE FOR ANY CONSEQUENTIAL, EXEMPLARY, SPECIAL. INCIDENTAL, OR PUNITIVE DAMAGES OF ANY KIND\",\n  \"evidence_chunk_id\": \"28fcfe953491d7f677b7518e40d934773047e636a9b09fde364e9bc3c0e5bd6f:25\"\n}",
+  "input_tokens": 2447,
+  "output_tokens": 136,
+  "latency_ms": 3583.4545850011637,
+  "created_at": "2026-10-27T12:24:01.695570+00:00"
+}

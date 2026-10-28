@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": false,\n  \"evidence_quote\": \"A Facility Addendum may be extended for up to three (3) additional periods of twelve (12) months (each, an \u201cExtension Period\u201d) by written notice given by Customer to Manufacturer not less than twelve (12) months prior to the expiration of the Initial Term or the applicable Extension Period, as the case may be.\",\n  \"evidence_chunk_id\": \"893909bf198d75e1b608756b10eea3b698b42cc0d5de30d984f0da48e797ecbb:173\"\n}",
+  "input_tokens": 2541,
+  "output_tokens": 157,
+  "latency_ms": 3569.8411900011706,
+  "created_at": "2026-10-27T12:23:54.403069+00:00"
+}

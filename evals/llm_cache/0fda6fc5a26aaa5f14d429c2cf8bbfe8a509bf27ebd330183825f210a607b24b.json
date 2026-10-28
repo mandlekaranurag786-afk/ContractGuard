@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"IN NO EVENT SHALL A PARTY\u2019S LIABILITY BE GREATER THAN, PER CLAIM OR SERIES OF CLAIMS ARISING FROM THE SAME CAUSE OF ACTION, [* * *].\",\n  \"evidence_chunk_id\": \"efdc607a19a80f5dd4d5a385baf876a08c5e51fdbaa08bc8332f16c422d4ae7e:94\"\n}",
+  "input_tokens": 2391,
+  "output_tokens": 122,
+  "latency_ms": 1906.9004179982585,
+  "created_at": "2026-10-27T12:22:06.740721+00:00"
+}
