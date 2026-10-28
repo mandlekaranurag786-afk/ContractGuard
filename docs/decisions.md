@@ -335,8 +335,6 @@ PYTHONUNBUFFERED=1 and tee to see progress.
   not mixed. The product API may fall back to another model.
 - Cache every LLM response on disk, so re-runs cost no API calls.
 
-
-
 ## Structured extraction: design (19 Oct 2026)
 
 * Two Pydantic schemas, one per clause type:
@@ -575,4 +573,141 @@ PYTHONUNBUFFERED=1 and tee to see progress.
 * Formula caps ("lesser of") are not parsed.
 * Labels drafted with AI help; labeller agreement not measured.
 * Still open from before: hybrid vs dense, TOC/heading filtering,
+
+
+
+
+## Evidence follow-up loop: build (27 Oct)
+
+* Built in small checkpoints, safety core first: follow-up patterns, the merge
+  table, the overlay in the rule engine, then the controller loop. All with fake
+  LLM tests first.
+* Pattern bugs found by reading the patterns against common legal phrases,
+  before any real run:
+  * "including but not limited to" was counted as a money cap ("limited to").
+  * "to the maximum extent permitted by law" was counted as a cap ("maximum").
+  * "shall not be limited to" was counted as a cap.
+    Fixed with tests using the exact phrases.
+* Merge guard moved first: a trusted field must never be followed up, even if
+  the new evidence is weak (otherwise the bug would be hidden).
+* Currency for cap_amount follow-ups is merged as its own field; a trusted
+  currency is never replaced, only flagged as a conflict.
+* Patterns don't read the contract, the LLM does. Patterns only decide whether
+  an answer can be trusted automatically. Unknown wording -> NEEDS_REVIEW
+  (costs review time, never a wrong decision). Wrong patterns are the real
+  safety risk, so false positives are fixed first.
+
+## Follow-up loop: live runs (27 Oct)
+
+* Run 1 INVALID: all 60 follow-up calls failed with 400 INVALID_ARGUMENT
+  ("Unknown name additional_properties"). The one-field schemas used
+  extra="forbid", which adds additionalProperties: false; Gemini rejects it.
+  387 fake tests passed because fakes accept any schema.
+  Fixes: schemas without extra="forbid"; a contract test that no schema sent to
+  Gemini contains additionalProperties; the trace now keeps the error message.
+  New rule: one real call, then one contract, then the batch.
+* Run 2 (loop v1): 0 unsafe, only 2 fewer reviews (59 -> 57). 57 of 60
+  follow-ups returned nothing (no value). No verification bug.
+  Design flaw found in the trace: v1 only read UNSEEN chunks, but for
+  value_unsupported and condition_unverified the proof is usually in the chunks
+  already seen (the single main quote just doesn't contain it).
+* Added MergeOutcome NO_VALUE so "found nothing" is not reported as
+  "unverified".
+* Loop v2 (the ONE allowed revision): original chunks + up to 3 unseen chunks
+  for value_unsupported and condition_unverified; unseen only for
+  value_absence_claim.
+  Result: 0 unsafe, 9 fewer reviews (59 -> 50), all 9 changed decisions checked
+  by hand against the quotes and correct (8 were "unsupported" exclusions).
+* Pre-registered rule: 0 unsafe AND at least 10 fewer reviews. 9 < 10 ->
+  REJECT. I did not move the bar.
+* Decision: the default product stays follow-up OFF. Follow-up v2 is kept as an
+  opt-in option (--followup --followup-version v2). It can become the default
+  only after passing the same rule on held-out contracts.
+* Cost of v2: ~2 follow-up calls per contract (max 4), median time per
+  contract 5.8 s -> 9.9 s.
+
+## Verdict accuracy and root causes (28 Oct)
+
+* Default (follow-up off) / opt-in (follow-up v2):
+  * unsafe at rule and contract level: 0 / 0
+  * rule checks decided automatically: 42/101 / 51/101 (all correct)
+  * truth PASS decided automatically: 40/67 / 49/67
+  * truth FAIL caught automatically: 2/18 / 2/18
+  * contracts decided automatically: 3/30 / 9/30
+* Why reviews happen (default, 50 unnecessary reviews):
+  correct but unproven 30 (60%: unsupported 16, absence claim 11, explicit
+  negative 3), retrieval miss 10, low confidence 6, extraction wrong 4 (8%).
+* Main finding: the LLM is not the bottleneck. In only 4 of 50 reviews was
+  Gemini wrong. Better EVIDENCE would help more than a better model.
+* 11 of 16 missed FAILs are cap_required: "there is no cap" cannot be proven by
+  one quote. Proving absence is risky: here a pattern miss would cause an
+  unsafe FAIL (fail-closed reverses).
+* Caveat: contract-level truth is partial (only 1 contract has all 5 rules
+  scored).
+* Next steps, ranked by data: per-field evidence quotes in the main extraction;
+  number-proof fixes; proving absence (careful design); retrieval misses. All
+  need a held-out test.
+
+## LangGraph experiment (28 Oct)
+
+* Rebuilt ONLY the follow-up controller in LangGraph (separate folder
+  experiments/langgraph_followup/, optional dependency group langgraph-exp).
+  Same tools, same cached answers. Nothing in src/ depends on it.
+* Equivalence: 30 contracts, 150 rule results, 60 trace steps: 0 differences,
+  0 live calls.
+* Plain Python: 214 controller lines, 0 extra packages, median 43 ms per
+  contract. LangGraph: 258 lines (+20%), 19 extra packages (incl.
+  langchain-core, langsmith), median 54 ms. Speed difference doesn't matter
+  next to ~2 s per Gemini call.
+* Lesson: LangGraph's real strength is checkpoint/resume and human interrupts.
+  To get it, ALL progress (budget, seen chunks, overlays) must live in the graph
+  state. My version kept the budget in a closure, so it wasn't resumable.
+* Decision: plain Python stays the product version. I would switch for a
+  reviewer workflow (pause on NEEDS_REVIEW, then resume), long agents that must
+  survive restarts, or many branching/parallel tools.
+
+## Repo cleanup (28 Oct)
+
+* Committed the follow-up LLM cache (88 answers) so all follow-up results can be
+  reproduced offline. Deleted regenerable regression outputs and old logs.
+* .gitignore: manual_check/ and evals/*.log.
+* Never run "git clean -f" without "git clean -n" first: it would delete the
+  cache.
+
+## Fix #2 Part A: ordinal + anniversary (28 Oct) - REJECTED
+
+* Goal: prove "fifteenth (15th) anniversary" = 180 months, so Penntex and
+  RangeResources initial_term_max_60 (truth FAIL) become automatic FAILs.
+* Pre-registered ACCEPT: 0 unsafe in both runs and the batch; both targets
+  become FAIL; no earlier automatic decision changes; "supported" with wrong =
+  0 for every field in both runs.
+* Result: 0 unsafe, 0 decisions changed, supported-wrong 0, but 0 of 2 targets
+  fixed -> REJECT. Not merged (git restore).
+* Cause: my mistake. I designed from a summary, not the exact text. Both
+  contracts say "until the end of the fifteenth (15th) Contract Year", not
+  "anniversary".
+* Not extended to "Contract Year": it is a defined term; the first Contract
+  Year can be shorter or longer than 12 months. Proving 180 months would need
+  reading the definition. These cases stay in review (safe).
+* Lesson: always print the exact text before designing a pattern.
+* Part B (formula bounds like "the lesser of X or $500,000") was not done: high
+  risk of misreading formulas, only 1 case (Hyperion). Separate future
+  experiment.
+
+## Open items (updated 28 Oct)
+
+* Held-out set: label ~10 new CUAD contracts and run the full system once,
+  without tuning. Needed before any default change (e.g. follow-up v2).
+* No true "no answer" contracts in the eval.
+* Per-field evidence quotes in the main extraction (biggest expected gain:
+  16 "unsupported" reviews).
+* Proving absence ("no cap anywhere") without unsafe FAILs.
+* "Contract Year" durations (need definition lookup).
+* Formula caps ("lesser of" / "greater of") not parsed (Part B).
+* Exclusion and clause retrieval misses.
+* Error attribution per row, not per field.
+* Page numbers/headers inside text still break some quotes.
+* Labels drafted with AI help; labeller agreement not measured.
+* Still open from before: hybrid vs dense, TOC/heading filtering,
   clause-aware chunking, selected_30 filter check, bge-small truncation.
+* clause-aware chunking, selected_30 filter check, bge-small truncation.
