@@ -1,0 +1,173 @@
+Reports: evals/reports_followup_v2_run1
+Labels: evals/extraction_labels_v2.csv
+Policy: policies/eval_policy.json
+Retrieval diagnostics: evals/extraction_results_v2.csv
+Predictions: saved report values (including follow-up overlays).
+Blank labels are unknown; NONE means expected null.
+
+Contracts: 30
+Scored rule-rows: 101/150
+
+A) RULE LEVEL (scored rows only; truth rows, engine columns)
+
+TOTAL
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 49 | 0 | 18 | 0
+FAIL | 0 | 2 | 16 | 0
+NEEDS_REVIEW | 0 | 0 | 9 | 0
+NOT_APPLICABLE | 0 | 0 | 7 | 0
+Truth FAIL caught automatically: 2/18
+Truth PASS decided automatically: 49/67
+Truth NEEDS_REVIEW kept for review: 9/9
+Unsafe: 0
+
+cap_min_2m
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 1 | 0 | 0 | 0
+FAIL | 0 | 1 | 1 | 0
+NEEDS_REVIEW | 0 | 0 | 4 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 1/2
+Truth PASS decided automatically: 1/1
+Truth NEEDS_REVIEW kept for review: 4/4
+Unsafe: 0
+
+cap_required
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 14 | 0 | 5 | 0
+FAIL | 0 | 0 | 11 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/11
+Truth PASS decided automatically: 14/19
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+excludes_consequential
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 20 | 0 | 8 | 0
+FAIL | 0 | 0 | 2 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/2
+Truth PASS decided automatically: 20/28
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+renewal_notice_min_30
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 11 | 0 | 4 | 0
+FAIL | 0 | 1 | 0 | 0
+NEEDS_REVIEW | 0 | 0 | 5 | 0
+NOT_APPLICABLE | 0 | 0 | 7 | 0
+Truth FAIL caught automatically: 1/1
+Truth PASS decided automatically: 11/15
+Truth NEEDS_REVIEW kept for review: 5/5
+Unsafe: 0
+
+initial_term_max_60
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 3 | 0 | 1 | 0
+FAIL | 0 | 0 | 2 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/2
+Truth PASS decided automatically: 3/4
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+B) MISSED FAILS
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (low_confidence) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=low_confidence | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | excludes_consequential | truth=FAIL | engine=NEEDS_REVIEW (low_confidence) | field=has_damages_exclusion | predicted=False | label='False' | field_status=absence_claim | root_cause=low_confidence | diagnostic_field=has_damages_exclusion | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | excludes_consequential | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_damages_exclusion | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_damages_exclusion | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | cap_min_2m | truth=FAIL | engine=NEEDS_REVIEW (value_unsupported) | field=cap_amount | predicted=500000.0 | label='500000' | field_status=unsupported | root_cause=correct_but_unproven | diagnostic_field=cap_amount | diagnostic_value=500000.0 | diagnostic_label='500000' | diagnostic_status=unsupported
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | initial_term_max_60 | truth=FAIL | engine=NEEDS_REVIEW (value_unsupported) | field=initial_term_months | predicted=180 | label='180' | field_status=unsupported | root_cause=correct_but_unproven | diagnostic_field=initial_term_months | diagnostic_value=180 | diagnostic_label='180' | diagnostic_status=unsupported
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | initial_term_max_60 | truth=FAIL | engine=NEEDS_REVIEW (value_unsupported) | field=initial_term_months | predicted=180 | label='180' | field_status=unsupported | root_cause=correct_but_unproven | diagnostic_field=initial_term_months | diagnostic_value=180 | diagnostic_label='180' | diagnostic_status=unsupported
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+
+C) UNNECESSARY REVIEW ROOT CAUSES (first match wins)
+category / rule | cap_min_2m | cap_required | excludes_consequential | renewal_notice_min_30 | initial_term_max_60 | TOTAL
+retrieval_miss | 0 | 5 | 5 | 0 | 0 | 10
+low_confidence | 0 | 2 | 2 | 1 | 1 | 6
+extraction_wrong | 0 | 0 | 2 | 1 | 0 | 3
+correct_but_unproven | 1 | 9 | 1 | 9 | 2 | 22
+cap_formula | 0 | 0 | 0 | 0 | 0 | 0
+other | 0 | 0 | 0 | 0 | 0 | 0
+TOTAL | 1 | 16 | 10 | 11 | 3 | 41
+
+correct_but_unproven by status
+category / rule | cap_min_2m | cap_required | excludes_consequential | renewal_notice_min_30 | initial_term_max_60 | TOTAL
+absence_claim | 0 | 6 | 1 | 4 | 0 | 11
+explicit_negative | 0 | 0 | 0 | 3 | 0 | 3
+unsupported | 1 | 3 | 0 | 2 | 2 | 8
+TOTAL | 1 | 9 | 1 | 9 | 2 | 22
+
+Other rows
+(none)
+
+D) CONTRACT LEVEL (both sides use the SAME scored rules only)
+truth / engine | FAIL | NEEDS_REVIEW | PASS | NO_APPLICABLE_RULES
+FAIL | 2 | 13 | 0 | 0
+NEEDS_REVIEW | 0 | 4 | 0 | 0
+PASS | 0 | 4 | 7 | 0
+NO_APPLICABLE_RULES | 0 | 0 | 0 | 0
+Unsafe overall: 0
+All 5 rules scored: 1
+contract | scored rules | all rules scored | truth | engine | unsafe overall
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | 4/5 | False | FAIL | NEEDS_REVIEW | False
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | 3/5 | False | PASS | NEEDS_REVIEW | False
+BLACKSTONEGSOLONG-SHORTCREDITINCOMEFUND_05_11_2020-EX-99.(K)(1)-SERVICE AGREEMENT.PDF | 3/5 | False | PASS | PASS | False
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+CENTRACKINTERNATIONALINC_10_29_1999-EX-10.3-WEB SITE HOSTING AGREEMENT.PDF | 3/5 | False | FAIL | FAIL | False
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+GopageCorp_20140221_10-K_EX-10.1_8432966_EX-10.1_Content License Agreement.pdf | 3/5 | False | PASS | PASS | False
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT.PDF | 3/5 | False | PASS | PASS | False
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | 3/5 | False | PASS | NEEDS_REVIEW | False
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | 2/5 | False | FAIL | NEEDS_REVIEW | False
+MRSFIELDSORIGINALCOOKIESINC_01_29_1998-EX-10-FRANCHISE AGREEMENT.PDF | 4/5 | False | FAIL | FAIL | False
+Magenta Therapeutics, Inc. - Master Development and Manufacturing Agreement.PDF | 4/5 | False | NEEDS_REVIEW | NEEDS_REVIEW | False
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | 3/5 | False | PASS | NEEDS_REVIEW | False
+PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT .PDF | 4/5 | False | NEEDS_REVIEW | NEEDS_REVIEW | False
+ParatekPharmaceuticalsInc_20170505_10-KA_EX-10.29_10323872_EX-10.29_Outsourcing Agreement.pdf | 4/5 | False | NEEDS_REVIEW | NEEDS_REVIEW | False
+PareteumCorp_20081001_8-K_EX-99.1_2654808_EX-99.1_Hosting Agreement.pdf | 4/5 | False | NEEDS_REVIEW | NEEDS_REVIEW | False
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+TodosMedicalLtd_20190328_20-F_EX-4.10_11587157_EX-4.10_Marketing Agreement_ Reseller Agreement.pdf | 3/5 | False | PASS | PASS | False
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | 4/5 | False | PASS | NEEDS_REVIEW | False
+VitalibisInc_20180316_8-K_EX-10.2_11100168_EX-10.2_Hosting Agreement.pdf | 3/5 | False | PASS | PASS | False
+XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF | 3/5 | False | PASS | PASS | False
+XpresspaGroupInc_20190401_10-K_EX-10.28_11599457_EX-10.28_Marketing Agreement.pdf | 4/5 | False | PASS | PASS | False
+Contracts with differing overall verdicts:
+2ThemartComInc_19990826_10-12G_EX-10.10_6700288_EX-10.10_Co-Branding Agreement_ Agency Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.34_11788308_EX-10.34_Sponsorship Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+Apollo Endosurgery - Manufacturing and Supply Agreement.PDF | 4/5 | False | FAIL | NEEDS_REVIEW | False
+BELLICUMPHARMACEUTICALS,INC_05_07_2019-EX-10.1-Supply Agreement.PDF | 3/5 | False | PASS | NEEDS_REVIEW | False
+BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+EuromediaHoldingsCorp_20070215_10SB12G_EX-10.B(01)_525118_EX-10.B(01)_Content License Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+FerroglobePlc_20150624_F-4A_EX-10.20_9154746_EX-10.20_Outsourcing Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+HYPERIONSOFTWARECORP_09_28_1994-EX-10.47-EXCLUSIVE DISTRIBUTOR AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+InmodeLtd_20190729_F-1A_EX-10.9_11743243_EX-10.9_Manufacturing Agreement.pdf | 3/5 | False | PASS | NEEDS_REVIEW | False
+KitovPharmaLtd_20190326_20-F_EX-4.15_11584449_EX-4.15_Manufacturing Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT.PDF | 2/5 | False | FAIL | NEEDS_REVIEW | False
+OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT.PDF | 3/5 | False | PASS | NEEDS_REVIEW | False
+PenntexMidstreamPartnersLp_20150416_S-1A_EX-10.4_9042833_EX-10.4_Transportation Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+PfHospitalityGroupInc_20150923_10-12G_EX-10.1_9266710_EX-10.1_Franchise Agreement1.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+RangeResourcesLouisianaInc_20150417_8-K_EX-10.5_9045501_EX-10.5_Transportation Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+SigaTechnologiesInc_20190603_8-K_EX-10.1_11695818_EX-10.1_Promotion Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf | 4/5 | False | PASS | NEEDS_REVIEW | False
