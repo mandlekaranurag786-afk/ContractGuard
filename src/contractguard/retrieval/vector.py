@@ -21,6 +21,11 @@ def _load_model(model_name: str) -> SentenceTransformer:
     return SentenceTransformer(model_name)
 
 
+def warm_up_model() -> None:
+    """Load the shared embedding model before serving requests."""
+    _load_model(MODEL_NAME)
+
+
 def embed_chunks(chunks: Sequence[Chunk], model_name: str = MODEL_NAME) -> np.ndarray:
     """Embed chunk text with normalized local vectors."""
     if not chunks:

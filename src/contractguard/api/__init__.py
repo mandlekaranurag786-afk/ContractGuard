@@ -1,1 +1,1 @@
-"""API package."""
+"""HTTP interface for ContractGuard."""
