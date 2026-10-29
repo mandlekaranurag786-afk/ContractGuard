@@ -8,16 +8,20 @@ version = "0.1.0"
 description = "Contract document processing tools."
 requires-python = ">=3.11"
 dependencies = [
+    "fastapi>=0.162.0",
     "google-genai>=2.31.0",
     "numpy>=1.26",
     "pydantic>=2.7",
     "pymupdf>=1.24",
+    "python-multipart>=0.0.32",
     "rank-bm25>=0.2.2",
     "sentence-transformers>=3.0",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
     "pytest>=8.0",
     "ruff>=0.6",
 ]
