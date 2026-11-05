@@ -4,6 +4,7 @@ import csv
 import random
 import re
 import shutil
+import unicodedata
 from pathlib import Path
 
 from contractguard.ingestion.pdf import PDFIngestionError
@@ -18,10 +19,23 @@ SEED = 20261103
 N_MAIN, N_NONE = 10, 2
 MAX_PAGES = 200
 
+# CUAD's CSV spells these contracts differently from its PDF folder (checked by hand).
+CSV_TO_PDF_NAME = {
+    "HarpoonTherapeuticsInc_20200312_10-K_EX-10.18_12051356_EX-10.18_Development Agreement.PDF":
+        "HarpoonTherapeuticsInc_20200312_10-K_EX-10.18_12051356_EX-10.18_Development Agreement_Option Agreement.pdf",
+    "KALLOINC_11_03_2011-EX-10.1-STRATEGIC ALLIANCE AGREEMENT.PDF'":
+        "KALLOINC_11_03_2011-EX-10.1-STRATEGIC ALLIANCE AGREEMENT.PDF",
+}
+
 
 def key(name: str) -> str:
-    """Compare names by letters and digits only (CUAD spells some names differently)."""
-    stem = name[:-4] if name.lower().endswith(".pdf") else name
+    """Compare names by plain letters and digits only.
+
+    NFKD turns accented letters stored in different Unicode forms into the same
+    plain letters (e.g. both forms of "É" become "E").
+    """
+    plain = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
+    stem = plain[:-4] if plain.lower().endswith(".pdf") else plain
     return re.sub(r"[^a-z0-9]", "", stem.lower())
 
 
@@ -63,7 +77,8 @@ def main() -> None:
     assert not OUT_CSV.exists(), "Selection already done; it must run only once."
 
     master_rows = list(csv.DictReader(open(MASTER, encoding="utf-8")))
-    rows = {key(r["Filename"]): r for r in master_rows}
+    rows = {key(CSV_TO_PDF_NAME.get(r["Filename"], r["Filename"])): r
+            for r in master_rows}
     assert len(rows) == len(master_rows) == 510, "file-name keys collide in CSV"
 
     pdf_files = [p for p in CUAD.glob("full_contract_pdf/**/*")
