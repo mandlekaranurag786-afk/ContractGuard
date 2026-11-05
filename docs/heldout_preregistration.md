@@ -70,3 +70,13 @@ decision is checked by hand against its quote. (Proportional form of the origina
 
 Results are written to docs/decisions.md whatever they show. Small sample: report
 "0 of n" with the rule-of-three bound (about 3/n) instead of "never".
+
+
+## Amendment 1 (5 Nov 2026, before any selection)
+
+The first selection run stopped at its own safety check: the original Pacira
+contract could not be matched. CUAD spells it three ways (CSV "A&R STRATEGIC",
+PDF "A_RSTRATEGIC", our copy "A_R STRATEGIC"). Name matching now compares letters
+and digits only; the script asserts 510 unique names in both the CSV and the PDF
+folder and that both sets are equal. No contract was selected before this change;
+the selection rule, seed and counts are unchanged.
