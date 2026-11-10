@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"This agreement shall automatically renew for a period of three (3) years and upon the parties mutual agreement on new minimum performance goals for the renewal period.\",\n  \"evidence_chunk_id\": \"ac0b23b019fabd43ccaef6b8e721604535888a5f8f98b77794af9c783aee3dc7:9\"\n}",
+  "input_tokens": 2252,
+  "output_tokens": 116,
+  "latency_ms": 2155.254165001679,
+  "created_at": "2026-11-10T16:12:37.025523+00:00"
+}

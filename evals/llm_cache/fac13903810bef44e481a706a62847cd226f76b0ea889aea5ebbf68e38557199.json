@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the total compensation paid for hosting and support services over the immediately preceding 12 months period\",\n  \"has_damages_exclusion\": false,\n  \"evidence_quote\": \"IN NO EVENT SHALL TRUELINK'S LIABILITY FOR ANY MATTER ARISING UNDER OR RELATED TO SECTION 3, 4, 7 AND 11 THIS AGREEMENT (OTHER THAN DUE TO A BREACH RESULTING FROM TRUELINK'S GROSS NEGLIGENCE OR WILLFUL MISCONDUCT) EXCEED THE TOTAL COMPENSATION PAID FOR HOSTING AND SUPPORT SERVICES OVER THE IMMEDIATELY PRECEDING 12 MONTHS PERIOD.\",\n  \"evidence_chunk_id\": \"11b9608b1887cf113da444e6b515789088d35160f37ac7f53be7830221a7e0fa:26\"\n}",
+  "input_tokens": 1758,
+  "output_tokens": 243,
+  "latency_ms": 2135.409982998681,
+  "created_at": "2026-11-10T16:07:09.895594+00:00"
+}

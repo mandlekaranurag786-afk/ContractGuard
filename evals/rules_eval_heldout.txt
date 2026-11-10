@@ -1,0 +1,70 @@
+Offline rule evaluation; labels: evals/heldout_labels.csv
+
+All metrics and decision/strength counts exclude UNSCORED rule-rows.
+
+Truth order: found=False -> UNSCORED; condition empty -> UNSCORED, NONE -> NEEDS_REVIEW, unequal -> NOT_APPLICABLE (ignore rule field); rule field empty -> UNSCORED, NONE -> NEEDS_REVIEW; currency empty -> UNSCORED, NONE/different -> NEEDS_REVIEW; then compare.
+
+Label found=False rows: 3
+
+RUN: heldout | POLICY: STRICT
+Rule-rows: 60; scored: 45; UNSCORED: 15
+decision | engine | truth
+PASS | 5 | 27
+FAIL | 1 | 9
+NEEDS_REVIEW | 39 | 5
+NOT_APPLICABLE | 0 | 4
+Correct: 11/45
+Review: 39/45 (86.7%)
+UNNECESSARY_REVIEW: 34
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 5 | 4 | 0 | 5
+cap_required | 10 | 0 | 0 | 10
+excludes_consequential | 10 | 0 | 0 | 10
+renewal_notice_min_30 | 10 | 1 | 0 | 10
+initial_term_max_60 | 10 | 6 | 0 | 4
+Auto-decisions by evidence_strength: proof=6, weak_signal=0, explicit_negative=0
+
+RUN: heldout | POLICY: KEYWORD
+Rule-rows: 60; scored: 45; UNSCORED: 15
+decision | engine | truth
+PASS | 15 | 27
+FAIL | 1 | 9
+NEEDS_REVIEW | 29 | 5
+NOT_APPLICABLE | 0 | 4
+Correct: 21/45
+Review: 29/45 (64.4%)
+UNNECESSARY_REVIEW: 24
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 5 | 4 | 0 | 5
+cap_required | 10 | 4 | 0 | 6
+excludes_consequential | 10 | 1 | 0 | 9
+renewal_notice_min_30 | 10 | 6 | 0 | 5
+initial_term_max_60 | 10 | 6 | 0 | 4
+Auto-decisions by evidence_strength: proof=6, weak_signal=10, explicit_negative=0
+
+RUN: heldout | POLICY: BALANCED
+Rule-rows: 60; scored: 45; UNSCORED: 15
+decision | engine | truth
+PASS | 15 | 27
+FAIL | 1 | 9
+NEEDS_REVIEW | 28 | 5
+NOT_APPLICABLE | 1 | 4
+Correct: 22/45
+Review: 28/45 (62.2%)
+UNNECESSARY_REVIEW: 23
+UNSAFE: 0
+rule | scored | correct | unsafe | review
+cap_min_2m | 5 | 4 | 0 | 5
+cap_required | 10 | 4 | 0 | 6
+excludes_consequential | 10 | 1 | 0 | 9
+renewal_notice_min_30 | 10 | 7 | 0 | 4
+initial_term_max_60 | 10 | 6 | 0 | 4
+Auto-decisions by evidence_strength: proof=6, weak_signal=10, explicit_negative=1
+
+PRE-REGISTERED SELECTION
+Start at STRICT.
+KEYWORD: unsafe-free in all selected runs=True; fewer reviews versus STRICT=[10]; accepted.
+BALANCED: unsafe-free in all selected runs=True; fewer reviews versus KEYWORD=[1]; blocked.
+Selected policy: KEYWORD

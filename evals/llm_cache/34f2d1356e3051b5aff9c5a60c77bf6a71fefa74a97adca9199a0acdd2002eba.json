@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 24,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": 42,\n  \"evidence_quote\": \"After the initial period of two years, the maintenance and support contract shall be automatically renewed for a period of one year on each renewal date, unless one of the parties terminates the maintenance and support contract through written notification to the other party in the form of a registered letter with proof of receipt, at least six (6) weeks prior to the renewal date.\",\n  \"evidence_chunk_id\": \"f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:25\"\n}",
+  "input_tokens": 1705,
+  "output_tokens": 208,
+  "latency_ms": 11494.374980997236,
+  "created_at": "2026-11-10T16:06:01.764853+00:00"
+}

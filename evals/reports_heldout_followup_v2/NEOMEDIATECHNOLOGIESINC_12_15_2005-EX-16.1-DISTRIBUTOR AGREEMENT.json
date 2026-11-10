@@ -1,0 +1,253 @@
+{
+  "contract": "data/heldout/NEOMEDIATECHNOLOGIESINC_12_15_2005-EX-16.1-DISTRIBUTOR AGREEMENT.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 5,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "clause_not_found",
+      "reason": "The clause was not found.",
+      "field": "has_damages_exclusion",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "NOT_FOUND",
+      "evidence_quote": null,
+      "evidence_chunk_id": null,
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "condition_unverified",
+      "reason": "The condition field auto_renews has status absence_claim and is not trusted.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": false,
+      "condition_status": "absence_claim",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "18.2 The parties hereof intend to form a long-term relationship. To this end, if both parties wish to renew this Agreement, the parties shall agree on such intention in writing at least thirty(30) days before the expiry of the current Term of the Agreement.",
+      "evidence_chunk_id": "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:30",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "18.2 The parties hereof intend to form a long-term relationship. To this end, if both parties wish to renew this Agreement, the parties shall agree on such intention in writing at least thirty(30) days before the expiry of the current Term of the Agreement.",
+      "condition_evidence_chunk_id": "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:30"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "initial_term_months",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "18.2 The parties hereof intend to form a long-term relationship. To this end, if both parties wish to renew this Agreement, the parties shall agree on such intention in writing at least thirty(30) days before the expiry of the current Term of the Agreement.",
+      "evidence_chunk_id": "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:30",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "NOT_FOUND",
+      "confidence_reasons": [
+        "absence_not_trusted",
+        "evidence_not_found"
+      ],
+      "retrieved_chunk_ids": [
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:20",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:21",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:6",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:24",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:22"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:30",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:31",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:23",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:17",
+        "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:29"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 2,
+    "cache_hits": 2,
+    "input_tokens": 3427,
+    "output_tokens": 173,
+    "cached_input_tokens": 3511,
+    "cached_output_tokens": 263,
+    "elapsed_ms": 12673.355866998463
+  },
+  "followup": {
+    "enabled": true,
+    "version": "v2",
+    "status": "completed",
+    "calls_used": 2,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Renewal Term",
+        "field": "auto_renews",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "this agreement shall automatically renew for successive terms unless notice of non-renewal",
+        "new_chunk_ids": [
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:32",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:26",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:2"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:30",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:31",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:23",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:17",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:29",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:32",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:26",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:2"
+        ],
+        "value": false,
+        "quote_excerpt": "18.2 The parties hereof intend to form a long-term relationship. To this end, if both parties wish to renew this Agreement, the parties shall agree on such intention in writing at least thirty(30) day",
+        "verified": true,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 2416,
+        "output_tokens": 144,
+        "latency_ms": 2050.3650059981737,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Renewal Term",
+        "field": "initial_term_months",
+        "rule_ids": [
+          "initial_term_max_60"
+        ],
+        "query": "the initial term of this agreement shall be years from the effective date",
+        "new_chunk_ids": [
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:8",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:36",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:34"
+        ],
+        "chunk_policy": "unseen_only",
+        "chunk_ids": [
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:8",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:36",
+          "5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:34"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 1011,
+        "output_tokens": 29,
+        "latency_ms": 6533.2176690026245,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 2,
+    "cached_calls": 0,
+    "uncached_input_tokens": 3427,
+    "uncached_output_tokens": 173
+  }
+}

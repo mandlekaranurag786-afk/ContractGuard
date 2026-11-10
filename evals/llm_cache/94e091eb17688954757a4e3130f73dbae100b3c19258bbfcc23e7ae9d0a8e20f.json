@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": false,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": \"This Agreement shall begin on the Effective Date and shall continue until December 31, 2020, unless extended or earlier terminated. Either party may terminate this Agreement at any time on prior written notice to the other. This Agreement may be extended upon mutual written agreement of the parties.\",\n  \"evidence_chunk_id\": \"18fc8a33dd82875ef8f31bd70d70d4bd96572d5d9730a6ac31a71cef1200aaea:2\"\n}",
+  "input_tokens": 1654,
+  "output_tokens": 186,
+  "latency_ms": 23598.798933999205,
+  "created_at": "2026-11-10T16:08:24.290659+00:00"
+}

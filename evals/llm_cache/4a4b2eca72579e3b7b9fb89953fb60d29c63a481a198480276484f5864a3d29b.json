@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"IN NO EVENT SHALL A PARTY TO THIS AGREEMENT BE LIABLE TO THE OTHER PARTY TO THIS AGREEMENT FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR CONSEQUENTIAL DAMAGES RESULTING FROM THE USE, OR INABILITY TO USE, THE LICENSED PRODUCTS OR ARISING OUT OF THIS AGREEMENT\",\n  \"evidence_chunk_id\": \"259c057c3177899d1cdf70fd77212537c07c8f31414ddd3bad21e8f5937e3e50:51\"\n}",
+  "input_tokens": 2382,
+  "output_tokens": 144,
+  "latency_ms": 8629.633300002752,
+  "created_at": "2026-11-10T16:12:49.203998+00:00"
+}

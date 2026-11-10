@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": false,\n  \"evidence_quote\": \"18.2 The parties hereof intend to form a long-term relationship. To this end, if both parties wish to renew this Agreement, the parties shall agree on such intention in writing at least thirty(30) days before the expiry of the current Term of the Agreement.\",\n  \"evidence_chunk_id\": \"5a4306d303347099ca5d33542b6226604dac72ade0b224bdc647cc257fd5a2dc:30\"\n}",
+  "input_tokens": 2416,
+  "output_tokens": 144,
+  "latency_ms": 2050.3650059981737,
+  "created_at": "2026-11-10T16:13:30.164875+00:00"
+}

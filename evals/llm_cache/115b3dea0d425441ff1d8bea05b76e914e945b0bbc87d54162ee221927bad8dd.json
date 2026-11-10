@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"value\": true,\n  \"evidence_quote\": \"NEITHER PARTY WILL, UNDER ANY CIRCUMSTANCES, BE LIABLE TO THE OTHER PARTY FOR ANY LOST PROFITS OR ANY OTHER SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR RELATING TO THIS AGREEMENT\",\n  \"evidence_chunk_id\": \"319cd0a660408baa6c43d2fbb1c1f68f7a6f946789d43599575524f1bfc2628f:38\"\n}",
+  "input_tokens": 2437,
+  "output_tokens": 132,
+  "latency_ms": 1662.3875429977488,
+  "created_at": "2026-11-10T16:14:01.915172+00:00"
+}

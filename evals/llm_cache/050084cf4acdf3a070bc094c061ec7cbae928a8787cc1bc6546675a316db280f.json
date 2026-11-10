@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 12,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 12,\n  \"notice_days\": 30,\n  \"evidence_quote\": \"13. TERM OF AGREEMENT. This Agreement will take effect on the Effective Date and remain in effect for a period of 1 year\u037e provided, that Sections 2 and 3 level shall terminate promptly upon (a) any action or omission by Client or any of its customers which constitutes a breach of or default by TrueLink under any System Agreement or Credit Repository Agreement, which breach or default has either not been cured or cannot be cured within the applicable cure period and the consequences of which is that TrueLink will lose material rights it had pursuant to said Agreements or (b) any violations or breach by Client of Sections 8a - 8c. This Agreement shall renew automatically thereafter for successive one year periods until terminated pursuant to Section 12 herein or unless either Client or TrueLink deliver to the other written notice of intent not to renew no later than thirty (30) days prior to the end of said year.\",\n  \"evidence_chunk_id\": \"11b9608b1887cf113da444e6b515789088d35160f37ac7f53be7830221a7e0fa:27\"\n}",
+  "input_tokens": 1754,
+  "output_tokens": 326,
+  "latency_ms": 1888.7150880000263,
+  "created_at": "2026-11-10T16:07:05.648791+00:00"
+}

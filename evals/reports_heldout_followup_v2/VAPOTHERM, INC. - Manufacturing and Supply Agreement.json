@@ -1,0 +1,290 @@
+{
+  "contract": "data/heldout/VAPOTHERM, INC. - Manufacturing and Supply Agreement.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 3,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 2,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Notwithstanding any other provision contained in this Agreement, each party’s maximum aggregate liability to the other party for any and all causes whatsoever, and each party’s remedy, regardless of the form of action, whether in contract or tort, including negligence, and whether or not pursuant to the indemnification provisions contained in Section 12 and whether or not such party is notified of the possibility of damage to the other party, shall be limited to $[* * *].",
+      "evidence_chunk_id": "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_money_cap=True satisfies is_true.",
+      "field": "has_money_cap",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Notwithstanding any other provision contained in this Agreement, each party’s maximum aggregate liability to the other party for any and all causes whatsoever, and each party’s remedy, regardless of the form of action, whether in contract or tort, including negligence, and whether or not pursuant to the indemnification provisions contained in Section 12 and whether or not such party is notified of the possibility of damage to the other party, shall be limited to $[* * *].",
+      "evidence_chunk_id": "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "followup_pattern",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "followup",
+      "confidence_level": "HIGH",
+      "evidence_quote": "12.3 No Liability for Consequential Damages. No party will be liable to any other for any indirect, consequential, or special damages or for loss of profits.",
+      "evidence_chunk_id": "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:56",
+      "field_evidence_source": "followup",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "notice_days",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "13.1 Term. The term of this Agreement is three years from and including the date of this Agreement (the “Initial Term”), with automatic renewal for additional successive one-year terms (each a “Renewal Term” and together wit the Initial Term, the “Term”) unless no later than [* * *] days prior to the end of the I",
+      "evidence_chunk_id": "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "13.1 Term. The term of this Agreement is three years from and including the date of this Agreement (the “Initial Term”), with automatic renewal for additional successive one-year terms (each a “Renewal Term” and together wit the Initial Term, the “Term”) unless no later than [* * *] days prior to the end of the I",
+      "condition_evidence_chunk_id": "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "initial_term_months=36 satisfies <= 60.",
+      "field": "initial_term_months",
+      "value": 36,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "13.1 Term. The term of this Agreement is three years from and including the date of this Agreement (the “Initial Term”), with automatic renewal for additional successive one-year terms (each a “Renewal Term” and together wit the Initial Term, the “Term”) unless no later than [* * *] days prior to the end of the I",
+      "evidence_chunk_id": "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:56",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:28",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:3",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:27"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:58",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:77",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:35",
+        "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:7"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 3,
+    "cache_hits": 2,
+    "input_tokens": 4624,
+    "output_tokens": 187,
+    "cached_input_tokens": 3716,
+    "cached_output_tokens": 436,
+    "elapsed_ms": 14437.191872002586
+  },
+  "followup": {
+    "enabled": true,
+    "version": "v2",
+    "status": "completed",
+    "calls_used": 3,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "cap_amount",
+        "rule_ids": [
+          "cap_min_2m"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:10",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:9",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:82"
+        ],
+        "chunk_policy": "unseen_only",
+        "chunk_ids": [
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:10",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:9",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:82"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 1043,
+        "output_tokens": 36,
+        "latency_ms": 1655.4131020020577,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Cap On Liability",
+        "field": "has_damages_exclusion",
+        "rule_ids": [
+          "excludes_consequential"
+        ],
+        "query": "neither party shall be liable for indirect incidental special consequential damages or lost profits",
+        "new_chunk_ids": [
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:53",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:54",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:74"
+        ],
+        "chunk_policy": "original_plus_unseen",
+        "chunk_ids": [
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:56",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:57",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:28",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:3",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:27",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:53",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:54",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:74"
+        ],
+        "value": true,
+        "quote_excerpt": "12.3 No Liability for Consequential Damages. No party will be liable to any other for any indirect, consequential, or special damages or for loss of profits.",
+        "verified": true,
+        "status": "followup_pattern",
+        "merge_outcome": "ACCEPTED_CONFIRMATION",
+        "input_tokens": 2488,
+        "output_tokens": 122,
+        "latency_ms": 1544.3471990001854,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 3,
+        "clause_type": "Renewal Term",
+        "field": "notice_days",
+        "rule_ids": [
+          "renewal_notice_min_30"
+        ],
+        "query": "written notice of non-renewal days prior to the expiration of the term",
+        "new_chunk_ids": [
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:60",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:59",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:63"
+        ],
+        "chunk_policy": "unseen_only",
+        "chunk_ids": [
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:60",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:59",
+          "1987a265e93224ea3b7b6e1baaddea13978bd830fc2677b0c44e5ee3316f06f8:63"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 1093,
+        "output_tokens": 29,
+        "latency_ms": 2052.299711998785,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [
+      {
+        "rule_id": "excludes_consequential",
+        "before_decision": "NEEDS_REVIEW",
+        "before_reason_code": "value_unsupported",
+        "after_decision": "PASS",
+        "after_reason_code": "compared",
+        "evidence_strength": "followup"
+      }
+    ],
+    "live_calls": 3,
+    "cached_calls": 0,
+    "uncached_input_tokens": 4624,
+    "uncached_output_tokens": 187
+  }
+}

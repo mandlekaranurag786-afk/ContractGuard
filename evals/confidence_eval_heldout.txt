@@ -1,0 +1,68 @@
+RUN: extraction_results_heldout.csv
+level | rows | fully correct | wrong
+HIGH | 13 | 10 | 3
+MEDIUM | 3 | 2 | 1
+LOW | 2 | 1 | 1
+NOT_FOUND | 6 | 3 | 3
+HIGH-but-wrong: 3/13 (23.1%)
+GOOSEHEADINSURANCE,INC_04_02_2018-EX-10.6-Franchise Agreement.PDF | Renewal Term | wrong fields: renewal_term_months: label='NONE', prediction=60 | reasons=[] | quote excerpt='The term of this Agreement starts on the Effective Date and, unless this Agreement is earlier terminated in accordance with its provisions, will expire ten (10) years from the Effective Date.\n2.2 Renewal. You will have the right to renew your rights to operate the Franchise Business for two (2) addi'
+VAPOTHERM, INC. - Manufacturing and Supply Agreement.PDF | Cap On Liability | wrong fields: currency: label='USD', prediction=None | reasons=[] | quote excerpt='Notwithstanding any other provision contained in this Agreement, each party’s maximum aggregate liability to the other party for any and all causes whatsoever, and each party’s remedy, regardless of the form of action, whether in contract or tort, including negligence, and whether or not pursuant to'
+ADUROBIOTECH,INC_06_02_2020-EX-10.7-CONSULTING AGREEMENT(1).PDF | Renewal Term | wrong fields: initial_term_months: label='6', prediction=None | reasons=[] | quote excerpt='This Agreement shall begin on the Effective Date and shall continue until December 31, 2020, unless extended or earlier terminated. Either party may terminate this Agreement at any time on prior written notice to the other. This Agreement may be extended upon mutual written agreement of the parties.'
+Errors caught: 5/8 (62.5%)
+Review rate: 11/24 (45.8%)
+Correct-but-downgraded: 6
+NeoformaInc_19991202_S-1A_EX-10.26_5224521_EX-10.26_Co-Branding Agreement.pdf | Cap On Liability | MEDIUM | reasons=['cap_amount_not_supported_by_quote']
+NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf | Renewal Term | MEDIUM | reasons=['initial_term_months_not_supported_by_quote']
+StampscomInc_20001114_10-Q_EX-10.47_2631630_EX-10.47_Co-Branding Agreement.pdf | Cap On Liability | LOW | reasons=['evidence_not_found']
+ADUROBIOTECH,INC_06_02_2020-EX-10.7-CONSULTING AGREEMENT(1).PDF | Cap On Liability | NOT_FOUND | reasons=['absence_not_trusted', 'evidence_not_found']
+WOMENSGOLFUNLIMITEDINC_03_29_2000-EX-10.13-ENDORSEMENT AGREEMENT - Intellectual Property Rights                 Confidentiality and Non-Use Obligations Agreement.pdf | Renewal Term | NOT_FOUND | reasons=['absence_not_trusted', 'evidence_not_found']
+WOMENSGOLFUNLIMITEDINC_03_29_2000-EX-10.13-ENDORSEMENT AGREEMENT - Intellectual Property Rights                 Confidentiality and Non-Use Obligations Agreement.pdf | Cap On Liability | NOT_FOUND | reasons=['absence_not_trusted', 'evidence_not_found']
+Numeric support x correctness (scored fields only):
+field | support | correct | wrong
+notice_days | supported | 5 | 0
+notice_days | unsupported | 0 | 0
+notice_days | not_applicable | 6 | 0
+renewal_term_months | supported | 6 | 1
+renewal_term_months | unsupported | 1 | 1
+renewal_term_months | not_applicable | 2 | 0
+initial_term_months | supported | 6 | 0
+initial_term_months | unsupported | 2 | 0
+initial_term_months | not_applicable | 0 | 2
+cap_amount | supported | 0 | 0
+cap_amount | unsupported | 1 | 0
+cap_amount | not_applicable | 4 | 0
+not_applicable: null numeric prediction (or failed extraction); excluded from the 2x2 supported/unsupported table.
+Field status x correctness (scored fields only; nonzero rows):
+clause_type | field | status | correct | wrong
+Cap On Liability | cap_amount | absence_claim | 4 | 0
+Cap On Liability | cap_amount | unsupported | 1 | 0
+Cap On Liability | cap_formula | absence_claim | 9 | 0
+Cap On Liability | cap_formula | unsupported | 3 | 0
+Cap On Liability | currency | absence_claim | 0 | 1
+Cap On Liability | currency | supported | 1 | 0
+Cap On Liability | found | absence_claim | 2 | 3
+Cap On Liability | found | unsupported | 7 | 0
+Cap On Liability | has_damages_exclusion | absence_claim | 2 | 2
+Cap On Liability | has_damages_exclusion | keyword_signal | 2 | 0
+Cap On Liability | has_damages_exclusion | unsupported | 4 | 0
+Cap On Liability | has_money_cap | absence_claim | 5 | 0
+Cap On Liability | has_money_cap | keyword_signal | 5 | 0
+Renewal Term | auto_renews | absence_claim | 2 | 0
+Renewal Term | auto_renews | explicit_negative | 1 | 0
+Renewal Term | auto_renews | keyword_signal | 6 | 0
+Renewal Term | auto_renews | unsupported | 0 | 1
+Renewal Term | found | absence_claim | 1 | 0
+Renewal Term | found | unsupported | 11 | 0
+Renewal Term | initial_term_months | absence_claim | 0 | 2
+Renewal Term | initial_term_months | supported | 6 | 0
+Renewal Term | initial_term_months | unsupported | 2 | 0
+Renewal Term | notice_days | absence_claim | 4 | 0
+Renewal Term | notice_days | explicit_negative | 2 | 0
+Renewal Term | notice_days | supported | 5 | 0
+Renewal Term | renewal_term_months | absence_claim | 2 | 0
+Renewal Term | renewal_term_months | supported | 6 | 1
+Renewal Term | renewal_term_months | unsupported | 1 | 1
+HIGH-but-wrong after field status: 1
+GOOSEHEADINSURANCE,INC_04_02_2018-EX-10.6-Franchise Agreement.PDF | Renewal Term | wrong fields: renewal_term_months: label='NONE', prediction=60 | reasons=[] | quote excerpt='The term of this Agreement starts on the Effective Date and, unless this Agreement is earlier terminated in accordance with its provisions, will expire ten (10) years from the Effective Date.\n2.2 Renewal. You will have the right to renew your rights to operate the Franchise Business for two (2) addi'
+This count requires EVERY wrong field to be supported or keyword_signal; it does not change confidence levels.
+No support rule was specified for found, currency or cap_formula: present values are unsupported; null/False values are absence_claim.

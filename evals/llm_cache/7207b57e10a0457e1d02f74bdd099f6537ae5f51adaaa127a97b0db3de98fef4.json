@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 60,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 60,\n  \"notice_days\": 90,\n  \"evidence_quote\": \"11.1 The Term shall commence upon the Effective Date and shall continue for an initial term of five (5) years. The Term shall automatically\\n renew thereafter for successive 5-year terms unless either party provides prior written notice of termination not less than 90 days prior to\\n the end of such five-year term.\",\n  \"evidence_chunk_id\": \"319cd0a660408baa6c43d2fbb1c1f68f7a6f946789d43599575524f1bfc2628f:32\"\n}",
+  "input_tokens": 1847,
+  "output_tokens": 207,
+  "latency_ms": 1467.6901860002545,
+  "created_at": "2026-11-10T16:07:53.285393+00:00"
+}

@@ -1,0 +1,28 @@
+Policy: policies/eval_policy.json | KEYWORD | prompt=v2
+Cache-only: ON (main extraction) | cache=evals/llm_cache
+Follow-up cache-only: ON
+Embedding model: loaded once; shared by pipeline via _load_model lru_cache
+Model load time (separate): 172.80 ms
+contract | overall_status | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE | llm_calls | cache_hits | elapsed_ms
+GOOSEHEADINSURANCE,INC_04_02_2018-EX-10.6-Franchise Agreement.PDF | FAIL | 0 | 1 | 4 | 0 | 0 | 2 | 15785.46
+NeoformaInc_19991202_S-1A_EX-10.26_5224521_EX-10.26_Co-Branding Agreement.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 5878.73
+VAPOTHERM, INC. - Manufacturing and Supply Agreement.PDF | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 4729.52
+InnerscopeHearingTechnologiesInc_20181109_8-K_EX-10.6_11419704_EX-10.6_Distributor Agreement.pdf | NEEDS_REVIEW | 1 | 0 | 4 | 0 | 0 | 2 | 1903.39
+NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 4397.77
+SLOVAKWIRELESSFINANCECOBV_03_28_2001-EX-4.(B)(II).3-Maintenance and support contract for SICAP(R) modules.PDF | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 3643.63
+BNCMORTGAGEINC_05_17_1999-EX-10.4-LICENSING AND WEB SITE HOSTING AGREEMENT.PDF | NEEDS_REVIEW | 3 | 0 | 2 | 0 | 0 | 2 | 1961.78
+StampscomInc_20001114_10-Q_EX-10.47_2631630_EX-10.47_Co-Branding Agreement.pdf | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 7964.53
+NEOMEDIATECHNOLOGIESINC_12_15_2005-EX-16.1-DISTRIBUTOR AGREEMENT.PDF | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 2736.82
+LegacyEducationAllianceInc_20200330_10-K_EX-10.18_12090678_EX-10.18_Development Agreement.pdf | NEEDS_REVIEW | 2 | 0 | 3 | 0 | 0 | 2 | 3769.97
+ADUROBIOTECH,INC_06_02_2020-EX-10.7-CONSULTING AGREEMENT(1).PDF | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 830.45
+WOMENSGOLFUNLIMITEDINC_03_29_2000-EX-10.13-ENDORSEMENT AGREEMENT - Intellectual Property Rights                 Confidentiality and Non-Use Obligations Agreement.pdf | NEEDS_REVIEW | 0 | 0 | 5 | 0 | 0 | 2 | 519.16
+Overall status counts: FAIL=1, NEEDS_REVIEW=11, PASS=0, NO_APPLICABLE_RULES=0
+Decision counts: PASS=15, FAIL=1, NEEDS_REVIEW=44, NOT_APPLICABLE=0
+Review rate: 44/60 (73.33%)
+Reason code counts: cap_is_formula=2, clause_not_found=17, compared=16, condition_unverified=4, low_confidence=5, value_absence_claim=10, value_unsupported=6
+Median elapsed_ms: 3706.80
+p95 elapsed_ms (nearest rank): 15785.46
+Total llm_calls: 0
+Total cache_hits: 24
+
+CONSISTENCY: design-set comparison skipped for custom inputs.

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": 1000000,\n  \"currency\": \"USD\",\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"EXCEPT IN CONNECTION WITH A BREACH BY EITHER PARTY OF ARTICLE 13, THE INDEMNIFICATION OBLIGATIONS OF NEOFORMA UNDER SECTION 15.4(c) [INDEMNIFICATION BY NEOFORMA] AND (d) AND THE INDEMNIFICATION OBLIGATIONS OF VERTICALNET UNDER SECTION 15.5(c) [INDEMNIFICATION BY VERTICALNET] AND (d), EACH PARTY'S LIABILITY FOR DAMAGES HEREUNDER SHALL NOT EXCEED $1,000,000.\",\n  \"evidence_chunk_id\": \"72f393359cb96a1a7d5048b026cb4e17aa5e65a47454f407f3652a50d4538383:77\"\n}",
+  "input_tokens": 1950,
+  "output_tokens": 266,
+  "latency_ms": 12891.334648997145,
+  "created_at": "2026-11-10T16:01:37.861492+00:00"
+}

@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 60,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 24,\n  \"notice_days\": null,\n  \"evidence_quote\": \"The initial term of this Agreement shall commence on the Effective Date and end on the fifth anniversary of the Effective Date. MBE shall have the right to elect by written notice to the Company at any time between two (2) and six (6) months prior to the end of such initial term or any subsequent Renewal Period\",\n  \"evidence_chunk_id\": \"dba376bec8ed2e068df7609343b413005e2c0facb23ac2d3ed993d23c784ad9c:62\"\n}",
+  "input_tokens": 1740,
+  "output_tokens": 195,
+  "latency_ms": 7204.959320999478,
+  "created_at": "2026-11-10T16:07:22.920934+00:00"
+}

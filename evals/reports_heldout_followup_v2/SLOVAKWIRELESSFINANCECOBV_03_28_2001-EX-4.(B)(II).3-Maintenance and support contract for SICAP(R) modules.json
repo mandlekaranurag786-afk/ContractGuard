@@ -1,0 +1,245 @@
+{
+  "contract": "data/heldout/SLOVAKWIRELESSFINANCECOBV_03_28_2001-EX-4.(B)(II).3-Maintenance and support contract for SICAP(R) modules.PDF",
+  "policy_path": "policies/eval_policy.json",
+  "trust_policy": "KEYWORD",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "overall_status": "NEEDS_REVIEW",
+  "overall_reason": "At least one rule requires human review; this is not an approval.",
+  "counts": {
+    "PASS": 3,
+    "FAIL": 0,
+    "NEEDS_REVIEW": 2,
+    "NOT_APPLICABLE": 0
+  },
+  "rule_results": [
+    {
+      "rule_id": "cap_min_2m",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "cap_amount",
+      "value": null,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": "absence_claim",
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Sicap Ltd's liability for indirect loss, including consequential loss, loss of profit, lost savings and loss caused by interruption of operations is excluded.",
+      "evidence_chunk_id": "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:26",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "cap_required",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "NEEDS_REVIEW",
+      "reason_code": "value_absence_claim",
+      "reason": "No value was found and the text gives no proof either way; a person must check.",
+      "field": "has_money_cap",
+      "value": false,
+      "field_status": "absence_claim",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": null,
+      "confidence_level": "HIGH",
+      "evidence_quote": "Sicap Ltd's liability for indirect loss, including consequential loss, loss of profit, lost savings and loss caused by interruption of operations is excluded.",
+      "evidence_chunk_id": "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:26",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "excludes_consequential",
+      "clause_type": "Cap On Liability",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "has_damages_exclusion=True satisfies is_true.",
+      "field": "has_damages_exclusion",
+      "value": true,
+      "field_status": "keyword_signal",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "Sicap Ltd's liability for indirect loss, including consequential loss, loss of profit, lost savings and loss caused by interruption of operations is excluded.",
+      "evidence_chunk_id": "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:26",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    },
+    {
+      "rule_id": "renewal_notice_min_30",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "notice_days=42 satisfies >= 30.",
+      "field": "notice_days",
+      "value": 42,
+      "field_status": "supported",
+      "condition_field": "auto_renews",
+      "condition_value": true,
+      "condition_status": "keyword_signal",
+      "currency_status": null,
+      "evidence_strength": "weak_signal",
+      "confidence_level": "HIGH",
+      "evidence_quote": "After the initial period of two years, the maintenance and support contract shall be automatically renewed for a period of one year on each renewal date, unless one of the parties terminates the maintenance and support contract through written notification to the other party in the form of a registered letter with proof of receipt, at least six (6) weeks prior to the renewal date.",
+      "evidence_chunk_id": "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:25",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": "extraction",
+      "condition_evidence_quote": "After the initial period of two years, the maintenance and support contract shall be automatically renewed for a period of one year on each renewal date, unless one of the parties terminates the maintenance and support contract through written notification to the other party in the form of a registered letter with proof of receipt, at least six (6) weeks prior to the renewal date.",
+      "condition_evidence_chunk_id": "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:25"
+    },
+    {
+      "rule_id": "initial_term_max_60",
+      "clause_type": "Renewal Term",
+      "policy": "KEYWORD",
+      "decision": "PASS",
+      "reason_code": "compared",
+      "reason": "initial_term_months=24 satisfies <= 60.",
+      "field": "initial_term_months",
+      "value": 24,
+      "field_status": "supported",
+      "condition_field": null,
+      "condition_value": null,
+      "condition_status": null,
+      "currency_status": null,
+      "evidence_strength": "proof",
+      "confidence_level": "HIGH",
+      "evidence_quote": "After the initial period of two years, the maintenance and support contract shall be automatically renewed for a period of one year on each renewal date, unless one of the parties terminates the maintenance and support contract through written notification to the other party in the form of a registered letter with proof of receipt, at least six (6) weeks prior to the renewal date.",
+      "evidence_chunk_id": "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:25",
+      "field_evidence_source": "extraction",
+      "condition_evidence_source": null,
+      "condition_evidence_quote": null,
+      "condition_evidence_chunk_id": null
+    }
+  ],
+  "clauses": [
+    {
+      "clause_type": "Cap On Liability",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:26",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:27",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:1",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:3",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:18"
+      ],
+      "extraction_error": null
+    },
+    {
+      "clause_type": "Renewal Term",
+      "confidence_level": "HIGH",
+      "confidence_reasons": [],
+      "retrieved_chunk_ids": [
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:25",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:26",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:24",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:3",
+        "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:27"
+      ],
+      "extraction_error": null
+    }
+  ],
+  "cost": {
+    "llm_calls": 2,
+    "cache_hits": 2,
+    "input_tokens": 1918,
+    "output_tokens": 65,
+    "cached_input_tokens": 3524,
+    "cached_output_tokens": 376,
+    "elapsed_ms": 16143.25264099898
+  },
+  "followup": {
+    "enabled": true,
+    "version": "v2",
+    "status": "completed",
+    "calls_used": 2,
+    "max_calls": 4,
+    "steps": [
+      {
+        "step": 1,
+        "clause_type": "Cap On Liability",
+        "field": "cap_amount",
+        "rule_ids": [
+          "cap_min_2m"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:20",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:23",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:22"
+        ],
+        "chunk_policy": "unseen_only",
+        "chunk_ids": [
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:20",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:23",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:22"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 995,
+        "output_tokens": 36,
+        "latency_ms": 11249.415548001707,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      },
+      {
+        "step": 2,
+        "clause_type": "Cap On Liability",
+        "field": "has_money_cap",
+        "rule_ids": [
+          "cap_required"
+        ],
+        "query": "total aggregate liability shall not exceed the amount",
+        "new_chunk_ids": [
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:15",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:21",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:28"
+        ],
+        "chunk_policy": "unseen_only",
+        "chunk_ids": [
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:15",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:21",
+          "f28f6a6871f5df6db523cc87fbc6a53b44e1b2a67a36ff39c421c910369fd373:28"
+        ],
+        "value": null,
+        "quote_excerpt": "",
+        "verified": false,
+        "status": "followup_untrusted",
+        "merge_outcome": "NO_VALUE",
+        "input_tokens": 923,
+        "output_tokens": 29,
+        "latency_ms": 1920.354624002357,
+        "cached": false,
+        "note": "merged",
+        "error": null
+      }
+    ],
+    "changed_rules": [],
+    "live_calls": 2,
+    "cached_calls": 0,
+    "uncached_input_tokens": 1918,
+    "uncached_output_tokens": 65
+  }
+}

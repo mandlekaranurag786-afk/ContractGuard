@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the amount actually paid by Licensee to Licensor for the Licensed Product giving rise to the liability\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"Licensor's total liability to Licensee under any provision of this Agreement shall be limited to the amount actually paid by Licensee to Licensor for the Licensed Product giving rise to the liability.\",\n  \"evidence_chunk_id\": \"259c057c3177899d1cdf70fd77212537c07c8f31414ddd3bad21e8f5937e3e50:51\"\n}",
+  "input_tokens": 1744,
+  "output_tokens": 196,
+  "latency_ms": 4620.069645003241,
+  "created_at": "2026-11-10T16:05:47.514767+00:00"
+}

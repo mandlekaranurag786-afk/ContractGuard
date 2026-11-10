@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the amounts paid by MBE and the MBE Centers to the Company pursuant to this Agreement\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"14. Limitation of Liability. Notwithstanding anything to the contrary in this Agreement, in no event shall either party's liability under any provision of this Agreement or otherwise arising out of or related to this Agreement (other than payments due or accrued under Section 8, exceed the amounts paid by MBE and the MBE Centers to the Company pursuant to this Agreement. The parties further agree that NEITHER PARTY WILL BE LIABLE FOR ANY LOST PROFITS, FOR COSTS OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES OR FOR ANY CLAIM OR DEMAND AGAINST A\",\n  \"evidence_chunk_id\": \"dba376bec8ed2e068df7609343b413005e2c0facb23ac2d3ed993d23c784ad9c:61\"\n}",
+  "input_tokens": 1789,
+  "output_tokens": 255,
+  "latency_ms": 2379.7194299986586,
+  "created_at": "2026-11-10T16:07:25.324765+00:00"
+}
