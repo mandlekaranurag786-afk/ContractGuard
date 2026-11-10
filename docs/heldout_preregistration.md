@@ -1,4 +1,3 @@
-
 # Held-out test: pre-registration
 
 Written: 4 Nov 2026, before any held-out contract was selected, labelled or run.
@@ -71,7 +70,6 @@ decision is checked by hand against its quote. (Proportional form of the origina
 Results are written to docs/decisions.md whatever they show. Small sample: report
 "0 of n" with the rule-of-three bound (about 3/n) instead of "never".
 
-
 ## Amendment 1 (5 Nov 2026, before any selection)
 
 The first selection run stopped at its own safety check: the original Pacira
@@ -80,3 +78,28 @@ PDF "A_RSTRATEGIC", our copy "A_R STRATEGIC"). Name matching now compares letter
 and digits only; the script asserts 510 unique names in both the CSV and the PDF
 folder and that both sets are equal. No contract was selected before this change;
 the selection rule, seed and counts are unchanged.
+
+
+## Amendment 2 (5 Nov 2026, before any selection)
+
+The second run stopped at the "CSV and PDF names must match" check: 3 of 510
+CUAD names differ between master_clauses.csv and the PDF folder. Fixes, each
+checked by hand: (1) Harpoon: CSV name lacks "_Option Agreement" -> explicit
+mapping; (2) KALLO: CSV name has a stray "'" after ".PDF" -> explicit mapping;
+(3) LECLANCHÉ: same visible name, different Unicode form of "É" -> names are
+Unicode-normalized (NFKD) before comparing. All three checks (510 unique CSV
+names, 510 unique PDF names, equal sets) stay strict. No contract was selected
+before this change; the rule, seed and counts are unchanged.
+
+
+
+## Amendment 3 (10 Nov 2026, before labelling and before any run)
+
+eval_rules.py makes every rule on a found=False row UNSCORED, so the normal
+"unsafe" count would ignore the no-answer contracts, which exist to catch
+invented clauses. Added rule: every automatic decision (PASS / FAIL /
+NOT_APPLICABLE) on a found=False row is listed and checked by hand against the
+contract text; it counts as UNSAFE unless the text clearly supports it. Reported
+separately as "unsafe on absent clauses" and added to the primary unsafe count.
+On the 30 design contracts no row has found=False, so earlier numbers are unchanged.
+Labelling rule for found=False rows: leave the other fields empty.
