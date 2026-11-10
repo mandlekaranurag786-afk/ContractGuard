@@ -21,6 +21,7 @@ from scripts.eval_confidence import percent, rebuild_extraction
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNS = ("v2", "v2_repeat")
+LABELS = Path("evals/extraction_labels_v2.csv")
 AUTO = {Decision.PASS, Decision.FAIL, Decision.NOT_APPLICABLE}
 
 
@@ -77,18 +78,19 @@ def outcome_flags(truth: Decision | None, engine: Decision) -> dict[str, bool]:
     }
 
 
-def select_policy(metrics: dict) -> tuple[TrustPolicy, list[str]]:
+def select_policy(metrics: dict, runs=RUNS) -> tuple[TrustPolicy, list[str]]:
     chosen = TrustPolicy.STRICT
     lines = ["Start at STRICT."]
     for candidate in (TrustPolicy.KEYWORD, TrustPolicy.BALANCED):
-        safe = all(metrics[run][candidate]["unsafe"] == 0 for run in RUNS)
+        safe = all(metrics[run][candidate]["unsafe"] == 0 for run in runs)
         savings = [
             metrics[run][chosen]["review"] - metrics[run][candidate]["review"]
-            for run in RUNS
+            for run in runs
         ]
         accepted = safe and all(saving >= 3 for saving in savings)
+        scope = "both runs" if len(runs) == 2 else "all selected runs"
         lines.append(
-            f"{candidate}: unsafe-free in both runs={safe}; fewer reviews "
+            f"{candidate}: unsafe-free in {scope}={safe}; fewer reviews "
             f"versus {chosen}={savings}; {'accepted' if accepted else 'blocked'}."
         )
         if accepted:
@@ -203,27 +205,38 @@ def summarize(run: str, policy: TrustPolicy, records: list[dict], rules: list[Ru
     return "\n".join(lines), totals
 
 
-def main(argv: list[str] | None = None) -> None:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tag", default="v3")
-    tag = parser.parse_args(argv).tag
+    parser.add_argument("--labels", type=Path, default=LABELS)
+    parser.add_argument("--runs", nargs="+", default=RUNS)
+    args = parser.parse_args(argv)
+    tag = args.tag
     if not tag or any(
         c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
         for c in tag
     ):
         parser.error("tag must contain only letters, numbers, underscores or hyphens")
+    if any(not run.replace("_", "").replace("-", "").isalnum() for run in args.runs):
+        parser.error("runs must contain only letters, numbers, underscores or hyphens")
+    return args
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = parse_args(argv)
+    tag = args.tag
     output = ROOT / "evals"
     paths = [output / f"rules_eval_{tag}.txt"] + [
         output / f"rule_results_{run}_{policy.value.lower()}_{tag}.csv"
-        for run in RUNS
+        for run in args.runs
         for policy in TrustPolicy
     ]
     if any(path.exists() for path in paths):
         raise FileExistsError("Refusing to overwrite existing rule evaluation outputs")
     rules = load_rules(ROOT / "policies" / "eval_policy.json")
-    labels = load_rows(output / "extraction_labels_v2.csv")
+    labels = load_rows(ROOT / args.labels)
     sections = [
-        "Offline rule evaluation; labels: evals/extraction_labels_v2.csv",
+        f"Offline rule evaluation; labels: {args.labels}",
         "All metrics and decision/strength counts exclude UNSCORED rule-rows.",
         "Truth order: found=False -> UNSCORED; condition empty -> UNSCORED, "
         "NONE -> NEEDS_REVIEW, unequal -> NOT_APPLICABLE (ignore rule field); "
@@ -233,7 +246,7 @@ def main(argv: list[str] | None = None) -> None:
         f"{sum(r['found'] == 'False' for r in labels.values())}",
     ]
     metrics, outputs = {}, {}
-    for run in RUNS:
+    for run in args.runs:
         rows = load_rows(output / f"extraction_results_{run}.csv")
         if rows.keys() != labels.keys():
             raise ValueError(f"Instances differ between {run} and labels")
@@ -245,7 +258,7 @@ def main(argv: list[str] | None = None) -> None:
             outputs[output / f"rule_results_{run}_{policy.value.lower()}_{tag}.csv"] = (
                 records
             )
-    chosen, selection = select_policy(metrics)
+    chosen, selection = select_policy(metrics, args.runs)
     sections.append(
         "PRE-REGISTERED SELECTION\n"
         + "\n".join(selection)

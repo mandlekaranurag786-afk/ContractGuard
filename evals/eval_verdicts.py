@@ -14,7 +14,7 @@ from contractguard.evaluation.extraction_metrics import FIELD_KINDS, parse_label
 from contractguard.report import OverallStatus, overall_status
 from contractguard.rules.models import Decision, RuleResult, TrustPolicy, load_rules
 from evals.eval_followup import load_reports, score_reports
-from evals.eval_rules import load_rows
+from evals.eval_rules import AUTO, load_rows
 
 LABELS = Path("evals/extraction_labels_v2.csv")
 POLICY = Path("policies/eval_policy.json")
@@ -235,25 +235,55 @@ def build_report(reports: dict, rules: list, labels: dict, extractions: dict) ->
         if row["truth"] != row["engine"]
     ] or ["(none)"]
     sections.append("\n".join(lines))
+    if any(
+        parse_label(label.get("found", ""), bool) is False
+        for label in labels.values()
+    ):
+        absent = []
+        for (contract, rule_id), row in records.items():
+            result = row["result"]
+            if (
+                parse_label(labels[contract, result.clause_type].get("found", ""), bool)
+                is False
+                and result.decision in AUTO
+            ):
+                absent.append(
+                    f"{contract} | {rule_id} | {result.decision} | "
+                    f"{result.reason_code} | {(result.evidence_quote or '')[:150]!r}"
+                )
+        sections.append("\n".join([
+            "Automatic decisions on absent clauses (amendment 3)",
+            "contract | rule | decision | reason_code | "
+            "evidence quote (first 150 chars)",
+            *absent,
+            f"Count: {len(absent)}",
+        ]))
     return "\n\n".join(sections) + "\n"
 
 
-def main(argv: list[str] | None = None) -> None:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--reports", type=Path, required=True)
     parser.add_argument("--tag", required=True)
+    parser.add_argument("--labels", type=Path, default=LABELS)
+    parser.add_argument("--extractions", type=Path, default=EXTRACTIONS)
     args = parser.parse_args(argv)
     if not args.tag or not args.tag.replace("_", "").replace("-", "").isalnum():
         parser.error("Invalid output tag")
+    return args
+
+
+def main(argv: list[str] | None = None) -> None:
+    args = parse_args(argv)
     output = Path(f"evals/verdict_eval_{args.tag}.txt")
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite {output}")
     reports = load_reports(args.reports)
-    labels, extractions = load_rows(LABELS), load_rows(EXTRACTIONS)
+    labels, extractions = load_rows(args.labels), load_rows(args.extractions)
     rules = load_rules(POLICY)
     text = (
-        f"Reports: {args.reports}\nLabels: {LABELS}\nPolicy: {POLICY}\n"
-        f"Retrieval diagnostics: {EXTRACTIONS}\n"
+        f"Reports: {args.reports}\nLabels: {args.labels}\nPolicy: {POLICY}\n"
+        f"Retrieval diagnostics: {args.extractions}\n"
         "Predictions: saved report values (including follow-up overlays).\n"
         "Blank labels are unknown; NONE means expected null.\n\n"
         + build_report(reports, rules, labels, extractions)

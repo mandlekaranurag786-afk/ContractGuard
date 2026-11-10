@@ -34,13 +34,16 @@ POLICY = Path("policies/eval_policy.json")
 OFFLINE_RESULTS = Path("evals/rule_results_v2_keyword_v2.csv")
 SUMMARY = Path("evals/checker_batch_summary.txt")
 REPORTS = Path("evals/reports")
+CONTRACTS_DIR = Path("data/contracts")
 
 
-def selected_contracts() -> list[Path]:
+def selected_contracts(
+    labels: Path = LABELS, contracts_dir: Path = CONTRACTS_DIR
+) -> list[Path]:
     """Reuse the extraction eval's labels source, preserving its contract order."""
     return [
-        Path("data/contracts") / name
-        for name in dict.fromkeys(contract for contract, _ in load_rows(LABELS))
+        contracts_dir / name
+        for name in dict.fromkeys(contract for contract, _ in load_rows(labels))
     ]
 
 
@@ -219,7 +222,7 @@ def compare_offline(reports: list[ContractReport], path: Path) -> str:
     )
 
 
-def main(argv: list[str] | None = None) -> int:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--cache-only",
@@ -232,18 +235,25 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--live-followup", action="store_true")
     parser.add_argument("--followup-cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     parser.add_argument("--tag")
+    parser.add_argument("--labels", type=Path, default=LABELS)
+    parser.add_argument("--contracts-dir", type=Path, default=CONTRACTS_DIR)
     args = parser.parse_args(argv)
     if args.live_followup and not args.followup:
         parser.error("--live-followup requires --followup")
     if args.tag and (not args.tag.replace("_", "").replace("-", "").isalnum()):
         parser.error("tag must contain letters, numbers, underscores or hyphens")
+    return args
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
     summary = (
         Path(f"evals/checker_batch_summary_{args.tag}.txt") if args.tag else SUMMARY
     )
     reports_dir = Path(f"evals/reports_{args.tag}") if args.tag else REPORTS
     if summary.exists():
         raise FileExistsError(summary)
-    contracts = selected_contracts()
+    contracts = selected_contracts(args.labels, args.contracts_dir)
     for contract in contracts:
         if not contract.is_file():
             raise FileNotFoundError(contract)
@@ -267,11 +277,14 @@ def main(argv: list[str] | None = None) -> int:
         )
     except LLMQuotaError:
         return 1
-    text = (
-        summarize(reports, load_ms, not args.live_followup)
-        + "\n\n"
-        + compare_offline(reports, OFFLINE_RESULTS)
-    )
+    text = summarize(reports, load_ms, not args.live_followup)
+    if (
+        args.labels.resolve() == LABELS.resolve()
+        and args.contracts_dir.resolve() == CONTRACTS_DIR.resolve()
+    ):
+        text += "\n\n" + compare_offline(reports, OFFLINE_RESULTS)
+    else:
+        text += "\n\nCONSISTENCY: design-set comparison skipped for custom inputs."
     with summary.open("x", encoding="utf-8") as handle:
         handle.write(text + "\n")
     print(text)

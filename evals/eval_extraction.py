@@ -400,23 +400,30 @@ def _run_eval(
     return 1 if quota_error else 0
 
 
-def main() -> int:
-    global LABELS, RESULTS_OUT, SUMMARY_OUT, PROMPT_VERSION
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--fake", action="store_true", help="Offline always-abstain LLM"
     )
     parser.add_argument("--labels", type=Path, default=LABELS)
+    parser.add_argument("--parsed-dir", type=Path, default=PARSED_DIR)
     parser.add_argument("--tag", required=True, help="Versioned output suffix")
     parser.add_argument("--cache-only", action="store_true")
     parser.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     parser.add_argument("--prompt-version", choices=("v1", "v2"), default="v1")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if not re.fullmatch(r"[A-Za-z0-9_-]+", args.tag):
         parser.error("--tag must contain only letters, digits, underscores or hyphens")
     if args.fake and args.cache_only:
         parser.error("--fake and --cache-only are mutually exclusive")
+    return args
+
+
+def main() -> int:
+    global LABELS, RESULTS_OUT, SUMMARY_OUT, PROMPT_VERSION, PARSED_DIR
+    args = parse_args()
     LABELS = args.labels
+    PARSED_DIR = args.parsed_dir
     PROMPT_VERSION = args.prompt_version
     RESULTS_OUT = Path(f"evals/extraction_results_{args.tag}.csv")
     SUMMARY_OUT = Path(f"evals/extraction_summary_{args.tag}.json")
