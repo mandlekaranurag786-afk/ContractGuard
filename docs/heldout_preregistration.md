@@ -103,3 +103,12 @@ contract text; it counts as UNSAFE unless the text clearly supports it. Reported
 separately as "unsafe on absent clauses" and added to the primary unsafe count.
 On the 30 design contracts no row has found=False, so earlier numbers are unchanged.
 Labelling rule for found=False rows: leave the other fields empty.
+
+
+## Amendment 4 (10 Nov 2026, before any run)
+
+Labels were proposed by an AI assistant (ChatGPT) from the PDFs, reviewed by a
+second assistant (Claude) against the labelling rules (5 rule-based fixes), and
+the remaining open fields were checked by Anurag in the PDFs. No assistant and
+no person saw ContractGuard's output on these contracts. Risk: AI labels may
+share errors with the system's LLM; this is a stated limit of the test.
