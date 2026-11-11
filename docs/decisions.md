@@ -574,9 +574,6 @@ PYTHONUNBUFFERED=1 and tee to see progress.
 * Labels drafted with AI help; labeller agreement not measured.
 * Still open from before: hybrid vs dense, TOC/heading filtering,
 
-
-
-
 ## Evidence follow-up loop: build (27 Oct)
 
 * Built in small checkpoints, safety core first: follow-up patterns, the merge
@@ -711,3 +708,79 @@ PYTHONUNBUFFERED=1 and tee to see progress.
 * Still open from before: hybrid vs dense, TOC/heading filtering,
   clause-aware chunking, selected_30 filter check, bge-small truncation.
 * clause-aware chunking, selected_30 filter check, bge-small truncation.
+
+
+## Day 16–18 notes (after 28 Oct)
+
+* Day 16: FastAPI (/health, /policy, /check). No cloud deploy: Gemini free tier
+  may use uploaded data, so a public demo would invite real contracts.
+* Day 17: API errors (401/413/415/422/429/503/500), optional API key,
+  one check at a time.
+* Day 18: CPU-only Torch (0 decision differences on 150 rule checks;
+  .venv 5.8 GB -> 1.3 GB). Docker image 2.4 GB, non-root, offline, local only.
+* 1 Nov: SQLite approved for Day 20 (history, audit, daily cap). LangSmith
+  rejected for the product (cloud service; contract text would leave the machine).
+
+## Day 19 – Held-out test (10 Nov)
+
+Rules first: docs/heldout_preregistration.md, committed 5 Nov (ed79004), before
+any contract was picked. 4 amendments, all before the step they affect:
+
+1. Name matching by letters and digits only (Pacira spelled 3 ways in CUAD).
+2. 3 CUAD names differ between CSV and PDF folder (Harpoon, KALLO, LECLANCHÉ).
+3. Automatic decisions on absent clauses (found=False) are listed and checked
+   by hand, because eval_rules.py makes those rows UNSCORED.
+4. Labels proposed by ChatGPT, reviewed by Claude against the rules (5 fixes),
+   open fields checked by me in the PDFs (7 fields, 6 contracts).
+
+Setup:
+
+* 10 main contracts (same rule as the 30: CUAD has Renewal Term AND Cap On
+  Liability) + 2 no-answer contracts. Seed 20261103. Pools: 92 and 179.
+* All 12 passed pre-flight first try. 253 pages, 0 scanned.
+* The selection rule for the 30 was reconstructed from data (never written down).
+* Frozen system: tag heldout-v1 (4c181fd). Eval scripts got --labels etc.
+  options; regression on the 30 showed 0 differences. Tests: 595 passed.
+* Live calls: 22 extraction + 20 follow-up. Results commit 6de387c
+  (44 new cache files, so it reruns offline with 0 calls).
+
+Results (60 rule checks, 45 scored, 15 unscored):
+
+* Safety: 0 unsafe of 45. 0 automatic decisions on the 3 absent-clause rows.
+  With the 30: 0 of 146 -> true unsafe rate probably under ~2% (rule of three).
+* Automation: 16/45 (36%) vs 42/101 (42%) on the 30.
+* Truth FAILs caught: 1/9 (only Goosehead, initial term 120 > 60).
+  All 5 missed cap_required FAILs are "no cap" cases.
+* Extraction fully correct: 16/24 (67%) vs 47–50/60 on the 30.
+* HIGH-but-wrong: 3/13 (23.1%) vs 14.3% / 9.3%. Confidence alone is not reliable.
+* New: 1 "supported" value was wrong (Goosehead renewal_term_months = 60,
+  label NONE: optional renewal, not automatic). No rule uses it.
+* 24 unnecessary reviews: correct-but-unproven 12, retrieval miss 7,
+  low confidence 4, extraction wrong 1. Evidence, not the LLM, is the bottleneck.
+* KEYWORD picked again by the same rule (STRICT 39, KEYWORD 29, BALANCED 28 reviews).
+* Follow-up v2: 0 unsafe, 2 correct changes (Vapotherm, NEON), but only
+  2 fewer reviews (needed 5) -> REJECT. Stays opt-in.
+
+Decision: no fixes now. Changes after the run are not allowed, these 12 are no
+longer unseen, and any fix would need a new held-out set.
+
+Problems found: .venv rebuilt after a system Python update (3.12.15 -> 3.12.16);
+grep breaks multi-line CSV rows (use the csv module); eval_confidence.py
+overwrote confidence_eval_v3.txt (restored with git).
+
+## Open items (updated 11 Nov)
+
+* DONE: held-out set. DONE: no-answer contracts (2 added).
+* Per-field evidence quotes (held-out: correct-but-unproven still 50% of reviews).
+* Proving absence ("no cap anywhere") without unsafe FAILs.
+* Retrieval misses (29% of held-out reviews).
+* renewal_term_months definition for optional (non-automatic) renewals.
+* "Contract Year" durations; formula caps ("lesser of" / "greater of").
+* Error attribution per row; page numbers/headers inside text.
+* Labeller agreement not measured (AI-assisted labels).
+* eval_confidence.py needs an output option (always writes confidence_eval_v3.txt).
+* eval_retrieval.py points to a missing selected_30_contracts.csv.
+* CLI --followup-version default is still v1 (decision is v2).
+* Optional: uv-managed Python so system updates can't break .venv.
+* Still open from before: hybrid vs dense, TOC/heading filtering,
+  clause-aware chunking, bge-small truncation.
