@@ -709,7 +709,6 @@ PYTHONUNBUFFERED=1 and tee to see progress.
   clause-aware chunking, selected_30 filter check, bge-small truncation.
 * clause-aware chunking, selected_30 filter check, bge-small truncation.
 
-
 ## Day 16–18 notes (after 28 Oct)
 
 * Day 16: FastAPI (/health, /policy, /check). No cloud deploy: Gemini free tier
@@ -784,3 +783,63 @@ overwrote confidence_eval_v3.txt (restored with git).
 * Optional: uv-managed Python so system updates can't break .venv.
 * Still open from before: hybrid vs dense, TOC/heading filtering,
   clause-aware chunking, bge-small truncation.
+
+
+## Day 20 (11 Nov) - SQLite check history + daily cap
+
+### What was built
+
+- src/contractguard/api/history.py: HistoryStore on built-in sqlite3 (no new dependency).
+- Two append-only tables: `checks` (one row per /check request) and
+  `check_rules` (one row per rule result: rule id, decision, reason code).
+- Daily cap inside /check. New endpoints GET /checks and GET /checks/{id}.
+- New settings: CONTRACTGUARD_DB_PATH (.cache/history.db), CONTRACTGUARD_DAILY_CAP (30),
+  CONTRACTGUARD_HISTORY_MODE (metadata | full). Bad values stop the server at startup.
+
+### Decisions and reasons
+
+- Rolling 24 hours, not a calendar day: no timezone bugs.
+- Cap counts checks that reached the pipeline (success, quota error, internal error).
+  busy, 413, 415, 422 and daily_limit_reached are recorded but not counted: they make no LLM call.
+- Cache hits count toward the cap: keeps the rule simple.
+- 401 writes no row: someone without a key must not be able to fill the database.
+- Cap is checked inside the check lock: two requests cannot both pass the count.
+- Fail closed: if history cannot be read -> 503 history_unavailable, no LLM call.
+  If saving a counted row fails, the report is still returned, but later checks get 503
+  until restart. Reason: a cap that cannot count is not a cap.
+- metadata mode (default) uses an allow-list: decisions, reason codes, statuses, confidence.
+  No quotes, no extracted values, no free-text reasons, no follow-up block. The PDF is never stored.
+- Separate check_rules table (not only JSON): "which rule fails most" is one SQL query.
+- One connection per operation; WAL mode: requests run in different threads, and reads
+  must work while a check is writing.
+- policy_hash = sha256 of the validated rules (sorted keys): whitespace changes do not change it.
+- History is for viewing only: a new upload is always checked fresh.
+- In code, db_path=None means history off (same pattern as "no API key = auth off");
+  from_env always sets a path, so a real server always has history on.
+
+### Measured
+
+- Tests: 673 passed (595 before Day 20).
+- Local real call, 1 contract, no follow-up: 200, NEEDS_REVIEW, 2 LLM calls,
+  3753 input / 379 output tokens, about 11.3 s. So cap 30 = about 60 calls/day (free limit 500/day).
+- Second request with cap 1: 429 daily_limit_reached in 3 ms, Retry-After 86389 s
+  (requests were 11.49 s apart; 86400 - 11.49, rounded up).
+- Stored report in metadata mode: 0 evidence quotes.
+- Docker (contractguard:day20, 2.4 GB): cached check 2.2 s (0 calls, 2 cache hits);
+  second request 429; after container restart 2 rows still present and the next check still 429.
+  RAM 378.8 MiB right after restart.
+
+### Bug found and fixed
+
+- Tests wrote 21 rows (12 counted) into the real .cache/history.db, because create_app()
+  without settings uses from_env(). Three test runs would have passed the cap of 30.
+- Fix: tests/conftest.py sets CONTRACTGUARD_DB_PATH to a temp folder for every test.
+- Proof: the real DB stayed at 21 rows during a full run; after deleting it, a full run
+  did not create it again.
+
+### Open items (new)
+
+- No deletion / retention for old history rows.
+- Cap counts checks, not LLM calls; LLM calls per follow-up check not measured.
+- Name search ignores case only for ASCII letters (SQLite default).
+- GET /checks query errors (e.g. limit=0) use FastAPI's default 422 format, not our error format.

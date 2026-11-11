@@ -106,6 +106,7 @@ def test_health_without_api_key():
     assert response.json() == {
         "status": "ok", "prompt_version": "v2", "rules": len(load_rules(POLICY)),
         "auth": False, "max_upload_mb": 10, "max_pages": 200,
+        "history": True, "daily_cap": 30, "history_mode": "metadata",
     }
 
 
@@ -326,8 +327,11 @@ def test_settings_from_env(monkeypatch):
     monkeypatch.setenv("CONTRACTGUARD_MAX_UPLOAD_MB", "0.5")
     monkeypatch.setenv("CONTRACTGUARD_MAX_PAGES", "3")
     monkeypatch.setenv("CONTRACTGUARD_CACHE_DIR", ".cache/test")
+    monkeypatch.setenv("CONTRACTGUARD_DB_PATH", "some/history.db")
     settings = api.ApiSettings.from_env()
-    assert settings == api.ApiSettings(None, 524288, 3, Path(".cache/test"))
+    assert settings == api.ApiSettings(
+        None, 524288, 3, Path(".cache/test"), db_path=Path("some/history.db")
+    )
     from dataclasses import FrozenInstanceError
 
     with pytest.raises(FrozenInstanceError):
