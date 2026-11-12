@@ -15,6 +15,7 @@ from tempfile import NamedTemporaryFile
 from time import perf_counter
 
 from fastapi import Depends, FastAPI, Form, Header, HTTPException, Query, UploadFile
+from fastapi.responses import HTMLResponse
 
 from contractguard.api.history import (
     CheckRecord,
@@ -103,6 +104,9 @@ def create_app(
     checker=None, policy_path=None, settings=None, document_loader=load_document,
     *, history=None, clock=None,
 ) -> FastAPI:
+    index_html = (Path(__file__).parent / "static" / "index.html").read_text(
+        encoding="utf-8"
+    )
     settings = settings if settings is not None else ApiSettings.from_env()
     clock = clock if clock is not None else lambda: datetime.now(timezone.utc)
     if history is None and settings.db_path is not None:
@@ -152,6 +156,19 @@ def create_app(
             )
         ):
             raise api_error(401, "unauthorized", "A valid API key is required.")
+
+    @app.get("/", include_in_schema=False)
+    def index():
+        return HTMLResponse(index_html, headers={
+            "Content-Security-Policy": (
+                "default-src 'none'; connect-src 'self'; "
+                "script-src 'unsafe-inline'; style-src 'unsafe-inline'; "
+                "base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+            ),
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "no-referrer",
+            "Cache-Control": "no-store",
+        })
 
     @app.get("/health")
     def health():

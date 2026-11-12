@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContractGuard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f6f8; color: #192b38; font-family: system-ui, sans-serif; line-height: 1.6; }
+    main { max-width: 1040px; margin: 0 auto; padding: 36px 20px 64px; }
+    h1 { margin: 0; font-size: 2rem; letter-spacing: -0.04em; }
+    h2 { font-size: 1.25rem; margin-top: 0; }
+    .intro { margin-top: 4px; color: #526474; }
+    #warning { padding: 16px 20px; border: 1px solid #d7b767; border-left: 4px solid #a87313; border-radius: 8px; background: #fff7df; color: #674b12; }
+    #limits { color: #526474; font-size: 0.95rem; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    input[type="file"] { width: 100%; padding: 12px; border: 1px solid #aab9c4; border-radius: 6px; background: white; font: inherit; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid #cbd5dd; }
+    button { font: inherit; cursor: pointer; border-radius: 6px; padding: 10px 18px; }
+    .tabs button { border: 0; border-bottom: 3px solid transparent; background: transparent; border-radius: 0; color: #526474; }
+    .tabs button[aria-selected="true"] { color: #164b69; border-bottom-color: #164b69; font-weight: 700; }
+    .panel { background: white; border: 1px solid #d9e1e7; border-radius: 10px; padding: 24px; }
+    .followup { display: flex; align-items: center; gap: 10px; margin: 20px 0; font-weight: 400; }
+    input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; }
+    #check-button { background: #164b69; color: white; border: 1px solid #164b69; font-weight: 600; }
+    #check-button:disabled { opacity: 0.6; cursor: wait; }
+    :focus-visible { outline: 3px solid #347fa9; outline-offset: 3px; }
+    #status { color: #526474; }
+    #error:not(:empty) { background: #fff0ef; color: #922b2b; border: 1px solid #e7b9b9; padding: 12px 16px; border-radius: 6px; margin-top: 16px; }
+    #result:not(:empty) { margin-top: 28px; border-top: 1px solid #d9e1e7; padding-top: 24px; }
+    .badge { display: inline-block; padding: 3px 9px; border-radius: 5px; font-size: 0.85rem; font-weight: 700; background: #e9edf0; color: #46515c; white-space: nowrap; overflow-wrap: normal; word-break: normal; }
+    .badge.pass { background: #e1f4e8; color: #1b653a; }
+    .badge.fail { background: #fce6e6; color: #9b2828; }
+    .badge.review { background: #fff0d9; color: #8c4a0d; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th, td { padding: 12px; border-bottom: 1px solid #d9e1e7; vertical-align: top; overflow-wrap: anywhere; min-width: 100px; }
+    th { background: #f4f6f8; }
+    td:last-child { min-width: 180px; white-space: pre-wrap; }
+    .cost { font-size: 0.9rem; color: #526474; }
+    .history-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; }
+    .history-controls input, .history-controls select { padding: 10px; border: 1px solid #aab9c4; border-radius: 6px; font: inherit; max-width: 100%; }
+    #history-note { color: #526474; }
+    #history-error:not(:empty) { padding: 12px; margin: 16px 0; border-radius: 6px; background: #fff0ef; color: #922b2b; }
+    #history-detail:not(:empty) { margin-top: 24px; }
+    #history-detail dt { font-weight: 600; }
+    #history-detail dd { margin: 0 0 10px; overflow-wrap: anywhere; }
+    [hidden] { display: none !important; }
+    @media (max-width: 600px) { main { padding: 20px 12px; } .panel { padding: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ContractGuard</h1>
+      <p class="intro">Check a demo contract against company rules.</p>
+    </header>
+    <div id="warning">Demo only. Do not upload real or confidential contracts. This page runs on your machine, but parts of the contract text are sent to Google Gemini for extraction. On the free tier, Google may use that data.</div>
+    <p id="auth-notice" role="status" hidden></p>
+    <p id="limits" aria-live="polite">Loading limits...</p>
+    <div class="tabs" role="tablist" aria-label="Contract tools">
+      <button id="tab-check" type="button" role="tab" aria-selected="true" aria-controls="check-panel">Check</button>
+      <button id="tab-history" type="button" role="tab" aria-selected="false" aria-controls="history-panel" tabindex="-1">History</button>
+    </div>
+    <section id="check-panel" class="panel" role="tabpanel" aria-labelledby="tab-check">
+      <h2>Check a contract</h2>
+      <label for="file">Demo PDF</label>
+      <input id="file" type="file" accept="application/pdf,.pdf">
+      <label class="followup" for="followup">
+        <input id="followup" type="checkbox">
+        Evidence follow-up (slower, more LLM calls)
+      </label>
+      <button id="check-button" type="button">Check contract</button>
+      <p id="status" role="status"></p>
+      <div id="error" role="alert"></div>
+      <div id="result" aria-live="polite"></div>
+    </section>
+    <section id="history-panel" class="panel" role="tabpanel" aria-labelledby="tab-history" hidden>
+      <h2>Check history</h2>
+      <div class="history-controls">
+        <div>
+          <label for="history-name">File name contains</label>
+          <input id="history-name" type="text">
+        </div>
+        <div>
+          <label for="history-status">Result</label>
+          <select id="history-status">
+            <option value="">All</option>
+            <option value="PASS">PASS</option>
+            <option value="FAIL">FAIL</option>
+            <option value="NEEDS_REVIEW">NEEDS_REVIEW</option>
+            <option value="NO_APPLICABLE_RULES">NO_APPLICABLE_RULES</option>
+          </select>
+        </div>
+        <button id="history-refresh" type="button">Refresh</button>
+      </div>
+      <p id="history-note" aria-live="polite"></p>
+      <div id="history-error" role="alert"></div>
+      <div id="history-table" class="table-wrap" aria-live="polite"></div>
+      <div id="history-detail" aria-live="polite"></div>
+    </section>
+  </main>
+  <script>
+    "use strict";
+
+    const byId = (id) => document.getElementById(id);
+    const genericError = "Something went wrong. Please try again.";
+    const errors = {
+      unauthorized: "This server needs an API key. The demo page works only when authentication is off.",
+      busy: "Another contract is being checked. Try again in a few seconds.",
+      daily_limit_reached: "The daily check limit is reached. Try again in about {wait}.",
+      file_too_large: "The file is too large.",
+      not_a_pdf: "This file is not a PDF.",
+      unreadable_pdf: "The PDF cannot be opened. It may be damaged or password-protected.",
+      empty_pdf: "The PDF has no pages.",
+      too_many_pages: "The PDF has too many pages.",
+      scanned_pdf: "This PDF is a scan without text. Scanned PDFs are not supported.",
+      llm_quota_exhausted: "The Gemini limit is reached. Try again in a minute.",
+      history_unavailable: "Check history is not available, so checks are stopped. Tell the admin.",
+      internal_error: "The contract could not be checked.",
+      not_found: "This check was not found."
+    };
+
+    function waitText(header) {
+      if (header === null || header.trim() === "") return "a while";
+      const seconds = Number(header);
+      if (!Number.isFinite(seconds) || seconds < 0) return "a while";
+      if (seconds < 60) return `${Math.ceil(seconds)} seconds`;
+      if (seconds < 3600) return `${Math.ceil(seconds / 60)} minutes`;
+      return `${Math.ceil(seconds / 3600)} hours`;
+    }
+
+    function errorText(body, retryAfter) {
+      const detail = body && body.detail;
+      if (!detail || typeof detail !== "object" || Array.isArray(detail)) return genericError;
+      if (typeof detail.code !== "string" || !Object.hasOwn(errors, detail.code)) return genericError;
+      return errors[detail.code].replace("{wait}", waitText(retryAfter));
+    }
+
+    function element(tag, text, className) {
+      const node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      if (className) node.className = className;
+      return node;
+    }
+
+    function badge(decision) {
+      const tone = decision === "PASS" ? "pass" : decision === "FAIL" ? "fail" :
+        decision === "NEEDS_REVIEW" ? "review" : "neutral";
+      return element("span", decision ?? "Unknown", `badge ${tone}`);
+    }
+
+    function showReport(report) {
+      const result = byId("result");
+      result.replaceChildren();
+      result.append(badge(report.overall_status), element("p", report.overall_reason ?? ""));
+      const table = element("table");
+      const head = element("thead");
+      const headings = element("tr");
+      for (const title of ["Rule", "Decision", "Reason", "Quote"]) {
+        const cell = element("th", title);
+        cell.scope = "col";
+        headings.append(cell);
+      }
+      head.append(headings);
+      const body = element("tbody");
+      for (const rule of report.rule_results ?? []) {
+        const row = element("tr");
+        const decision = element("td");
+        decision.append(badge(rule.decision));
+        row.append(element("td", rule.rule_id ?? "-"), decision,
+          element("td", rule.reason ?? "-"), element("td", rule.evidence_quote ?? "-"));
+        body.append(row);
+      }
+      table.append(head, body);
+      const wrapper = element("div", undefined, "table-wrap");
+      wrapper.append(table);
+      result.append(wrapper);
+      const cost = report.cost ?? {};
+      const seconds = (Number(cost.elapsed_ms ?? 0) / 1000).toFixed(1);
+      result.append(element("p",
+        `LLM calls: ${cost.llm_calls ?? 0} · Cache hits: ${cost.cache_hits ?? 0} · ` +
+        `Input tokens: ${cost.input_tokens ?? 0} · Output tokens: ${cost.output_tokens ?? 0} · ` +
+        `Time: ${seconds} seconds`, "cost"));
+    }
+
+    async function loadLimits() {
+      try {
+        const response = await fetch("/health", {cache: "no-store"});
+        if (!response.ok) throw new Error("Health unavailable");
+        const health = await response.json();
+        const notice = byId("auth-notice");
+        notice.textContent = health.auth ?
+          "This server has API-key authentication turned on. This demo page does not send a key, so checks and history will not work here. For the local demo, start the server without CONTRACTGUARD_API_KEY." : "";
+        notice.hidden = !health.auth;
+        updateHistoryHealth(health);
+        let text = `Max file size: ${health.max_upload_mb} MB · Max pages: ${health.max_pages}`;
+        if (health.history) text += ` · Daily check limit: ${health.daily_cap}`;
+        byId("limits").textContent = text;
+      } catch {
+        byId("limits").textContent = "Limits are unavailable. Check that the server is running.";
+      }
+    }
+
+    byId("check-button").addEventListener("click", async () => {
+      const button = byId("check-button");
+      const error = byId("error");
+      const status = byId("status");
+      error.textContent = "";
+      status.textContent = "";
+      byId("result").replaceChildren();
+      const file = byId("file").files[0];
+      if (!file) {
+        error.textContent = "Choose a PDF file.";
+        return;
+      }
+      button.disabled = true;
+      status.textContent = "Checking... this can take up to a minute.";
+      try {
+        const form = new FormData();
+        form.append("file", file);
+        form.append("followup", String(byId("followup").checked));
+        let response;
+        try {
+          response = await fetch("/check", {
+            method: "POST", body: form
+          });
+        } catch {
+          error.textContent = "Cannot reach the server.";
+          return;
+        }
+        const body = await response.json().catch(() => null);
+        if (!response.ok) {
+          error.textContent = errorText(body, response.headers.get("Retry-After"));
+          return;
+        }
+        if (!body || typeof body !== "object" || Array.isArray(body)) {
+          error.textContent = genericError;
+          return;
+        }
+        showReport(body);
+      } catch {
+        byId("result").replaceChildren();
+        error.textContent = genericError;
+      } finally {
+        button.disabled = false;
+        status.textContent = "";
+      }
+    });
+
+    let historyEnabled = true;
+    let historyRequest = 0;
+
+    function clearHistory() {
+      byId("history-error").textContent = "";
+      byId("history-table").replaceChildren();
+      byId("history-detail").replaceChildren();
+    }
+
+    function updateHistoryHealth(health) {
+      historyEnabled = Boolean(health.history);
+      for (const id of ["history-name", "history-status", "history-refresh"]) {
+        byId(id).disabled = !historyEnabled;
+      }
+      byId("history-note").textContent = !historyEnabled ?
+        "History is turned off on this server." : health.history_mode === "full" ?
+        "History stores full reports. Showing the newest 50 checks." :
+        "History stores decisions only, no quotes. Showing the newest 50 checks.";
+      if (!historyEnabled) {
+        historyRequest += 1;
+        clearHistory();
+      }
+    }
+
+    function historyTime(value) {
+      if (!value) return "-";
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? "-" : date.toLocaleString();
+    }
+
+    function historyBadge(check) {
+      return check.error_code ? element("span", check.error_code, "badge neutral") :
+        badge(check.overall_status);
+    }
+
+    function historyTable(headings) {
+      const table = element("table");
+      const head = element("thead");
+      const row = element("tr");
+      for (const heading of headings) {
+        const cell = element("th", heading);
+        cell.scope = "col";
+        row.append(cell);
+      }
+      head.append(row);
+      const body = element("tbody");
+      table.append(head, body);
+      return {table, body};
+    }
+
+    function showHistory(data) {
+      if (!Array.isArray(data.checks)) throw new Error("Invalid history response");
+      const container = byId("history-table");
+      if (data.checks.length === 0) {
+        container.append(element("p", "No checks found."));
+        return;
+      }
+      const {table, body} = historyTable([
+        "Time", "File", "Result", "Counted", "LLM calls", "Cache hits", "Time", "Details"
+      ]);
+      for (const check of data.checks) {
+        const row = element("tr");
+        const result = element("td");
+        result.append(historyBadge(check));
+        const actions = element("td");
+        const button = element("button", "Details");
+        button.type = "button";
+        button.addEventListener("click", () => loadHistoryDetail(check.id));
+        actions.append(button);
+        row.append(element("td", historyTime(check.created_at)),
+          element("td", check.file_name || "-"), result,
+          element("td", check.counted ? "Yes" : "No"),
+          element("td", check.llm_calls ?? "-"), element("td", check.cache_hits ?? "-"),
+          element("td", check.elapsed_ms == null ? "-" :
+            `${(check.elapsed_ms / 1000).toFixed(1)} s`), actions);
+        body.append(row);
+      }
+      container.append(table);
+    }
+
+    function showHistoryDetail(check) {
+      const container = byId("history-detail");
+      container.append(element("h3", check.file_name || "-"), historyBadge(check));
+      const fields = element("dl");
+      for (const [label, value] of [
+        ["Time", historyTime(check.created_at)],
+        ["Follow-up", check.followup ? "Yes" : "No"],
+        ["Prompt version", check.prompt_version || "-"],
+        ["File SHA-256", check.file_sha256 ? check.file_sha256.slice(0, 12) : "-"],
+        ["Policy hash", check.policy_hash ? check.policy_hash.slice(0, 12) : "-"]
+      ]) {
+        fields.append(element("dt", label), element("dd", value));
+      }
+      container.append(fields);
+      if (!Array.isArray(check.rules)) throw new Error("Invalid rule response");
+      if (check.rules.length === 0) {
+        container.append(element("p", "No rule results. This request ended with an error."));
+        return;
+      }
+      const {table, body} = historyTable(["Rule", "Decision", "Reason code"]);
+      for (const rule of check.rules) {
+        const row = element("tr");
+        const decision = element("td");
+        decision.append(badge(rule.decision));
+        row.append(element("td", rule.rule_id), decision, element("td", rule.reason ?? "-"));
+        body.append(row);
+      }
+      const wrapper = element("div", undefined, "table-wrap");
+      wrapper.append(table);
+      container.append(wrapper);
+    }
+
+    async function loadHistoryData(url, render, details = false) {
+      const request = ++historyRequest;
+      if (details) {
+        byId("history-error").textContent = "";
+        byId("history-detail").replaceChildren();
+      } else {
+        clearHistory();
+      }
+      if (!historyEnabled) return;
+      let response;
+      try {
+        response = await fetch(url, {cache: "no-store"});
+      } catch {
+        if (request === historyRequest) {
+          byId("history-error").textContent = "Cannot reach the server.";
+        }
+        return;
+      }
+      const data = await response.json().catch(() => null);
+      if (request !== historyRequest) return;
+      if (!response.ok) {
+        byId("history-error").textContent = errorText(data, response.headers.get("Retry-After"));
+        return;
+      }
+      try {
+        if (!data || typeof data !== "object" || Array.isArray(data)) {
+          throw new Error("Invalid history response");
+        }
+        render(data);
+        if (details) byId("history-detail").scrollIntoView({block: "nearest"});
+      } catch {
+        if (details) {
+          byId("history-detail").replaceChildren();
+        } else {
+          clearHistory();
+        }
+        byId("history-error").textContent = genericError;
+      }
+    }
+
+    function loadHistory() {
+      const query = new URLSearchParams({limit: "50"});
+      const name = byId("history-name").value;
+      const status = byId("history-status").value;
+      if (name) query.set("name", name);
+      if (status) query.set("status", status);
+      return loadHistoryData(`/checks?${query.toString()}`, showHistory);
+    }
+
+    function loadHistoryDetail(id) {
+      return loadHistoryData(
+        `/checks/${encodeURIComponent(String(id))}`, showHistoryDetail, true
+      );
+    }
+
+    byId("history-refresh").addEventListener("click", loadHistory);
+
+    const tabs = [byId("tab-check"), byId("tab-history")];
+    function selectTab(selected) {
+      for (const tab of tabs) {
+        const active = tab === selected;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        byId(tab.getAttribute("aria-controls")).hidden = !active;
+      }
+      if (selected === byId("tab-history")) loadHistory();
+    }
+    for (const tab of tabs) {
+      tab.addEventListener("click", () => selectTab(tab));
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === "Home" ? tabs[0] : event.key === "End" ? tabs[1] :
+          tabs[1 - tabs.indexOf(tab)];
+        selectTab(next);
+        next.focus();
+      });
+    }
+    loadLimits();
+  </script>
+</body>
+</html>

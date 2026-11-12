@@ -843,3 +843,56 @@ overwrote confidence_eval_v3.txt (restored with git).
 - Cap counts checks, not LLM calls; LLM calls per follow-up check not measured.
 - Name search ignores case only for ASCII letters (SQLite default).
 - GET /checks query errors (e.g. limit=0) use FastAPI's default 422 format, not our error format.
+
+
+## Day 21 (12 Nov) - Demo UI
+
+### What was built
+
+- One page at GET / (src/contractguard/api/static/index.html): plain HTML + CSS + JS,
+  one file, no new dependency, no external resources (works offline).
+- Check tab: upload PDF, optional evidence follow-up, result with overall status,
+  5 rules (decision, reason, quote) and cost/time.
+- History tab: newest 50 checks from GET /checks, name and result filters,
+  Details from GET /checks/{id} (rule decisions and reason codes).
+
+### Decisions and reasons
+
+- No API key box in the UI; backend API-key auth stays optional and is OFF for the
+  local demo (key line commented in .env). Reason: localhost-only demo; a key box
+  adds friction and no real protection there. If the app is ever deployed or shared,
+  turn auth on again and add a login.
+- Known limit with auth off: a website open in the same browser could send requests
+  to 127.0.0.1:8000 (it cannot read the answers). Guards: server bound to 127.0.0.1,
+  daily cap 30.
+- If the server has auth ON, the page says so (reads "auth" from /health) instead of
+  failing silently.
+- All dynamic text is written with textContent, never innerHTML: file names, reasons
+  and quotes come from uploaded PDFs (XSS risk). Tested: the page contains no
+  innerHTML / eval / document.write.
+- Content-Security-Policy on the page: it may only talk to its own server; no
+  external scripts, styles or images.
+- No console logging, no localStorage / cookies in the page.
+- Warning text is accurate: the page runs locally, but parts of the contract text go
+  to Google Gemini (free tier; Google may use the data).
+- History note follows the server setting (metadata: "decisions only, no quotes").
+- JavaScript has no automatic tests (would need a new dependency); covered by a
+  10-step manual browser checklist, all passed on 12 Nov.
+
+### Measured
+
+- Tests: 685 passed (673 before the UI).
+- Browser, local server, auth off: cached check shown in 5.4 s (0 LLM calls, 2 cache hits).
+
+### Bugs found and fixed
+
+- Clicking Details cleared the history list (my spec said "clear table and details
+  before each load"). Fix: a Details click clears only the old error and details.
+- Badge text broke across lines in narrow table cells. Fix: white-space: nowrap.
+
+### Open items (new)
+
+- UI shows one quote per clause, not per field (same open item as per-field evidence).
+- No paging in History (newest 50 only).
+- With auth off there is no protection against requests from other local pages
+  except the daily cap.
