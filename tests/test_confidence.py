@@ -278,3 +278,70 @@ def test_foreign_dollars_do_not_support_usd(country):
     assert field_status(ex, "currency", quote) == "unsupported"
     assert field_status(ex, "currency", quote + " ($2,000,000)") == "supported"
     assert field_status(ex, "currency", quote + " Alternatively USD.") == "supported"
+
+
+@pytest.mark.parametrize(
+    "value,quote",
+    [
+        (5000000, "liability shall not exceed, in the aggregate, the sum of five "
+         "million United States dollars (USD 5,000,000)."),
+        (5000000, "liability shall not exceed USD 5,000,000 in the aggregate"),
+        (5000000, "liability shall not exceed $5,000,000 in the aggregate"),
+        (5000000, "liability shall not exceed $5,000,000."),
+        (5000000, "liability shall not exceed 5,000,000 dollars."),
+        (5000000, "liability shall not exceed five million dollars in total"),
+        (1000000, "EACH PARTY'S LIABILITY FOR DAMAGES HEREUNDER SHALL NOT EXCEED "
+         "$1,000,000."),
+        (5000000, "liability shall not exceed US$5,000,000"),
+        (5000000, "liability shall not exceed U.S. $5,000,000, and no more"),
+        (5000000, "liability shall not exceed $ 5,000,000"),
+        (5000000, "liability shall not exceed five million U.S. dollars"),
+        (5000000, "liability shall not exceed U.S.$5,000,000"),
+        (5000000, "liability shall not exceed 5,000,000 United States dollars"),
+        (5000000, "liability shall not exceed 5,000,000 United States dollar"),
+        (5000000, "liability shall not exceed five million U.S. dollar"),
+        (5000000, "liability shall not exceed five million US dollars"),
+        (5000000, "liability shall not exceed five million US dollar"),
+    ],
+)
+def test_cap_amount_punctuation_and_usd_units_supported(value, quote):
+    ex = LiabilityCapExtraction(
+        found=True, has_money_cap=True, cap_amount=value, currency="USD",
+        cap_formula=None, has_damages_exclusion=False,
+        evidence_quote=None, evidence_chunk_id=None,
+    )
+    assert field_support(ex, "cap_amount", quote) == "supported"
+
+
+@pytest.mark.parametrize(
+    "quote",
+    [
+        "liability shall not exceed $5,000,000.50",
+        "liability shall not exceed $15,000,000",
+        "liability shall not exceed $5,000,000,000",
+        "liability shall not exceed USD 5,000,001.",
+        "liability shall not exceed 5,000,000 shares.",
+        "liability shall not exceed EUR 5,000,000.",
+        "the annual fee is USD 5,000,000 per year",
+    ],
+)
+def test_cap_amount_rejects_mismatches_and_missing_support(quote):
+    ex = LiabilityCapExtraction(
+        found=True, has_money_cap=True, cap_amount=5000000, currency="USD",
+        cap_formula=None, has_damages_exclusion=False,
+        evidence_quote=None, evidence_chunk_id=None,
+    )
+    assert field_support(ex, "cap_amount", quote) == "unsupported"
+
+
+def test_notice_days_section_number_with_period_remains_unsupported():
+    ex = RenewalTermExtraction(
+        found=True, initial_term_months=None, auto_renews=True,
+        renewal_term_months=None, notice_days=30,
+        evidence_quote=None, evidence_chunk_id=None,
+    )
+    quote = (
+        "as provided in Section 30. Written notice of 5 days is required "
+        "prior to renewal"
+    )
+    assert field_support(ex, "notice_days", quote) == "unsupported"

@@ -896,3 +896,63 @@ overwrote confidence_eval_v3.txt (restored with git).
 - No paging in History (newest 50 only).
 - With auth off there is no protection against requests from other local pages
   except the daily cap.
+
+
+## Stress test with synthetic contracts (12 Nov, exploratory)
+
+- 4 synthetic contracts with fictional parties, written for this test with deliberately
+  hard wording: A (truth PASS), B (truth FAIL), C (truth NEEDS_REVIEW: values in schedules
+  that are not attached, formula cap), D (truth FAIL: trap numbers such as insurance
+  USD 5,000,000 next to the real cap USD 1,500,000).
+- Truth for all 20 rule checks and the success rules were written before the run
+  (stress_test_expected.md). Follow-up off (product default). Run once, through the UI.
+- Result: 0 unsafe of 20. All 4 rows that truly need a human went to review.
+  6 of 16 decidable rows decided correctly without a human (38%). FAILs caught 0 of 6.
+  Overall status matched the truth for 1 of 4 contracts; the other 3 were NEEDS_REVIEW (safe).
+- Trap contract: the cap quote was the real cap clause; the notice value was 30 days,
+  not the 10 or 180 that also appear.
+- Patterns seen (not fixed):
+  1. cap_min_2m was never decided automatically, even when the quote contains the amount
+     (A, B, D, and the CUAD Neoforma contract). Cause not diagnosed yet.
+  2. One quote per clause: the second value of a clause (damages exclusion, initial term)
+     has no quote of its own -> NEEDS_REVIEW. Same as the open item "per-field evidence quotes".
+  3. Unusual wording ("prolonged of its own force") was not accepted as proof of auto-renewal.
+  4. One quote started in the middle of a word (contract D, renewal clause).
+- Limits: 4 contracts, written and labelled by one author (Claude), synthetic text.
+  Exploratory only; it does not change the reported design or held-out numbers.
+- No fix was made. Any fix must be tested on new contracts, not on these four.
+
+
+## Fix A - cap amount evidence check (pre-registered 12 Nov, before any evaluation)
+
+Change: field_support for cap_amount only. (1) A "." or "," after the number is allowed
+when no digit follows. (2) Money markers added: USD / US$ / U.S. $ before the number;
+"United States dollars" / "U.S. dollars" / "US dollars" after it. No change to the LLM,
+the prompt, the keyword rule or any other field.
+
+Bar (fixed before the run):
+
+1. 0 unsafe on the design set (30), the held-out set (12) and the stress set (4).
+   One unsafe decision = fix A is rejected.
+2. Only cap_min_2m rows may change, and only from NEEDS_REVIEW to a decision equal to
+   the truth. Any other changed row = stop and diagnose.
+3. Stress set expectation: cap_min_2m becomes PASS in A, FAIL in B and D; nothing else changes.
+
+Expected size (counted from old saved results, before the run): at most 1 value_unsupported
+cap_min_2m row on the design set and 1 on the held-out set.
+The held-out result is post-hoc (that set was already used once), not a clean test.
+
+
+Result (12 Nov, run once, 0 LLM calls in all three runs):
+
+- Design: 0 unsafe; decision differences 0; 42/101 automatic (unchanged). The one
+  value_unsupported cap row (Hyperion) stays in review, correctly: its quote has
+  "$5OO,000" with letter O and a "lesser of" formula.
+- Held-out (post-hoc): 0 unsafe; exactly one row changed: Neoforma cap_min_2m
+  NEEDS_REVIEW -> FAIL (truth FAIL). Automatic 16 -> 17 of 45; FAILs caught 1 -> 2 of 9;
+  unnecessary reviews 24 -> 23. Not independent: the Neoforma sentence was used to find the bug.
+- Stress: 0 unsafe of 20; cap_min_2m became PASS (A), FAIL (B), FAIL (D); C unchanged;
+  no other row changed. Decided correctly 6 -> 9 of 16; FAILs caught 0 -> 2 of 6;
+  overall status equal to truth 1 -> 3 of 4.
+- All three bar rules held -> fix A kept.
+- Tests: 710 passed.

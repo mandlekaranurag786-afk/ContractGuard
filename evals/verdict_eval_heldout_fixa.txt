@@ -1,0 +1,139 @@
+Reports: evals/reports_heldout_fixa
+Labels: evals/heldout_labels.csv
+Policy: policies/eval_policy.json
+Retrieval diagnostics: evals/extraction_results_heldout.csv
+Predictions: saved report values (including follow-up overlays).
+Blank labels are unknown; NONE means expected null.
+
+Contracts: 12
+Scored rule-rows: 45/60
+
+A) RULE LEVEL (scored rows only; truth rows, engine columns)
+
+TOTAL
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 15 | 0 | 12 | 0
+FAIL | 0 | 2 | 7 | 0
+NEEDS_REVIEW | 0 | 0 | 5 | 0
+NOT_APPLICABLE | 0 | 0 | 4 | 0
+Truth FAIL caught automatically: 2/9
+Truth PASS decided automatically: 15/27
+Truth NEEDS_REVIEW kept for review: 5/5
+Unsafe: 0
+
+cap_min_2m
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 0 | 0 | 0 | 0
+FAIL | 0 | 1 | 0 | 0
+NEEDS_REVIEW | 0 | 0 | 4 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 1/1
+Truth PASS decided automatically: 0/0
+Truth NEEDS_REVIEW kept for review: 4/4
+Unsafe: 0
+
+cap_required
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 4 | 0 | 1 | 0
+FAIL | 0 | 0 | 5 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/5
+Truth PASS decided automatically: 4/5
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+excludes_consequential
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 1 | 0 | 7 | 0
+FAIL | 0 | 0 | 2 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/2
+Truth PASS decided automatically: 1/8
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+renewal_notice_min_30
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 5 | 0 | 0 | 0
+FAIL | 0 | 0 | 0 | 0
+NEEDS_REVIEW | 0 | 0 | 1 | 0
+NOT_APPLICABLE | 0 | 0 | 4 | 0
+Truth FAIL caught automatically: 0/0
+Truth PASS decided automatically: 5/5
+Truth NEEDS_REVIEW kept for review: 1/1
+Unsafe: 0
+
+initial_term_max_60
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 5 | 0 | 4 | 0
+FAIL | 0 | 1 | 0 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 1/1
+Truth PASS decided automatically: 5/9
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+B) MISSED FAILS
+BNCMORTGAGEINC_05_17_1999-EX-10.4-LICENSING AND WEB SITE HOSTING AGREEMENT.PDF | excludes_consequential | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_damages_exclusion | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_damages_exclusion | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+GOOSEHEADINSURANCE,INC_04_02_2018-EX-10.6-Franchise Agreement.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+GOOSEHEADINSURANCE,INC_04_02_2018-EX-10.6-Franchise Agreement.PDF | excludes_consequential | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_damages_exclusion | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_damages_exclusion | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+InnerscopeHearingTechnologiesInc_20181109_8-K_EX-10.6_11419704_EX-10.6_Distributor Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+LegacyEducationAllianceInc_20200330_10-K_EX-10.18_12090678_EX-10.18_Development Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+NEOMEDIATECHNOLOGIESINC_12_15_2005-EX-16.1-DISTRIBUTOR AGREEMENT.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+SLOVAKWIRELESSFINANCECOBV_03_28_2001-EX-4.(B)(II).3-Maintenance and support contract for SICAP(R) modules.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+
+C) UNNECESSARY REVIEW ROOT CAUSES (first match wins)
+category / rule | cap_min_2m | cap_required | excludes_consequential | renewal_notice_min_30 | initial_term_max_60 | TOTAL
+retrieval_miss | 0 | 3 | 3 | 0 | 1 | 7
+low_confidence | 0 | 1 | 1 | 1 | 1 | 4
+extraction_wrong | 0 | 0 | 0 | 0 | 1 | 1
+correct_but_unproven | 0 | 2 | 5 | 3 | 1 | 11
+cap_formula | 0 | 0 | 0 | 0 | 0 | 0
+other | 0 | 0 | 0 | 0 | 0 | 0
+TOTAL | 0 | 6 | 9 | 4 | 4 | 23
+
+correct_but_unproven by status
+category / rule | cap_min_2m | cap_required | excludes_consequential | renewal_notice_min_30 | initial_term_max_60 | TOTAL
+absence_claim | 0 | 2 | 1 | 2 | 0 | 5
+explicit_negative | 0 | 0 | 0 | 1 | 0 | 1
+unsupported | 0 | 0 | 4 | 0 | 1 | 5
+TOTAL | 0 | 2 | 5 | 3 | 1 | 11
+
+Other rows
+(none)
+
+D) CONTRACT LEVEL (both sides use the SAME scored rules only)
+truth / engine | FAIL | NEEDS_REVIEW | PASS | NO_APPLICABLE_RULES
+FAIL | 2 | 5 | 0 | 0
+NEEDS_REVIEW | 0 | 3 | 0 | 0
+PASS | 0 | 1 | 0 | 0
+NO_APPLICABLE_RULES | 0 | 0 | 0 | 1
+Unsafe overall: 0
+All 5 rules scored: 5
+contract | scored rules | all rules scored | truth | engine | unsafe overall
+ADUROBIOTECH,INC_06_02_2020-EX-10.7-CONSULTING AGREEMENT(1).PDF | 2/5 | False | PASS | NEEDS_REVIEW | False
+BNCMORTGAGEINC_05_17_1999-EX-10.4-LICENSING AND WEB SITE HOSTING AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+GOOSEHEADINSURANCE,INC_04_02_2018-EX-10.6-Franchise Agreement.PDF | 4/5 | False | FAIL | FAIL | False
+InnerscopeHearingTechnologiesInc_20181109_8-K_EX-10.6_11419704_EX-10.6_Distributor Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+LegacyEducationAllianceInc_20200330_10-K_EX-10.18_12090678_EX-10.18_Development Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+NEOMEDIATECHNOLOGIESINC_12_15_2005-EX-16.1-DISTRIBUTOR AGREEMENT.PDF | 3/5 | False | FAIL | NEEDS_REVIEW | False
+NEONSYSTEMSINC_03_01_1999-EX-10.5-DISTRIBUTOR AGREEMENT_New.pdf | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+NeoformaInc_19991202_S-1A_EX-10.26_5224521_EX-10.26_Co-Branding Agreement.pdf | 5/5 | True | FAIL | FAIL | False
+SLOVAKWIRELESSFINANCECOBV_03_28_2001-EX-4.(B)(II).3-Maintenance and support contract for SICAP(R) modules.PDF | 4/5 | False | FAIL | NEEDS_REVIEW | False
+StampscomInc_20001114_10-Q_EX-10.47_2631630_EX-10.47_Co-Branding Agreement.pdf | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+VAPOTHERM, INC. - Manufacturing and Supply Agreement.PDF | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+WOMENSGOLFUNLIMITEDINC_03_29_2000-EX-10.13-ENDORSEMENT AGREEMENT - Intellectual Property Rights                 Confidentiality and Non-Use Obligations Agreement.pdf | 0/5 | False | NO_APPLICABLE_RULES | NO_APPLICABLE_RULES | False
+Contracts with differing overall verdicts:
+ADUROBIOTECH,INC_06_02_2020-EX-10.7-CONSULTING AGREEMENT(1).PDF | 2/5 | False | PASS | NEEDS_REVIEW | False
+BNCMORTGAGEINC_05_17_1999-EX-10.4-LICENSING AND WEB SITE HOSTING AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+InnerscopeHearingTechnologiesInc_20181109_8-K_EX-10.6_11419704_EX-10.6_Distributor Agreement.pdf | 3/5 | False | FAIL | NEEDS_REVIEW | False
+LegacyEducationAllianceInc_20200330_10-K_EX-10.18_12090678_EX-10.18_Development Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+NEOMEDIATECHNOLOGIESINC_12_15_2005-EX-16.1-DISTRIBUTOR AGREEMENT.PDF | 3/5 | False | FAIL | NEEDS_REVIEW | False
+SLOVAKWIRELESSFINANCECOBV_03_28_2001-EX-4.(B)(II).3-Maintenance and support contract for SICAP(R) modules.PDF | 4/5 | False | FAIL | NEEDS_REVIEW | False
+
+Automatic decisions on absent clauses (amendment 3)
+contract | rule | decision | reason_code | evidence quote (first 150 chars)
+Count: 0

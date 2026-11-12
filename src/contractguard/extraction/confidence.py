@@ -95,6 +95,8 @@ def field_support(extraction: Extraction, field: str, quote: str) -> str:
         # Do not match a substring of a larger number, decimal, or word.
         boundary = r"[\w.,]" if number[0].isdigit() else r"[\w-]"
         end = rf"(?!{boundary})|(?=-{unit[:-1]}s?\b)"
+        if field == "cap_amount" and number[0].isdigit():
+            end = rf"(?!\w|[.,]\d)|(?=-{unit[:-1]}s?\b)"
         for match in re.finditer(rf"(?<!{boundary}){pattern}(?:{end})", text):
             after = text[match.end() : match.end() + 20]
             unit_pattern = (
@@ -104,7 +106,14 @@ def field_support(extraction: Extraction, field: str, quote: str) -> str:
             )
             has_unit = re.search(unit_pattern, after) is not None
             if field == "cap_amount":
-                has_unit |= text[max(0, match.start() - 1) : match.start()] == "$"
+                has_unit |= re.search(
+                    r"(?:\$|\busd|\bus\$|\bu\.s\. ?\$) ?$",
+                    text[:match.start()],
+                ) is not None
+                has_unit |= re.match(
+                    r"\s*(?:united states|u\.s\.|us) dollars?\b",
+                    text[match.end():],
+                ) is not None
             near_keyword = any(
                 keyword.start() <= match.end() + 120
                 and keyword.end() >= match.start() - 120
