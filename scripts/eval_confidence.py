@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 from collections import Counter
@@ -154,7 +155,22 @@ def evaluate(path: Path) -> str:
     return "\n".join(lines)
 
 
-def main() -> None:
+def write_report(path: Path, report: str) -> int:
+    try:
+        with path.open("x", encoding="utf-8") as handle:
+            handle.write(report)
+    except FileExistsError:
+        print(f"Refusing to overwrite {path}; use --out")
+        return 1
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--out", type=Path, default=ROOT / "evals" / "confidence_eval_v3.txt"
+    )
+    args = parser.parse_args(argv)
     report = (
         "\n\n".join(
             evaluate(ROOT / "evals" / f"extraction_results_{tag}.csv")
@@ -162,9 +178,12 @@ def main() -> None:
         )
         + "\n"
     )
-    (ROOT / "evals" / "confidence_eval_v3.txt").write_text(report, encoding="utf-8")
+    code = write_report(args.out, report)
+    if code:
+        return code
     print(report, end="")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

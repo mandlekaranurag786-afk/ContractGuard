@@ -45,7 +45,6 @@ from contractguard.retrieval.vector import InMemoryVectorIndex
 
 PARSED_DIR = Path("data/parsed")
 MASTER_CLAUSES_CSV = Path("data/contracts/master_clauses.csv")
-SELECTED_CONTRACTS_CSV = Path("data/contracts/selected_30_contracts.csv")
 RESULTS_OUT = Path("evals/retrieval_results_dense.csv")
 HYBRID_RESULTS_OUT = Path("evals/retrieval_results_hybrid.csv")
 TOP_K = 20

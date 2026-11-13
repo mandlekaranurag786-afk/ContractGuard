@@ -12,13 +12,18 @@ from contractguard.llm.gemini import GeminiClient
 from contractguard.rules.models import load_rules
 
 
-def main(argv: list[str] | None = None) -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("pdf", type=Path)
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--json-out", type=Path)
     parser.add_argument("--followup", action="store_true")
-    parser.add_argument("--followup-version", choices=("v1", "v2"), default="v1")
+    parser.add_argument("--followup-version", choices=("v1", "v2"), default="v2")
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
     args = parser.parse_args(argv)
     try:
         rules = load_rules(args.policy)

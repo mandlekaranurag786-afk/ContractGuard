@@ -784,7 +784,6 @@ overwrote confidence_eval_v3.txt (restored with git).
 * Still open from before: hybrid vs dense, TOC/heading filtering,
   clause-aware chunking, bge-small truncation.
 
-
 ## Day 20 (11 Nov) - SQLite check history + daily cap
 
 ### What was built
@@ -844,7 +843,6 @@ overwrote confidence_eval_v3.txt (restored with git).
 - Name search ignores case only for ASCII letters (SQLite default).
 - GET /checks query errors (e.g. limit=0) use FastAPI's default 422 format, not our error format.
 
-
 ## Day 21 (12 Nov) - Demo UI
 
 ### What was built
@@ -897,7 +895,6 @@ overwrote confidence_eval_v3.txt (restored with git).
 - With auth off there is no protection against requests from other local pages
   except the daily cap.
 
-
 ## Stress test with synthetic contracts (12 Nov, exploratory)
 
 - 4 synthetic contracts with fictional parties, written for this test with deliberately
@@ -922,7 +919,6 @@ overwrote confidence_eval_v3.txt (restored with git).
   Exploratory only; it does not change the reported design or held-out numbers.
 - No fix was made. Any fix must be tested on new contracts, not on these four.
 
-
 ## Fix A - cap amount evidence check (pre-registered 12 Nov, before any evaluation)
 
 Change: field_support for cap_amount only. (1) A "." or "," after the number is allowed
@@ -942,7 +938,6 @@ Expected size (counted from old saved results, before the run): at most 1 value_
 cap_min_2m row on the design set and 1 on the held-out set.
 The held-out result is post-hoc (that set was already used once), not a clean test.
 
-
 Result (12 Nov, run once, 0 LLM calls in all three runs):
 
 - Design: 0 unsafe; decision differences 0; 42/101 automatic (unchanged). The one
@@ -956,7 +951,6 @@ Result (12 Nov, run once, 0 LLM calls in all three runs):
   overall status equal to truth 1 -> 3 of 4.
 - All three bar rules held -> fix A kept.
 - Tests: 710 passed.
-
 
 ## Option 1 - initial term proven from the cited chunk (pre-registered 12 Nov)
 
@@ -978,8 +972,6 @@ Bar (fixed before the run):
 
 Ceiling counted from saved results before the run: 2 design rows (both 180 months,
 truth FAIL) and 1 held-out row.
-
-
 
 ## Option 1, variant 1 - result (13 Nov)
 
@@ -1004,7 +996,6 @@ Bar (fixed before the run), same four rules:
    C unchanged; no other row changes. (Stress contracts were already seen: mechanism check only.)
 4. If no row changes on the real contracts (design + held-out), it is NOT kept.
 
-
 ## Option 1, variant 2 - result (13 Nov, run once, 0 LLM calls)
 
 - Design: 0 unsafe, 0 rows changed. Held-out: 0 unsafe, 0 rows changed.
@@ -1020,7 +1011,6 @@ Bar (fixed before the run), same four rules:
 - Lesson: my synthetic contracts used clean modern wording and overstated the gain.
   Real evidence must come from real contracts.
 
-
 ## Option 2 - show what the model found (13 Nov)
 
 Idea considered first: show a "Suggested: PASS/FAIL" for rows in review. Dropped before
@@ -1035,3 +1025,17 @@ needs to know what to look for.
 Page numbers: considered and dropped (not in the report today; would need pipeline changes).
 Tests: 713 passed. Browser check on synthetic A: "yes" and "36 months" shown with
 "not proven by the quote"; decisions unchanged (3 PASS, 2 NEEDS_REVIEW).
+
+
+## Cleanups (13 Nov)
+
+- CLI --followup-version default v1 -> v2, matching the API (eval scripts keep their
+  old defaults so saved results stay reproducible).
+- scripts/eval_confidence.py: --out option; refuses to overwrite an existing file
+  (it used to overwrite evals/confidence_eval_v3.txt silently).
+- evals/eval_retrieval.py: removed an unused constant pointing to the never-existing
+  selected_30_contracts.csv.
+- Ruff warnings fixed in scripts/inspect_*.py. scripts/select_heldout.py left untouched
+  on purpose: it is the frozen, pre-registered selection script (3 long-line warnings remain).
+- Stress test files added to docs/stress_test/ (4 PDFs, expected answers, results README).
+- Tests: 716 passed.

@@ -4,14 +4,14 @@ yourself, instead of trusting a summary.
 
 Usage:
     uv run python scripts/inspect_chunks.py "data/contracts/BELLICUM....PDF"
-    uv run python scripts/inspect_chunks.py "data/contracts/BELLICUM....PDF" --around 146200
+    uv run python scripts/inspect_chunks.py "data/contracts/BELLICUM....PDF"
+        --around 146200
 """
 
 import argparse
-from pathlib import Path
 
-from contractguard.ingestion import ingest_pdf
 from contractguard.chunking import chunk_document  # adjust import if named differently
+from contractguard.ingestion import ingest_pdf
 
 
 def main():
@@ -51,7 +51,10 @@ def main():
 
 
 def _print_chunk(c):
-    print(f"--- {c.chunk_id}  (chars {c.char_start}-{c.char_end}, pages {c.page_start}-{c.page_end}) ---")
+    print(
+        f"--- {c.chunk_id}  (chars {c.char_start}-{c.char_end}, "
+        f"pages {c.page_start}-{c.page_end}) ---"
+    )
     print(c.text)
     print()
 
