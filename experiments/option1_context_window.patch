@@ -1,0 +1,562 @@
+diff --git a/src/contractguard/checker.py b/src/contractguard/checker.py
+index 840765f..2ce980e 100644
+--- a/src/contractguard/checker.py
++++ b/src/contractguard/checker.py
+@@ -6,6 +6,7 @@ from time import perf_counter
+ from typing import Literal, Protocol
+ 
+ from contractguard.chunking import Chunk
++from contractguard.extraction.checks import quote_context
+ from contractguard.extraction.confidence import compute_confidence
+ from contractguard.extraction.prompt import PRODUCT_PROMPT_VERSION
+ from contractguard.extraction.schemas import ExtractionResult
+@@ -91,10 +92,18 @@ class ContractChecker:
+             result = self.extractor.extract(clause, retrieved)
+             original_chunks[clause] = list(retrieved)
+             results[clause] = result
++            context = None
++            if (
++                not result.error
++                and result.extraction is not None
++                and result.checks.get("evidence_level") in ("strict", "in_context")
++            ):
++                context = quote_context(result.extraction, retrieved)
+             confidence = compute_confidence(
+                 None if result.error else result.extraction,
+                 result.checks,
+                 clause,
++                context=context,
+             )
+             confidences[clause] = confidence
+             summaries.append(
+diff --git a/src/contractguard/extraction/checks.py b/src/contractguard/extraction/checks.py
+index 56ece5e..0e24f6f 100644
+--- a/src/contractguard/extraction/checks.py
++++ b/src/contractguard/extraction/checks.py
+@@ -12,6 +12,7 @@ from contractguard.extraction.schemas import (
+ )
+ 
+ Extraction = RenewalTermExtraction | LiabilityCapExtraction
++QUOTE_CONTEXT_WINDOW = 500
+ 
+ 
+ def normalize(text: str) -> str:
+@@ -120,6 +121,21 @@ def build_context_spans(chunks: list[Chunk]) -> list[ContextSpan]:
+     return spans
+ 
+ 
++def quote_context(
++    extraction: Extraction, chunks: list[Chunk], window: int = QUOTE_CONTEXT_WINDOW
++) -> str | None:
++    """Return a bounded window around the first continuous normalized quote."""
++    quote = normalize(extraction.evidence_quote or "")
++    if not quote:
++        return None
++    for span in build_context_spans(chunks):
++        text = normalize(span.text)
++        start = text.find(quote)
++        if start >= 0:
++            return text[max(0, start - window):start + len(quote) + window]
++    return None
++
++
+ def _compact(text: str) -> str:
+     return re.sub(r"\s+", "", normalize(text))
+ 
+diff --git a/src/contractguard/extraction/confidence.py b/src/contractguard/extraction/confidence.py
+index 0d6fac0..e9e9858 100644
+--- a/src/contractguard/extraction/confidence.py
++++ b/src/contractguard/extraction/confidence.py
+@@ -3,7 +3,7 @@
+ from __future__ import annotations
+ 
+ import re
+-from dataclasses import dataclass
++from dataclasses import dataclass, field
+ from decimal import Decimal
+ 
+ from contractguard.extraction.checks import Extraction, normalize
+@@ -20,6 +20,7 @@ KEYWORDS = {
+     "initial_term_months": r"\b(?:initial|commence\w*|effective date|term of)\b",
+     "cap_amount": r"\b(?:exceed\w*|limit\w*|liability|liable)\b",
+ }
++CONTEXT_KEYWORDS = {"initial_term_months": r"\b(?:initial|commenc\w*)\b"}
+ _SMALL = (
+     "zero one two three four five six seven eight nine ten eleven twelve thirteen "
+     "fourteen fifteen sixteen seventeen eighteen nineteen"
+@@ -89,7 +90,14 @@ def field_support(extraction: Extraction, field: str, quote: str) -> str:
+     if value is None:
+         return "not_applicable"
+     text = normalize(quote).casefold()
+-    keywords = list(re.finditer(KEYWORDS[field], text))
++    match = _support_match(value, field, text, KEYWORDS[field])
++    return "supported" if match is not None else "unsupported"
++
++
++def _support_match(
++    value: int | float, field: str, text: str, keyword_pattern: str
++) -> re.Match[str] | None:
++    keywords = list(re.finditer(keyword_pattern, text))
+     for number, unit in number_forms(value, field):
+         pattern = re.escape(number).replace(r"\-", r"[-\s]")
+         # Do not match a substring of a larger number, decimal, or word.
+@@ -120,8 +128,8 @@ def field_support(extraction: Extraction, field: str, quote: str) -> str:
+                 for keyword in keywords
+             )
+             if has_unit and near_keyword:
+-                return "supported"
+-    return "unsupported"
++                return match
++    return None
+ 
+ 
+ BOOLEAN_KEYWORDS = {
+@@ -203,10 +211,12 @@ class ConfidenceResult:
+     reasons: list[str]
+     field_support: dict[str, str]
+     field_status: dict[str, str]
++    field_quotes: dict[str, str] = field(default_factory=dict)
+ 
+ 
+ def compute_confidence(
+-    extraction_or_none: Extraction | None, checks: dict, clause_type: str
++    extraction_or_none: Extraction | None, checks: dict, clause_type: str,
++    *, context: str | None = None,
+ ) -> ConfidenceResult:
+     extraction = extraction_or_none
+     if extraction is None:
+@@ -215,6 +225,21 @@ def compute_confidence(
+         field: field_support(extraction, field, extraction.evidence_quote or "")
+         for field in NUMERIC_FIELDS[clause_type]
+     }
++    field_quotes = {}
++    if context is not None and extraction.found:
++        normalized = normalize(context)
++        text = normalized.casefold()
++        for name, keyword_pattern in CONTEXT_KEYWORDS.items():
++            value = getattr(extraction, name, None)
++            if support.get(name) != "unsupported" or value is None:
++                continue
++            match = _support_match(value, name, text, keyword_pattern)
++            if match is not None:
++                support[name] = "supported"
++                source = normalized if len(normalized) == len(text) else text
++                field_quotes[name] = source[
++                    max(0, match.start() - 150):match.end() + 150
++                ].strip()
+     reasons = []
+     if not extraction.found:
+         reasons.append("absence_not_trusted")
+@@ -230,9 +255,12 @@ def compute_confidence(
+     if evidence == "composite":
+         reasons.append("composite_evidence")
+     reasons.extend(
+-        field + "_not_supported_by_quote"
++        field + (
++            "_supported_by_context" if field in field_quotes
++            else "_not_supported_by_quote"
++        )
+         for field, status in support.items()
+-        if status == "unsupported"
++        if status == "unsupported" or field in field_quotes
+     )
+     if not extraction.found:
+         level = "NOT_FOUND"
+@@ -246,4 +274,5 @@ def compute_confidence(
+         field: field_status(extraction, field, extraction.evidence_quote or "")
+         for field in type(extraction).model_fields
+     }
+-    return ConfidenceResult(level, reasons, support, statuses)
++    statuses.update({name: "supported" for name in field_quotes})
++    return ConfidenceResult(level, reasons, support, statuses, field_quotes)
+diff --git a/src/contractguard/rules/engine.py b/src/contractguard/rules/engine.py
+index f89ed95..7ceb3f4 100644
+--- a/src/contractguard/rules/engine.py
++++ b/src/contractguard/rules/engine.py
+@@ -41,7 +41,9 @@ def evaluate_rule(
+         return (
+             accepted[field].evidence_quote
+             if field in accepted
+-            else getattr(extraction, "evidence_quote", None)
++            else confidence.field_quotes.get(
++                field, getattr(extraction, "evidence_quote", None)
++            )
+         )
+ 
+     value = getattr(extraction, rule.field, None)
+diff --git a/tests/test_checker.py b/tests/test_checker.py
+index 436a81b..5bdeea8 100644
+--- a/tests/test_checker.py
++++ b/tests/test_checker.py
+@@ -256,3 +256,76 @@ def test_cli_json_and_v2_without_network(tmp_path, monkeypatch, capsys):
+     assert "weak signal (keyword only)" in printed
+     assert "  Quote: " + "Q" * 160 in printed
+     assert "DO_NOT_PRINT" not in printed
++
++
++@pytest.mark.parametrize(
++    "evidence_level,gap,expected_code",
++    [
++        ("strict", 0, "compared"),
++        ("in_context", 0, "compared"),
++        ("composite", 0, "value_unsupported"),
++        ("not_found", 0, None),
++        ("strict", 100, "value_unsupported"),
++    ],
++)
++def test_initial_term_context_uses_window_around_quote(
++    evidence_level, gap, expected_code
++):
++    from contractguard.chunking import Chunk
++
++    quote = (
++        "this Agreement shall be renewed automatically for a further period of "
++        "twelve (12) months unless either Party gives written notice not fewer "
++        "than ninety (90) days prior to expiry"
++    )
++    proving_sentence = (
++        "shall remain in full force until the third anniversary of the Effective "
++        "Date (such period of thirty-six (36) months being referred to herein "
++        'as the "Initial Term"). '
++    )
++    retrieved = [
++        Chunk(
++            chunk_id="doc:0", doc_id="doc", text=proving_sentence,
++            char_start=0, char_end=len(proving_sentence), page_start=1, page_end=1,
++        ),
++        Chunk(
++            chunk_id="doc:1", doc_id="doc", text=quote,
++            char_start=len(proving_sentence) + gap,
++            char_end=len(proving_sentence) + gap + len(quote),
++            page_start=1, page_end=1,
++        ),
++    ]
++
++    class ContextExtractor(FakeExtractor):
++        def extract(self, clause_type, chunks):
++            result = super().extract(clause_type, chunks)
++            result.extraction = RenewalTermExtraction(
++                found=True, initial_term_months=36, auto_renews=True,
++                renewal_term_months=12, notice_days=90,
++                evidence_quote=quote, evidence_chunk_id="doc:1",
++            )
++            result.checks = {
++                "evidence_level": evidence_level, "required_fields_present": True,
++                "not_found_is_clean": True,
++            }
++            return result
++
++    service = ContractChecker(
++        ContextExtractor(), document_loader=document,
++        retriever_builder=lambda _: FakeRetriever(retrieved),
++    )
++    initial_rule = Rule(
++        id="initial_term_max_60", description="Initial term at most 60 months",
++        clause_type="Renewal Term", field="initial_term_months",
++        operator="<=", threshold=60,
++    )
++    answer = service.check("fake.pdf", [initial_rule], "policy.json").rule_results[0]
++    if expected_code is not None:
++        assert answer.reason_code == expected_code
++    if expected_code == "compared":
++        assert answer.decision == Decision.PASS
++        assert "thirty-six (36) months" in answer.evidence_quote
++        assert answer.confidence_level == "MEDIUM"
++    else:
++        assert answer.decision == Decision.NEEDS_REVIEW
++        assert answer.evidence_quote == quote
+diff --git a/tests/test_confidence.py b/tests/test_confidence.py
+index 1b41ba2..cb53950 100644
+--- a/tests/test_confidence.py
++++ b/tests/test_confidence.py
+@@ -345,3 +345,134 @@ def test_notice_days_section_number_with_period_remains_unsupported():
+         "prior to renewal"
+     )
+     assert field_support(ex, "notice_days", quote) == "unsupported"
++
++
++_CONTEXT_QUOTE = (
++    'this Agreement shall be renewed automatically for a further period of '
++    'twelve (12) months unless either Party gives written notice not fewer than '
++    'ninety (90) days prior to expiry'
++)
++_CONTEXT_TEXT = (
++    'shall remain in full force until the third anniversary of the Effective Date '
++    '(such period of thirty-six (36) months being referred to herein as the '
++    '"Initial Term"). ' + _CONTEXT_QUOTE
++)
++_CONTEXT_CHECKS = {
++    "evidence_level": "strict",
++    "required_fields_present": True,
++    "not_found_is_clean": True,
++}
++
++
++def _context_extraction(value=36, quote=_CONTEXT_QUOTE, **updates):
++    data = dict(
++        found=True, initial_term_months=value, auto_renews=True,
++        renewal_term_months=12, notice_days=90,
++        evidence_quote=quote, evidence_chunk_id="c1",
++    )
++    data.update(updates)
++    return RenewalTermExtraction(**data)
++
++
++def test_initial_term_context_support_and_reason():
++    result = compute_confidence(
++        _context_extraction(), _CONTEXT_CHECKS, "Renewal Term", context=_CONTEXT_TEXT
++    )
++    assert result.field_status["initial_term_months"] == "supported"
++    assert result.field_support["initial_term_months"] == "supported"
++    assert "thirty-six (36) months" in result.field_quotes["initial_term_months"]
++    assert "initial_term_months_supported_by_context" in result.reasons
++    assert "initial_term_months_not_supported_by_quote" not in result.reasons
++    assert result.level == "MEDIUM"
++
++
++def test_explicit_none_context_matches_default():
++    ex = _context_extraction()
++    result = compute_confidence(ex, _CONTEXT_CHECKS, "Renewal Term", context=None)
++    assert result == compute_confidence(ex, _CONTEXT_CHECKS, "Renewal Term")
++    assert result.field_status["initial_term_months"] == "unsupported"
++    assert result.field_quotes == {}
++
++
++@pytest.mark.parametrize(
++    "value,quote,context,expected",
++    [
++        (24, _CONTEXT_QUOTE, _CONTEXT_TEXT, "unsupported"),
++        (12, "either Party may give written notice",
++         "this Agreement is extended for a further term of twelve (12) months",
++         "unsupported"),
++        (60, _CONTEXT_QUOTE,
++         "The term shall commence on the Effective Date and continue for "
++         "five (5) years. " + _CONTEXT_QUOTE, "supported"),
++    ],
++)
++def test_initial_term_context_requires_number_and_context_keyword(
++    value, quote, context, expected
++):
++    result = compute_confidence(
++        _context_extraction(value, quote), _CONTEXT_CHECKS,
++        "Renewal Term", context=context,
++    )
++    assert result.field_status["initial_term_months"] == expected
++    assert result.field_support["initial_term_months"] == expected
++    assert bool(result.field_quotes) == (expected == "supported")
++
++
++def test_quote_support_does_not_use_context():
++    ex = _context_extraction(36, "the Initial Term shall be thirty-six (36) months")
++    result = compute_confidence(
++        ex, _CONTEXT_CHECKS, "Renewal Term", context=_CONTEXT_TEXT
++    )
++    assert result.field_status["initial_term_months"] == "supported"
++    assert result.field_quotes == {}
++    assert result == compute_confidence(ex, _CONTEXT_CHECKS, "Renewal Term")
++
++
++def test_context_never_supports_notice_days():
++    result = compute_confidence(
++        _context_extraction(notice_days=45), _CONTEXT_CHECKS, "Renewal Term",
++        context="written notice of forty-five (45) days is required. " + _CONTEXT_QUOTE,
++    )
++    assert result.field_status["notice_days"] == "unsupported"
++    assert result.field_support["notice_days"] == "unsupported"
++    assert "notice_days" not in result.field_quotes
++
++
++def test_context_never_supports_liability_cap():
++    ex = LiabilityCapExtraction(
++        found=True, has_money_cap=True, cap_amount=5000000, currency="USD",
++        cap_formula=None, has_damages_exclusion=False,
++        evidence_quote="liability shall not exceed the fees paid",
++        evidence_chunk_id="c1",
++    )
++    result = compute_confidence(
++        ex, _CONTEXT_CHECKS, "Cap On Liability",
++        context="insurance limits of not less than USD 5,000,000. liability shall "
++        "not exceed the fees paid",
++    )
++    assert result.field_status["cap_amount"] == "unsupported"
++    assert result == compute_confidence(ex, _CONTEXT_CHECKS, "Cap On Liability")
++
++
++def test_not_found_ignores_context():
++    ex = _context_extraction(found=False)
++    assert compute_confidence(
++        ex, _CONTEXT_CHECKS, "Renewal Term", context=_CONTEXT_TEXT
++    ) == compute_confidence(ex, _CONTEXT_CHECKS, "Renewal Term")
++
++
++@pytest.mark.parametrize("prefix", ["Z " * 100, "ß " * 100])
++def test_context_quote_slice_uses_matching_text_offsets(prefix):
++    from contractguard.extraction.checks import normalize
++
++    context = prefix + "Initial Term: 36 months. " + "TAIL " * 60
++    normalized = normalize(context)
++    folded = normalized.casefold()
++    source = normalized if len(normalized) == len(folded) else folded
++    start = folded.index("36")
++    result = compute_confidence(
++        _context_extraction(), _CONTEXT_CHECKS, "Renewal Term", context=context
++    )
++    assert result.field_quotes == {
++        "initial_term_months": source[start - 150:start + 2 + 150].strip()
++    }
+diff --git a/tests/test_context_checks.py b/tests/test_context_checks.py
+index 24d3a0a..14a486e 100644
+--- a/tests/test_context_checks.py
++++ b/tests/test_context_checks.py
+@@ -76,3 +76,100 @@ def test_levels_strict_and_abstention():
+     assert evidence_level(extraction("hello"), chunks) == "strict"
+     assert evidence_level(extraction("missing"), chunks) == "not_found"
+     assert evidence_level(extraction(None, found=False), chunks) is None
++
++
++def test_quote_context_same_chunk_normalizes_text():
++    from contractguard.extraction.checks import quote_context
++
++    text = 'MARKER sentence. The “Initial Term”\n lasts 36 months.'
++    quote = 'The "Initial Term" lasts 36 months.'
++    result = quote_context(extraction(quote), [chunk(0, 0, text)])
++    assert result == "MARKER sentence. " + quote
++
++
++@pytest.mark.parametrize("overlap", [0, 5])
++def test_quote_context_includes_touching_or_overlapping_neighbor(overlap):
++    from contractguard.extraction.checks import quote_context
++
++    marker = "MARKER initial term is 36 months. "
++    quote = "Automatically renewed for twelve months."
++    text = marker + quote
++    split = len(marker)
++    chunks = [
++        chunk(0, 0, text[:split]),
++        chunk(1, split - overlap, text[split - overlap:]),
++    ]
++    result = quote_context(extraction(quote, cited="doc:1"), chunks)
++    assert result == text.strip()
++
++
++def test_quote_context_quote_crosses_overlapping_border():
++    from contractguard.extraction.checks import quote_context
++
++    quote = "Automatically renewed for twelve months."
++    text = "MARKER. " + quote + " End."
++    chunks = [chunk(0, 0, text[:25]), chunk(1, 20, text[20:])]
++    assert all(quote not in item.text for item in chunks)
++    result = quote_context(extraction(quote), chunks)
++    assert result is not None
++    assert quote in result
++
++
++def test_quote_context_excludes_disjoint_marker():
++    from contractguard.extraction.checks import quote_context
++
++    chunks = [chunk(0, 0, "MARKER."), chunk(1, 100, "The quoted sentence.")]
++    result = quote_context(extraction("The quoted sentence."), chunks)
++    assert result == "The quoted sentence."
++    assert "MARKER" not in result
++
++
++def test_quote_context_window_bounds_and_nearby_marker():
++    from contractguard.extraction.checks import normalize, quote_context
++
++    quote = "The quoted\n sentence."
++    text = "DISTANT_MARKER " + "x" * 600 + " NEAR_MARKER " + "y" * 100
++    text += " " + quote + " " + "z" * 700
++    normalized = normalize(text)
++    normalized_quote = normalize(quote)
++    start = normalized.index(normalized_quote)
++    result = quote_context(extraction(quote), [chunk(0, 0, text)])
++    assert result == normalized[start - 500:start + len(normalized_quote) + 500]
++    assert "DISTANT_MARKER" not in result
++    assert "NEAR_MARKER" in result
++    assert len(result) == len(normalized_quote) + 2 * 500
++
++
++@pytest.mark.parametrize("quote", ["missing", "", None, " \n "])
++def test_quote_context_missing_or_empty_quote(quote):
++    from contractguard.extraction.checks import quote_context
++
++    assert quote_context(extraction(quote), [chunk(0, 0, "Some text.")]) is None
++
++
++def test_quote_context_does_not_join_quote_across_gap():
++    from contractguard.extraction.checks import quote_context
++
++    chunks = [chunk(0, 0, "hello "), chunk(1, 20, "world")]
++    assert quote_context(extraction("hello world"), chunks) is None
++
++
++@pytest.mark.parametrize("padding", [0, 100, 500, 1000])
++def test_quote_context_length_limit(padding):
++    from contractguard.extraction.checks import normalize, quote_context
++
++    quote = "The quoted\n sentence."
++    text = "x" * padding + quote + "y" * padding
++    result = quote_context(extraction(quote), [chunk(0, 0, text)])
++    assert result is not None
++    assert len(result) <= len(normalize(quote)) + 2 * 500
++
++
++def test_quote_context_uses_first_occurrence_and_custom_window():
++    from contractguard.extraction.checks import quote_context
++
++    text = "FIRST quote " + "x" * 30 + " SECOND quote"
++    result = quote_context(extraction("quote"), [chunk(0, 0, text)], window=6)
++    assert result == text[:text.index("quote") + len("quote") + 6]
++    assert "FIRST" in result
++    assert "SECOND" not in result
+diff --git a/tests/test_rules.py b/tests/test_rules.py
+index 7830428..482a340 100644
+--- a/tests/test_rules.py
++++ b/tests/test_rules.py
+@@ -323,3 +323,46 @@ def test_formula_cap_reason(cap_amount):
+             "A value was found but the quote does not prove it. "
+             "The extraction also found a formula: fees paid in twelve months."
+         )
++
++
++@pytest.mark.parametrize("with_context_quote", [True, False])
++def test_initial_term_rule_uses_field_quote_when_present(with_context_quote):
++    from dataclasses import replace
++
++    result, confidence = inputs(initial_term_months=36)
++    context_quote = "The Initial Term is thirty-six (36) months."
++    confidence = replace(
++        confidence,
++        field_status={**confidence.field_status, "initial_term_months": "supported"},
++        field_quotes=(
++            {"initial_term_months": context_quote} if with_context_quote else {}
++        ),
++    )
++    answer = evaluate_rule(
++        rule(id="initial_term_max_60", field="initial_term_months",
++             operator="<=", threshold=60),
++        result, confidence, TrustPolicy.STRICT,
++    )
++    assert answer.decision == Decision.PASS
++    assert answer.evidence_quote == (
++        context_quote if with_context_quote else result.extraction.evidence_quote
++    )
++
++
++def test_condition_uses_its_own_context_quote():
++    from dataclasses import replace
++
++    result, confidence = inputs(initial_term_months=36)
++    context_quote = "The Initial Term is thirty-six (36) months."
++    confidence = replace(
++        confidence,
++        field_status={**confidence.field_status, "initial_term_months": "supported"},
++        field_quotes={"initial_term_months": context_quote},
++    )
++    answer = evaluate_rule(
++        rule(when={"field": "initial_term_months", "equals": 36}),
++        result, confidence, TrustPolicy.STRICT,
++    )
++    assert answer.decision == Decision.PASS
++    assert answer.condition_evidence_quote == context_quote
++    assert answer.evidence_quote == result.extraction.evidence_quote

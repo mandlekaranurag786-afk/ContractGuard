@@ -956,3 +956,66 @@ Result (12 Nov, run once, 0 LLM calls in all three runs):
   overall status equal to truth 1 -> 3 of 4.
 - All three bar rules held -> fix A kept.
 - Tests: 710 passed.
+
+
+## Option 1 - initial term proven from the cited chunk (pre-registered 12 Nov)
+
+Change: if initial_term_months is not proven by the quote, code searches the chunk that
+contains the quote (only when the quote is exactly in that chunk) for the number + unit
+within 120 characters of "initial" or "commenc*". If found: status supported, and the
+matched text becomes the evidence quote for that field. Not applied to cap_amount,
+notice_days or any yes/no field. No change to the LLM or the prompt.
+
+Bar (fixed before the run):
+
+1. 0 unsafe on design (30), held-out (12, post-hoc) and stress (4). One unsafe = rejected.
+2. Only initial_term_max_60 rows may change, and only from NEEDS_REVIEW to a decision
+   equal to the truth. Any other changed row = stop and diagnose.
+3. Stress expectation: initial_term_max_60 becomes PASS in A (36), FAIL in B (84),
+   PASS in D (60); C unchanged; no other row changes.
+4. If no row changes on the real contracts (design + held-out), the change is NOT kept:
+   no evidence of value on real data.
+
+Ceiling counted from saved results before the run: 2 design rows (both 180 months,
+truth FAIL) and 1 held-out row.
+
+
+
+## Option 1, variant 1 - result (13 Nov)
+
+Design, held-out, stress: 0 unsafe, 0 rows changed. Stress expectation (rule 3) failed;
+rule 4 applies -> variant 1 (cited chunk only) is NOT kept.
+Cause (diagnosed on A, B, D): chunk boundaries. The term sentence is in a neighbouring
+retrieved chunk (B, D), or the quote crosses a chunk border so it is not fully inside
+the cited chunk (A).
+
+## Option 1, variant 2 - window around the quote (pre-registered 13 Nov)
+
+Change: search area = the joined text of touching retrieved chunks, limited to
+500 characters before and after the quote. Used only when the quote is found there as
+one continuous piece. Still initial_term_months only; keyword "initial" or "commenc*"
+within 120 characters; no other field. 500 was chosen before any run and is not tuned.
+
+Bar (fixed before the run), same four rules:
+
+1. 0 unsafe on design, held-out (post-hoc) and stress. One unsafe = rejected.
+2. Only initial_term_max_60 rows may change, only from NEEDS_REVIEW to the true decision.
+3. Stress: initial_term_max_60 becomes PASS in A (36), FAIL in B (84), PASS in D (60);
+   C unchanged; no other row changes. (Stress contracts were already seen: mechanism check only.)
+4. If no row changes on the real contracts (design + held-out), it is NOT kept.
+
+
+## Option 1, variant 2 - result (13 Nov, run once, 0 LLM calls)
+
+- Design: 0 unsafe, 0 rows changed. Held-out: 0 unsafe, 0 rows changed.
+- Stress: 0 unsafe; initial_term_max_60 became PASS (A, 36), FAIL (B, 84), PASS (D, 60);
+  C unchanged; no other row changed. The mechanism works and shows the proving sentence.
+- Bar rules 1-3 held; rule 4 failed (no row changed on real contracts) -> NOT kept.
+  Code removed from master; saved as experiments/option1_context_window.patch.
+- Why real rows did not move (diagnosed after the run): the number is written near the
+  quote, but in other wording. Penntex and RangeResources: "until the end of the
+  fifteenth (15th) Contract Year" (ordinal + Contract Year; open item). NEON: "two (2)
+  years after the date of this Agreement" (no "initial"/"commenc" near the number).
+- Not pursued further: adding forms for these three rows would be tuning to rows already seen.
+- Lesson: my synthetic contracts used clean modern wording and overstated the gain.
+  Real evidence must come from real contracts.
