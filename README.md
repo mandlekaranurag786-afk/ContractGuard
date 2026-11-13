@@ -79,6 +79,31 @@ An optional **evidence follow-up loop** tries to find more proof for unproven va
 tested against a bar set in advance and missed it twice (9 fewer reviews, needed 10; then
 2 fewer, needed 5). So it stays **opt-in**, off by default.
 
+### After the held-out test (post-hoc)
+
+The numbers above are the frozen, pre-registered result. Later changes were measured again,
+each against a bar written before its run. Because these sets had already been seen, the
+numbers below are **post-hoc**: they show a change works, not that it generalises.
+
+**Stress test.** 4 synthetic contracts with fictional parties and deliberately hard wording
+(for example a USD 1,500,000 liability cap next to USD 5,000,000 of insurance), with the true
+answer for all 20 rule checks written before the run.
+
+| | Unsafe | Decidable rows decided correctly | FAILs caught |
+|---|---|---|---|
+| First run | 0 of 20 | 6 of 16 | 0 of 6 |
+| After fix A | 0 of 20 | 9 of 16 | 2 of 6 |
+
+**Fix A (kept).** The evidence check for the cap amount did not recognise `USD 5,000,000`,
+`five million United States dollars`, or a number at the end of a sentence (`$1,000,000.`).
+It now does, for the cap amount only. Result: design set unchanged (0 unsafe, 42 of 101);
+held-out set 0 unsafe, 17 of 45 automatic, FAILs caught 2 of 9 (was 1 of 9).
+
+**Search near the quote (not kept).** Letting the code prove the initial term from the text
+around the quote worked on the synthetic contracts but changed no row on the real ones (real
+contracts say, for example, "until the end of the fifteenth (15th) Contract Year"). By its
+pre-registered bar it was removed. The code is kept in `experiments/option1_context_window.patch`.
+
 ## Why not just ask a chatbot?
 
 For one contract and one question, a chatbot is fine and more flexible. ContractGuard is for
@@ -107,18 +132,18 @@ GEMINI_API_KEY=your-key-here
 ### Option A: Docker
 
 ```bash
-docker build -t contractguard:day21 .
-docker run -d --name cg21 -p 127.0.0.1:8000:8000 --env-file .env \
-  -v contractguard-cache:/app/.cache contractguard:day21
+docker build -t contractguard .
+docker run -d --name contractguard -p 127.0.0.1:8000:8000 --env-file .env \
+  -v contractguard-cache:/app/.cache contractguard
 ```
 
 Open <http://127.0.0.1:8000/>. Useful commands:
 
 ```bash
 docker ps                      # is it running?
-docker logs --tail 20 cg21     # requests and status codes
-docker stop cg21               # stop
-docker start cg21              # start again (history is kept in the volume)
+docker logs --tail 20 contractguard     # requests and status codes
+docker stop contractguard               # stop
+docker start contractguard              # start again (history is kept in the volume)
 ```
 
 The image is about 2.4 GB (CPU-only PyTorch and the embedding model are inside it). It runs as a
@@ -141,6 +166,10 @@ Only one server can use port 8000: stop the Docker container before starting the
 
 - **Check tab:** upload a PDF, get the overall status, the 5 rule decisions with reason and
   quote, and the cost (LLM calls, cache hits, tokens, time).
+- **Model found:** for each rule the page shows the value the model read (for example
+  "36 months") and, for rows in review, why it is not trusted ("not proven by the quote").
+  In review rows the quote is often a different sentence, so this tells the reviewer what to
+  look for. The page never suggests PASS or FAIL for a row in review, to avoid biasing the reviewer.
 - **History tab:** the newest 50 checks; click **Details** to see the rule decisions of one check.
 
 The page has no API key box. It works when API-key authentication is off (the default when
@@ -214,7 +243,7 @@ One check without follow-up makes 2 LLM calls (one per clause type).
 ## Tests and evaluation
 
 ```bash
-.venv/bin/python -m pytest -q        # 685 tests, all offline
+.venv/bin/python -m pytest -q        # 713 tests, all offline
 .venv/bin/ruff check src tests evals
 ```
 
@@ -249,10 +278,18 @@ Each one has a written reason and, where possible, a measurement in `docs/decisi
 - **Rules are fixed on the server.** Users cannot upload their own rules.
 - **No cloud deploy:** Docker locally, for privacy.
 - **Success rules are written before each experiment** and never moved after the results.
+- **A change is kept only if it helps on real contracts.** Gains on synthetic contracts alone
+  are not enough (the "search near the quote" change was removed for this reason).
+- **No suggested verdicts for rows in review.** The page shows what the model read, not what
+  the reviewer should decide.
 
 ## Known limits and next steps
 
-- One quote per clause, not per value. Per-field evidence quotes are the top accuracy step.
+- One quote per clause, not per value. A correct value whose sentence is not the quoted one
+  goes to review (the most common cause of unnecessary reviews). Per-field evidence quotes are
+  the top accuracy step.
+- Yes/no values (for example "damages are excluded") cannot be proven by keywords alone:
+  wording such as "excluded only to the extent set out in Schedule 4" needs a person.
 - Proving that something is absent ("there is no cap") is not solved; these go to review.
 - Retrieval sometimes misses the clause.
 - Formula caps ("the lesser of ...") and "Contract Year" durations are not handled well.
