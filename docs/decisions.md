@@ -1019,3 +1019,19 @@ Bar (fixed before the run), same four rules:
 - Not pursued further: adding forms for these three rows would be tuning to rows already seen.
 - Lesson: my synthetic contracts used clean modern wording and overstated the gain.
   Real evidence must come from real contracts.
+
+
+## Option 2 - show what the model found (13 Nov)
+
+Idea considered first: show a "Suggested: PASS/FAIL" for rows in review. Dropped before
+building: a suggested verdict can bias the reviewer towards the model's answer (stress
+contract C: the model read "damages excluded = yes", but the truth needs a person).
+Built instead: a "Model found" column in the Check tab. It shows the extracted value
+(and the condition value) and, for NEEDS_REVIEW rows, why it is not trusted
+("not proven by the quote", "absence is not proven", ...). No PASS/FAIL suggestion,
+no change to decisions, history or the API. Reason: in review rows the quote is often
+a different sentence (A: the exclusion row shows the cap sentence), so the reviewer
+needs to know what to look for.
+Page numbers: considered and dropped (not in the report today; would need pipeline changes).
+Tests: 713 passed. Browser check on synthetic A: "yes" and "36 months" shown with
+"not proven by the quote"; decisions unchanged (3 PASS, 2 NEEDS_REVIEW).

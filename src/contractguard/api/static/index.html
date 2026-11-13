@@ -38,6 +38,7 @@
     th { background: #f4f6f8; }
     td:last-child { min-width: 180px; white-space: pre-wrap; }
     .cost { font-size: 0.9rem; color: #526474; }
+    .note { color: #526474; }
     .history-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; }
     .history-controls input, .history-controls select { padding: 10px; border: 1px solid #aab9c4; border-radius: 6px; font: inherit; max-width: 100%; }
     #history-note { color: #526474; }
@@ -150,6 +151,37 @@
       return element("span", decision ?? "Unknown", `badge ${tone}`);
     }
 
+    function formatValue(field, value) {
+      if (value === null || value === undefined) return "nothing found";
+      if (value === true) return "yes";
+      if (value === false) return "no";
+      if (field === "initial_term_months" || field === "renewal_term_months") {
+        return `${value} months`;
+      }
+      if (field === "notice_days") return `${value} days`;
+      if (field === "cap_amount") return Number(value).toLocaleString("en-US");
+      return String(value);
+    }
+
+    function modelFoundCell(rule) {
+      const cell = element("td");
+      cell.append(element("div", formatValue(rule.field, rule.value)));
+      if (rule.condition_field) {
+        cell.append(element("div",
+          `${rule.condition_field}: ${formatValue(rule.condition_field, rule.condition_value)}`));
+      }
+      const notes = {
+        unsupported: "not proven by the quote",
+        absence_claim: "the model found nothing; absence is not proven",
+        conflicting: "disagrees with the quote",
+        explicit_negative: "the model read 'no'; not trusted without a person"
+      };
+      if (rule.decision === "NEEDS_REVIEW" && Object.hasOwn(notes, rule.field_status)) {
+        cell.append(element("div", notes[rule.field_status], "note"));
+      }
+      return cell;
+    }
+
     function showReport(report) {
       const result = byId("result");
       result.replaceChildren();
@@ -157,7 +189,7 @@
       const table = element("table");
       const head = element("thead");
       const headings = element("tr");
-      for (const title of ["Rule", "Decision", "Reason", "Quote"]) {
+      for (const title of ["Rule", "Decision", "Model found", "Reason", "Quote"]) {
         const cell = element("th", title);
         cell.scope = "col";
         headings.append(cell);
@@ -169,6 +201,7 @@
         const decision = element("td");
         decision.append(badge(rule.decision));
         row.append(element("td", rule.rule_id ?? "-"), decision,
+          modelFoundCell(rule),
           element("td", rule.reason ?? "-"), element("td", rule.evidence_quote ?? "-"));
         body.append(row);
       }

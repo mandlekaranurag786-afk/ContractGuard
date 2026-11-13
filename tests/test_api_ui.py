@@ -125,3 +125,26 @@ def test_wrong_key_not_in_responses_or_logs(client, caplog):
 def test_existing_health_and_policy(client):
     assert client.get("/health").json()["max_pages"] == 200
     assert client.get("/policy", headers={"X-API-Key": "correct"}).json()["rules"]
+
+
+def test_model_found_column_text(client):
+    html = client.get("/").text
+    for expected in (
+        "Model found", "formatValue", "nothing found",
+        "not proven by the quote", "absence is not proven",
+    ):
+        assert expected in html
+
+
+def test_model_found_preserves_page_security(client):
+    html = client.get("/").text
+    for forbidden in (
+        "innerHTML", "outerHTML", "insertAdjacentHTML", "document.write",
+        "eval(", "console.", "localStorage", "sessionStorage", "document.cookie",
+        "http://", "https://",
+    ):
+        assert forbidden not in html
+
+
+def test_model_found_has_no_suggested_decision(client):
+    assert "Suggested" not in client.get("/").text
