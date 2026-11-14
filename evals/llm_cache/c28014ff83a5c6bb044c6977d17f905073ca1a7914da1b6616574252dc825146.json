@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": 36,\n  \"auto_renews\": true,\n  \"renewal_term_months\": 24,\n  \"notice_days\": null,\n  \"evidence_quote\": \"3. Term. This Agreement will be in effect for three (3) years from the Effective Date (\u201cInitial Term\u201d) unless terminated earlier in accordance with this Agreement. This Agreement shall automatically extend for an additional two (2) years on the same terms herein (\u201cRenewal Term\u201d) provided WPT receives payments greater than twelve million U.S. dollars ($12,000,000) within the Initial Term.\",\n  \"evidence_chunk_id\": \"2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:3\"\n}",
+  "input_tokens": 1766,
+  "output_tokens": 220,
+  "latency_ms": 1978.8383730046917,
+  "created_at": "2026-11-14T14:16:24.517260+00:00"
+}

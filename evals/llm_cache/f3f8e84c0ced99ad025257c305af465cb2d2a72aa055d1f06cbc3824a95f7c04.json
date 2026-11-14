@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": false,\n  \"initial_term_months\": null,\n  \"auto_renews\": null,\n  \"renewal_term_months\": null,\n  \"notice_days\": null,\n  \"evidence_quote\": null,\n  \"evidence_chunk_id\": null\n}",
+  "input_tokens": 1759,
+  "output_tokens": 70,
+  "latency_ms": 2228.7055019987747,
+  "created_at": "2026-11-14T14:18:03.988986+00:00"
+}

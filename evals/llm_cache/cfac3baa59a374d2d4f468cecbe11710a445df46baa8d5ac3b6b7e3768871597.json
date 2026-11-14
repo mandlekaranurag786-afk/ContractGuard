@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"initial_term_months\": null,\n  \"auto_renews\": false,\n  \"renewal_term_months\": 12,\n  \"notice_days\": null,\n  \"evidence_quote\": \"Thereafter, this Agreement shall renew only upon the mutual written agreement of the parties for up to three additional renewal terms of one year each (each, a \\\"Renewal Term\\\").\",\n  \"evidence_chunk_id\": \"458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:58\"\n}",
+  "input_tokens": 1824,
+  "output_tokens": 172,
+  "latency_ms": 1998.0183720035711,
+  "created_at": "2026-11-14T14:16:43.438212+00:00"
+}

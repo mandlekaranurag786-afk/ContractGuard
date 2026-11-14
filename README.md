@@ -54,26 +54,39 @@ flowchart LR
 
 ## Results (measured)
 
-Data: contracts from CUAD. 30 contracts were used to design the system. 12 other
-contracts were kept as a **held-out test**: the success rules were written down before
-the run (`docs/heldout_preregistration.md`), and the test was run once (git tag `heldout-v1`).
+Data: contracts from CUAD. 30 contracts were used to design the system. Two separate sets of
+12 other contracts were kept as **held-out tests**. For each, the success rules were written
+down and committed before the contracts were selected, the labels were committed before the
+system saw the contracts, and the test was run once.
 
-| Metric | 30 design contracts | 12 held-out contracts (the honest test) |
-|---|---|---|
-| Unsafe decisions (wrong automatic PASS/FAIL) | 0 of 101 scored rule checks | 0 of 45 scored rule checks |
-| Decided automatically | 42 of 101 | 16 of 45 (36%) |
-| FAILs caught automatically | 2 of 18 | 1 of 9 |
-| Extraction fully correct (per clause) | 47–50 of 60 | 16 of 24 (67%) |
+| Metric | 30 design contracts | Held-out test 1 (10 Nov, tag `heldout-v1`) | Held-out test 2 (14 Nov, tag `heldout2-v1`, with fix A) |
+|---|---|---|---|
+| Unsafe decisions (wrong automatic PASS/FAIL) | 0 of 101 scored rule checks | 0 of 45 | **1 of 50** |
+| Decided automatically | 42 of 101 | 16 of 45 (36%) | 18 of 50 (36%), 1 of them wrong |
+| FAILs caught automatically | 2 of 18 | 1 of 9 | 0 of 6 |
+| Extraction fully correct (per clause) | 47–50 of 60 | 16 of 24 (67%) | 20 of 24 (83%) |
 
 What these numbers mean, honestly:
 
-- **Safe:** 0 unsafe decisions in 146 scored rule checks. With this sample size the true
-  unsafe rate is probably under about 2% (rule of three), not proven to be zero.
+- **Mostly safe, not perfectly:** 1 unsafe decision in 196 scored rule checks (1 in 95 on
+  unseen contracts). The true rate is probably under about 2.4% (one-sided 95% bound for
+  1 error in 196). It is not zero.
 - **Careful, not very automatic:** about one third of the rule checks are decided without a
   human. The rest go to review.
 - **Weak at catching FAILs:** most real FAILs end up as NEEDS_REVIEW, not as an automatic FAIL.
-- On the held-out set, 24 reviews were unnecessary: the value was correct but not proven (12),
-  retrieval missed the clause (7), confidence was low (4), extraction was wrong (1).
+- Unnecessary reviews, held-out test 1: 24 (value correct but not proven 12, retrieval missed
+  the clause 7, low confidence 4, extraction wrong 1). Held-out test 2: 19 (not proven 13,
+  retrieval 4, low confidence 2).
+
+**The unsafe decision.** Sparkling Spring Water, rule "initial term at most 60 months". The
+agreement runs perpetually while fees are paid (§17), so there is no fixed initial term and a
+person must decide. The system quoted a different clause, "a renewable one-year term
+commencing upon the Maintenance Commencement Date" (§10, the term of the maintenance
+services), read it as the agreement's term (12 months) and gave an automatic **PASS**. The
+code check confirmed it, because "one-year" and "commencing" really are in the quote. Lesson:
+the evidence check proves that a number is *written in the quote*, not that it is *the right
+number*. The contract as a whole still went to review (other rules were undecided). By the
+pre-registered rules, this is reported and not fixed after the run.
 
 An optional **evidence follow-up loop** tries to find more proof for unproven values. It was
 tested against a bar set in advance and missed it twice (9 fewer reviews, needed 10; then
@@ -97,7 +110,9 @@ answer for all 20 rule checks written before the run.
 **Fix A (kept).** The evidence check for the cap amount did not recognise `USD 5,000,000`,
 `five million United States dollars`, or a number at the end of a sentence (`$1,000,000.`).
 It now does, for the cap amount only. Result: design set unchanged (0 unsafe, 42 of 101);
-held-out set 0 unsafe, 17 of 45 automatic, FAILs caught 2 of 9 (was 1 of 9).
+held-out set 1 (post-hoc) 0 unsafe, 17 of 45 automatic, FAILs caught 2 of 9 (was 1 of 9).
+On held-out test 2 it changed no decision: none of those 12 contracts has a fixed-amount cap
+(checked by re-scoring the same cached answers with the code from before fix A).
 
 **Search near the quote (not kept).** Letting the code prove the initial term from the text
 around the quote worked on the synthetic contracts but changed no row on the real ones (real
@@ -285,6 +300,11 @@ Each one has a written reason and, where possible, a measurement in `docs/decisi
 
 ## Known limits and next steps
 
+- **A number in the quote can still be the wrong number.** The evidence check confirms that
+  the value is written in the quote, not that the quote is about the right thing (held-out
+  test 2: a 1-year maintenance term was read as the agreement's term). This is the source of
+  the one unsafe decision; a check that the quote belongs to the rule's subject is the next
+  safety step.
 - One quote per clause, not per value. A correct value whose sentence is not the quoted one
   goes to review (the most common cause of unnecessary reviews). Per-field evidence quotes are
   the top accuracy step.

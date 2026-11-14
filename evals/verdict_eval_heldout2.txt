@@ -1,0 +1,139 @@
+Reports: evals/reports_heldout2
+Labels: evals/heldout2_labels.csv
+Policy: policies/eval_policy.json
+Retrieval diagnostics: evals/extraction_results_heldout2.csv
+Predictions: saved report values (including follow-up overlays).
+Blank labels are unknown; NONE means expected null.
+
+Contracts: 12
+Scored rule-rows: 50/60
+
+A) RULE LEVEL (scored rows only; truth rows, engine columns)
+
+TOTAL
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 17 | 0 | 10 | 0
+FAIL | 0 | 0 | 6 | 0
+NEEDS_REVIEW | 1 | 0 | 13 | 0
+NOT_APPLICABLE | 0 | 0 | 3 | 0
+Truth FAIL caught automatically: 0/6
+Truth PASS decided automatically: 17/27
+Truth NEEDS_REVIEW kept for review: 13/14
+Unsafe: 1
+
+cap_min_2m
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 0 | 0 | 0 | 0
+FAIL | 0 | 0 | 0 | 0
+NEEDS_REVIEW | 0 | 0 | 10 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/0
+Truth PASS decided automatically: 0/0
+Truth NEEDS_REVIEW kept for review: 10/10
+Unsafe: 0
+
+cap_required
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 4 | 0 | 1 | 0
+FAIL | 0 | 0 | 5 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/5
+Truth PASS decided automatically: 4/5
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+excludes_consequential
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 3 | 0 | 7 | 0
+FAIL | 0 | 0 | 1 | 0
+NEEDS_REVIEW | 0 | 0 | 0 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/1
+Truth PASS decided automatically: 3/10
+Truth NEEDS_REVIEW kept for review: 0/0
+Unsafe: 0
+
+renewal_notice_min_30
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 3 | 0 | 1 | 0
+FAIL | 0 | 0 | 0 | 0
+NEEDS_REVIEW | 0 | 0 | 2 | 0
+NOT_APPLICABLE | 0 | 0 | 3 | 0
+Truth FAIL caught automatically: 0/0
+Truth PASS decided automatically: 3/4
+Truth NEEDS_REVIEW kept for review: 2/2
+Unsafe: 0
+
+initial_term_max_60
+truth / engine | PASS | FAIL | NEEDS_REVIEW | NOT_APPLICABLE
+PASS | 7 | 0 | 1 | 0
+FAIL | 0 | 0 | 0 | 0
+NEEDS_REVIEW | 1 | 0 | 1 | 0
+NOT_APPLICABLE | 0 | 0 | 0 | 0
+Truth FAIL caught automatically: 0/0
+Truth PASS decided automatically: 7/8
+Truth NEEDS_REVIEW kept for review: 1/2
+Unsafe: 1
+
+B) MISSED FAILS
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.19_11788293_EX-10.19_Content License Agreement.pdf | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT.PDF | excludes_consequential | truth=FAIL | engine=NEEDS_REVIEW (clause_not_found) | field=has_damages_exclusion | predicted=False | label='False' | field_status=absence_claim | root_cause=retrieval_miss | diagnostic_field=has_damages_exclusion | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_conflicting) | field=has_money_cap | predicted=False | label='False' | field_status=conflicting | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=conflicting
+TICKETSCOMINC_06_22_1999-EX-10.22-SPONSORSHIP AGREEMENT.PDF | cap_required | truth=FAIL | engine=NEEDS_REVIEW (value_absence_claim) | field=has_money_cap | predicted=False | label='False' | field_status=absence_claim | root_cause=correct_but_unproven | diagnostic_field=has_money_cap | diagnostic_value=False | diagnostic_label='False' | diagnostic_status=absence_claim
+
+C) UNNECESSARY REVIEW ROOT CAUSES (first match wins)
+category / rule | cap_min_2m | cap_required | excludes_consequential | renewal_notice_min_30 | initial_term_max_60 | TOTAL
+retrieval_miss | 0 | 2 | 2 | 0 | 0 | 4
+low_confidence | 0 | 1 | 1 | 0 | 0 | 2
+extraction_wrong | 0 | 0 | 0 | 0 | 0 | 0
+correct_but_unproven | 0 | 3 | 5 | 4 | 1 | 13
+cap_formula | 0 | 0 | 0 | 0 | 0 | 0
+other | 0 | 0 | 0 | 0 | 0 | 0
+TOTAL | 0 | 6 | 8 | 4 | 1 | 19
+
+correct_but_unproven by status
+category / rule | cap_min_2m | cap_required | excludes_consequential | renewal_notice_min_30 | initial_term_max_60 | TOTAL
+absence_claim | 0 | 2 | 0 | 1 | 0 | 3
+conflicting | 0 | 1 | 0 | 0 | 0 | 1
+explicit_negative | 0 | 0 | 0 | 2 | 0 | 2
+unsupported | 0 | 0 | 5 | 1 | 1 | 7
+TOTAL | 0 | 3 | 5 | 4 | 1 | 13
+
+Other rows
+(none)
+
+D) CONTRACT LEVEL (both sides use the SAME scored rules only)
+truth / engine | FAIL | NEEDS_REVIEW | PASS | NO_APPLICABLE_RULES
+FAIL | 0 | 5 | 0 | 0
+NEEDS_REVIEW | 0 | 5 | 0 | 0
+PASS | 0 | 1 | 0 | 0
+NO_APPLICABLE_RULES | 0 | 0 | 0 | 1
+Unsafe overall: 0
+All 5 rules scored: 9
+contract | scored rules | all rules scored | truth | engine | unsafe overall
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.19_11788293_EX-10.19_Content License Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.PDF | 0/5 | False | NO_APPLICABLE_RULES | NO_APPLICABLE_RULES | False
+CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION.PDF | 1/5 | False | PASS | NEEDS_REVIEW | False
+GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+IpassInc_20181203_8-K_EX-99.1_11445874_EX-99.1_Reseller Agreement.pdf | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+SFGFINANCIALCORP_05_12_2009-EX-10.1-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+TICKETSCOMINC_06_22_1999-EX-10.22-SPONSORSHIP AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.PDF | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.PDF | 5/5 | True | NEEDS_REVIEW | NEEDS_REVIEW | False
+Contracts with differing overall verdicts:
+AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.19_11788293_EX-10.19_Content License Agreement.pdf | 4/5 | False | FAIL | NEEDS_REVIEW | False
+ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION.PDF | 1/5 | False | PASS | NEEDS_REVIEW | False
+GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+TICKETSCOMINC_06_22_1999-EX-10.22-SPONSORSHIP AGREEMENT.PDF | 5/5 | True | FAIL | NEEDS_REVIEW | False
+
+Automatic decisions on absent clauses (amendment 3)
+contract | rule | decision | reason_code | evidence quote (first 150 chars)
+Count: 0

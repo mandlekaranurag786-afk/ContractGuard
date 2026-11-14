@@ -1026,7 +1026,6 @@ Page numbers: considered and dropped (not in the report today; would need pipeli
 Tests: 713 passed. Browser check on synthetic A: "yes" and "36 months" shown with
 "not proven by the quote"; decisions unchanged (3 PASS, 2 NEEDS_REVIEW).
 
-
 ## Cleanups (13 Nov)
 
 - CLI --followup-version default v1 -> v2, matching the API (eval scripts keep their
@@ -1039,3 +1038,36 @@ Tests: 713 passed. Browser check on synthetic A: "yes" and "36 months" shown wit
   on purpose: it is the frozen, pre-registered selection script (3 long-line warnings remain).
 - Stress test files added to docs/stress_test/ (4 PDFs, expected answers, results README).
 - Tests: 716 passed.
+
+
+## Second held-out test - result (14 Nov, run once)
+
+Rules: docs/heldout2_preregistration.md (committed 5501233 before selection). Selection seed
+20261114 (6169718); labels committed before any run (7c0cbe3; ChatGPT proposed, Claude
+reviewed, Anurag decided 4 judgement calls, 6 field changes). Frozen system: tag heldout2-v1.
+Run: 1 call -> 1 contract -> all 12; 24 calls total, 0 errors; answers cached and committed.
+
+Primary (safety): 1 unsafe of 50 scored rule checks; 0 automatic decisions on absent clauses.
+-> The "0 unsafe" claim is corrected: 1 unsafe in 196 scored rule checks overall
+   (0/101 design, 0/45 held-out 1, 1/50 held-out 2); about 2.4% one-sided 95% bound.
+   Earlier "0 unsafe" statements in this file and in Interview Guide Parts 1-4 are superseded.
+The case: Sparkling Spring Water, initial_term_max_60. Truth NEEDS_REVIEW (agreement is
+perpetual while fees are paid, s17). System: PASS, value 12, status supported, strength proof,
+quote "a renewable one-year term commencing upon the Maintenance Commencement Date" (s10,
+maintenance services term). The quote contains the number and the keyword, so the code check
+passed; the quote is about the wrong subject. STRICT would not have prevented it (proof).
+The contract's overall status was NEEDS_REVIEW (contract-level unsafe: 0).
+Not fixed after the run (pre-registered). Open item: check that the quote is about the
+rule's subject (agreement term, not a service or sub-term).
+
+Descriptive (KEYWORD): automatic 18/50 (36%), 1 of them wrong; FAILs caught 0/6;
+extraction fully correct 20/24 (83%); unnecessary reviews 19 (correct-but-unproven 13,
+retrieval 4, low confidence 2); contracts fully decided 0/12.
+The eval script's design-time policy selection printed "STRICT" (the unsafe row blocks
+KEYWORD); not acted on: the policy was frozen as KEYWORD before the run.
+
+Fix A on fresh data: re-scored the same cached answers with the code of 385f0ae (method
+verified: the old code returns "unsupported" on a fix A test sentence). 0 rule rows differ:
+no contract in this set has a fixed-amount cap.
+
+No further held-out set is drawn (pre-registered).

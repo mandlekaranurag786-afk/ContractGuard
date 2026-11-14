@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": false,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": null,\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"Neither party shall be liable to the other for lost profits or indirect, special consequential or punitive damages of any kind arising in connection with the manufacture, sale and distribution of the products, even if such party has been advised of the possibility of such damages.\",\n  \"evidence_chunk_id\": \"40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:44\"\n}",
+  "input_tokens": 1774,
+  "output_tokens": 188,
+  "latency_ms": 1515.9252019948326,
+  "created_at": "2026-11-14T14:17:19.585298+00:00"
+}

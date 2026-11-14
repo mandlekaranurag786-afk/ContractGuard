@@ -1,0 +1,8 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "response_text": "{\n  \"found\": true,\n  \"has_money_cap\": true,\n  \"cap_amount\": null,\n  \"currency\": null,\n  \"cap_formula\": \"the amounts paid by Converge to Vert for such enhancement, and (ii) with respect to any maintenance and support services, the amounts paid by Converge to Vert for such maintenance and support services during the three month period immediately preceding the date on which the claim or cause of action for any such damages first arose.\",\n  \"has_damages_exclusion\": true,\n  \"evidence_quote\": \"THE MAXIMUM LIABILITY OF EACH PARTY TO THE OTHER OR TO ANY THIRD PARTY FOR DAMAGES, IF ANY, RELATING TO THIS AGREEMENT OR ANY MAINTENANCE UPDATE, ENHANCEMENT OR SERVICES PROVIDED OR TO BE PROVIDED HEREUNDER, WHETHER FOR BREACH OF CONTRACT OR WARRANTY, STRICT LIABILITY, NEGLIGENCE OR OTHER TORT, STRICT PRODUCT LIABILITY, THE FAILURE OF ANY LIMITED REMEDY TO ACHIEVE ITS ESSENTIAL PURPOSE, OR OTHERWISE, SHALL NOT EXCEED (I) WITH RESPECT TO ANY ENHANCEMENT PROVIDED HEREUNDER, THE AMOUNTS PAID BY CONVERGE TO VERT FOR SUCH ENHANCEMENT, AND (II) WITH RESPECT TO ANY MAINTENANCE AND SUPPORT SERVICES, THE AMOUNTS PAID BY CONVERGE TO VERT FOR SUCH MAINTENANCE AND SUPPORT SERVICES DURING THE THREE MONTH PERIOD IMMEDIATELY PRECEDING THE DATE ON WHICH THE CLAIM OR CAUSE OF ACTION FOR ANY SUCH DAMAGES FIRST AROSE.\",\n  \"evidence_chunk_id\": \"458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:49\"\n}",
+  "input_tokens": 1939,
+  "output_tokens": 384,
+  "latency_ms": 2050.500073994044,
+  "created_at": "2026-11-14T14:16:47.490768+00:00"
+}

@@ -1,0 +1,385 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "v2",
+  "labels": "evals/heldout2_labels.csv",
+  "top_k": 5,
+  "date": "2026-11-14",
+  "completed_rows": 24,
+  "per_clause_type": {
+    "Renewal Term": {
+      "rows": 12,
+      "found_accuracy": "12/12",
+      "fields": {
+        "initial_term_months": "9/10",
+        "auto_renews": "9/10",
+        "renewal_term_months": "7/8",
+        "notice_days": "10/10"
+      },
+      "fully_correct": "10/12",
+      "fully_correct_percent": 83.33333333333333
+    },
+    "Cap On Liability": {
+      "rows": 12,
+      "found_accuracy": "10/12",
+      "fields": {
+        "has_money_cap": "10/10",
+        "cap_amount": "10/10",
+        "currency": "10/10",
+        "cap_formula": "12/12",
+        "has_damages_exclusion": "10/11"
+      },
+      "fully_correct": "10/12",
+      "fully_correct_percent": 83.33333333333333
+    }
+  },
+  "abstention": "2/2",
+  "faithfulness": {
+    "found_predictions": 20,
+    "levels": {
+      "strict": 18,
+      "in_context": 1,
+      "composite": 0,
+      "not_found": 1
+    },
+    "cited_chunk_correct": "19/19",
+    "not_found_rows": [
+      {
+        "contract": "VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "THE MAXIMUM LIABILITY OF EACH PARTY TO THE OTHER OR TO ANY THIRD PARTY FOR DAMAGES, IF ANY, RELATING TO THIS AGREEMENT OR ANY MAINTENANCE UPDATE, ENHANCEMENT OR SERVICES PROVIDED OR TO BE PROVIDED HEREUNDER, WHETHER FOR BREACH OF CONTRACT OR WARRANTY, STRICT LIABILITY, NEGLIGENCE OR OTHER TORT, STRICT PRODUCT LIABILITY, THE FAILURE OF ANY LIMITED REMEDY TO ACHIEVE ITS ESSENTIAL PURPOSE, OR OTHERWISE, SHALL NOT EXCEED (I) WITH RESPECT TO ANY ENHANCEMENT PROVIDED HEREUNDER, THE AMOUNTS PAID BY CONVERGE TO VERT FOR SUCH ENHANCEMENT, AND (II) WITH RESPECT TO ANY MAINTENANCE AND SUPPORT SERVICES, THE AMOUNTS PAID BY CONVERGE TO VERT FOR SUCH MAINTENANCE AND SUPPORT SERVICES DURING THE THREE MONTH PERIOD IMMEDIATELY PRECEDING THE DATE ON WHICH THE CLAIM OR CAUSE OF ACTION FOR ANY SUCH DAMAGES FIRST AROSE."
+      }
+    ],
+    "grounded": "18/20",
+    "ungrounded_rows": [
+      {
+        "contract": "VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "THE MAXIMUM LIABILITY OF EACH PARTY TO THE OTHER OR TO ANY THIRD PARTY FOR DAMAGES, IF ANY, RELATING TO THIS AGREEMENT OR ANY MAINTENANCE UPDATE, ENHANCEMENT OR SERVICES PROVIDED OR TO BE PROVIDED HEREUNDER, WHETHER FOR BREACH OF CONTRACT OR WARRANTY, STRICT LIABILITY, NEGLIGENCE OR OTHER TORT, STRICT PRODUCT LIABILITY, THE FAILURE OF ANY LIMITED REMEDY TO ACHIEVE ITS ESSENTIAL PURPOSE, OR OTHERWISE, SHALL NOT EXCEED (I) WITH RESPECT TO ANY ENHANCEMENT PROVIDED HEREUNDER, THE AMOUNTS PAID BY CONVERGE TO VERT FOR SUCH ENHANCEMENT, AND (II) WITH RESPECT TO ANY MAINTENANCE AND SUPPORT SERVICES, THE AMOUNTS PAID BY CONVERGE TO VERT FOR SUCH MAINTENANCE AND SUPPORT SERVICES DURING THE THREE MONTH PERIOD IMMEDIATELY PRECEDING THE DATE ON WHICH THE CLAIM OR CAUSE OF ACTION FOR ANY SUCH DAMAGES FIRST AROSE."
+      },
+      {
+        "contract": "SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF",
+        "clause_type": "Cap On Liability",
+        "evidence_quote": "In no event shall either party be liable to the other for the recovery of any special, indirect or consequential damages even if the defendant party had been advised of the possibility of such damages including but not limited to lost profits, lost revenues, failure to realize expected savings, loss of data and loss of use."
+      }
+    ]
+  },
+  "check_pass_rates": {
+    "required_fields_present": "24/24",
+    "not_found_is_clean": "24/24"
+  },
+  "error_split": {
+    "retrieval_miss": 1,
+    "extraction_error": 5
+  },
+  "extra_values": [
+    {
+      "contract": "AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.19_11788293_EX-10.19_Content License Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "field": "auto_renews",
+      "predicted_value": true
+    },
+    {
+      "contract": "VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "field": "renewal_term_months",
+      "predicted_value": 12
+    },
+    {
+      "contract": "FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION.PDF",
+      "clause_type": "Cap On Liability",
+      "field": "has_money_cap",
+      "predicted_value": true
+    },
+    {
+      "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "field": "has_money_cap",
+      "predicted_value": false
+    },
+    {
+      "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "field": "has_damages_exclusion",
+      "predicted_value": false
+    }
+  ],
+  "cost": {
+    "uncached_calls": 22,
+    "total_input_tokens": 39604,
+    "total_output_tokens": 4123,
+    "latency_median_ms": 1810.7224539999152,
+    "latency_p95_ms": 2350.0906889967155,
+    "calls_with_metadata": 22
+  },
+  "errors": [],
+  "fake": false,
+  "total_rows": 24,
+  "complete": true,
+  "cache_dir": "evals/llm_cache",
+  "retrieved_chunk_ids": [
+    {
+      "contract": "SFGFINANCIALCORP_05_12_2009-EX-10.1-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:38",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:45",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:21",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:20",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:33"
+      ]
+    },
+    {
+      "contract": "SFGFINANCIALCORP_05_12_2009-EX-10.1-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:13",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:43",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:41",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:14",
+        "5aa255209fed078a9eb325106d3dececbf7b5323c44c7e0f623a794653857caa:40"
+      ]
+    },
+    {
+      "contract": "AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.19_11788293_EX-10.19_Content License Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:3",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:8",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:37",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:12",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:17"
+      ]
+    },
+    {
+      "contract": "AlliedEsportsEntertainmentInc_20190815_8-K_EX-10.19_11788293_EX-10.19_Content License Agreement.pdf",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:25",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:35",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:23",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:8",
+        "2c5fe2d4f89cd8f305e99eefac75177858c8fd57155b4347a3b010e270e3ae8a:21"
+      ]
+    },
+    {
+      "contract": "TICKETSCOMINC_06_22_1999-EX-10.22-SPONSORSHIP AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:1",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:2",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:3",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:0",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:5"
+      ]
+    },
+    {
+      "contract": "TICKETSCOMINC_06_22_1999-EX-10.22-SPONSORSHIP AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:5",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:1",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:0",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:6",
+        "0fadfe57e5b7e9c5ff8b9490a06f70a383d7acafd063e4e4951844d89d5c618a:2"
+      ]
+    },
+    {
+      "contract": "VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:58",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:7",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:5",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:35",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:6"
+      ]
+    },
+    {
+      "contract": "VERTICALNETINC_04_01_2002-EX-10.19-MAINTENANCE AND SUPPORT AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:49",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:50",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:48",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:45",
+        "458e56739492284bf02e73db4c583b9072ceda43697a5a977267a3e896f2d359:46"
+      ]
+    },
+    {
+      "contract": "IpassInc_20181203_8-K_EX-99.1_11445874_EX-99.1_Reseller Agreement.pdf",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:32",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:46",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:47",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:52",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:33"
+      ]
+    },
+    {
+      "contract": "IpassInc_20181203_8-K_EX-99.1_11445874_EX-99.1_Reseller Agreement.pdf",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:30",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:31",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:29",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:32",
+        "c1eb7b17df6592490e5ec9a13f5356d52026f0fb86ab37bf6839cb0b4b10d105:27"
+      ]
+    },
+    {
+      "contract": "SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:11",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:24",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:22",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:16",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:0"
+      ]
+    },
+    {
+      "contract": "SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:19",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:18",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:17",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:16",
+        "4be49e32de7d92bf920ccc43e0856f461d1cc6aefb32a0f80f69b3c62757053b:15"
+      ]
+    },
+    {
+      "contract": "ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:1",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:2",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:47",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:23",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:8"
+      ]
+    },
+    {
+      "contract": "ENTERTAINMENTGAMINGASIAINC_02_15_2005-EX-10.5-DISTRIBUTOR AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:44",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:35",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:9",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:45",
+        "40843ae37bda539870e579ea6250436ff53ee0b8279ce69467519c9147e489e5:51"
+      ]
+    },
+    {
+      "contract": "FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:29",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:28",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:39",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:27",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:45"
+      ]
+    },
+    {
+      "contract": "FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:38",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:37",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:39",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:30",
+        "0af3ed902cd8bddacd6dcbd12849ddf1756a3672389e0bc1e2f636b0d6387c44:27"
+      ]
+    },
+    {
+      "contract": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:60",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:140",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:159",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:158",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:61"
+      ]
+    },
+    {
+      "contract": "CHANGEPOINTCORP_03_08_2000-EX-10.6-LICENSE AND HOSTING AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:57",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:135",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:133",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:139",
+        "38c558681f151ce76793fef1dd5637b713bbdf9165d28b2b6c475021b9a0b521:89"
+      ]
+    },
+    {
+      "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:5",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:4",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:35",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:21",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:34"
+      ]
+    },
+    {
+      "contract": "VISIUMTECHNOLOGIES,INC_10_20_2004-EX-10.20-DISTRIBUTOR AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:29",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:40",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:27",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:28",
+        "f029ec35488be014041a7becf3d21500ae788ddd6e1b711a3bba0d62d21319b6:39"
+      ]
+    },
+    {
+      "contract": "GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:9",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:10",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:3",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:2",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:28"
+      ]
+    },
+    {
+      "contract": "GWG HOLDINGS, INC. - ORDERLY MARKETING AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:20",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:2",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:21",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:15",
+        "cf9947599defa9a2b46ad1d8704ef246dccaee370bcf21a97f77d063efdededd:28"
+      ]
+    },
+    {
+      "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.PDF",
+      "clause_type": "Renewal Term",
+      "chunk_ids": [
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:34",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:0",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:65",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:30",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:48"
+      ]
+    },
+    {
+      "contract": "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT.PDF",
+      "clause_type": "Cap On Liability",
+      "chunk_ids": [
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:47",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:59",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:66",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:22",
+        "2f72ae347a488c464df630f0b45142e96e4ed31fc1ba00280b8a4db79e283354:65"
+      ]
+    }
+  ]
+}

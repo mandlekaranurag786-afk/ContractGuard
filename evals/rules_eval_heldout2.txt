@@ -1,0 +1,73 @@
+Offline rule evaluation; labels: evals/heldout2_labels.csv
+
+All metrics and decision/strength counts exclude UNSCORED rule-rows.
+
+Truth order: found=False -> UNSCORED; condition empty -> UNSCORED, NONE -> NEEDS_REVIEW, unequal -> NOT_APPLICABLE (ignore rule field); rule field empty -> UNSCORED, NONE -> NEEDS_REVIEW; currency empty -> UNSCORED, NONE/different -> NEEDS_REVIEW; then compare.
+
+Label found=False rows: 2
+
+RUN: heldout2 | POLICY: STRICT
+Rule-rows: 60; scored: 50; UNSCORED: 10
+decision | engine | truth
+PASS | 8 | 27
+FAIL | 0 | 6
+NEEDS_REVIEW | 42 | 14
+NOT_APPLICABLE | 0 | 3
+Correct: 20/50
+Review: 42/50 (84.0%)
+UNNECESSARY_REVIEW: 29
+UNSAFE: 1
+contract='SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF' | rule_id='initial_term_max_60' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='PASS' | field='initial_term_months' | value=12 | field_status='supported' | condition_status=None | currency_status=None | evidence_strength='proof' | quote excerpt='For a renewable one-year term commencing upon the Maintenance Commencement Date, subject to payment of maintenance fees in accordance with the Fee Schedule'
+rule | scored | correct | unsafe | review
+cap_min_2m | 10 | 10 | 0 | 10
+cap_required | 10 | 0 | 0 | 10
+excludes_consequential | 11 | 0 | 0 | 11
+renewal_notice_min_30 | 9 | 2 | 0 | 9
+initial_term_max_60 | 10 | 8 | 1 | 2
+Auto-decisions by evidence_strength: proof=8, weak_signal=0, explicit_negative=0
+
+RUN: heldout2 | POLICY: KEYWORD
+Rule-rows: 60; scored: 50; UNSCORED: 10
+decision | engine | truth
+PASS | 18 | 27
+FAIL | 0 | 6
+NEEDS_REVIEW | 32 | 14
+NOT_APPLICABLE | 0 | 3
+Correct: 30/50
+Review: 32/50 (64.0%)
+UNNECESSARY_REVIEW: 19
+UNSAFE: 1
+contract='SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF' | rule_id='initial_term_max_60' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='PASS' | field='initial_term_months' | value=12 | field_status='supported' | condition_status=None | currency_status=None | evidence_strength='proof' | quote excerpt='For a renewable one-year term commencing upon the Maintenance Commencement Date, subject to payment of maintenance fees in accordance with the Fee Schedule'
+rule | scored | correct | unsafe | review
+cap_min_2m | 10 | 10 | 0 | 10
+cap_required | 10 | 4 | 0 | 6
+excludes_consequential | 11 | 3 | 0 | 8
+renewal_notice_min_30 | 9 | 5 | 0 | 6
+initial_term_max_60 | 10 | 8 | 1 | 2
+Auto-decisions by evidence_strength: proof=8, weak_signal=10, explicit_negative=0
+
+RUN: heldout2 | POLICY: BALANCED
+Rule-rows: 60; scored: 50; UNSCORED: 10
+decision | engine | truth
+PASS | 18 | 27
+FAIL | 0 | 6
+NEEDS_REVIEW | 30 | 14
+NOT_APPLICABLE | 2 | 3
+Correct: 32/50
+Review: 30/50 (60.0%)
+UNNECESSARY_REVIEW: 17
+UNSAFE: 1
+contract='SPARKLINGSPRINGWATERHOLDINGSLTD_07_03_2002-EX-10.13-SOFTWARE LICENSE AND MAINTENANCE AGREEMENT.PDF' | rule_id='initial_term_max_60' | truth=<Decision.NEEDS_REVIEW: 'NEEDS_REVIEW'> | decision='PASS' | field='initial_term_months' | value=12 | field_status='supported' | condition_status=None | currency_status=None | evidence_strength='proof' | quote excerpt='For a renewable one-year term commencing upon the Maintenance Commencement Date, subject to payment of maintenance fees in accordance with the Fee Schedule'
+rule | scored | correct | unsafe | review
+cap_min_2m | 10 | 10 | 0 | 10
+cap_required | 10 | 4 | 0 | 6
+excludes_consequential | 11 | 3 | 0 | 8
+renewal_notice_min_30 | 9 | 7 | 0 | 4
+initial_term_max_60 | 10 | 8 | 1 | 2
+Auto-decisions by evidence_strength: proof=8, weak_signal=10, explicit_negative=2
+
+PRE-REGISTERED SELECTION
+Start at STRICT.
+KEYWORD: unsafe-free in all selected runs=False; fewer reviews versus STRICT=[10]; blocked.
+BALANCED: unsafe-free in all selected runs=False; fewer reviews versus STRICT=[12]; blocked.
+Selected policy: STRICT
